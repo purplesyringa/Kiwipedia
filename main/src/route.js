@@ -4,6 +4,9 @@ const zf = new ZeroFrame();
 import ZeroPage from "zero-dev-lib/ZeroPage";
 const zp = new ZeroPage(zf);
 
+import ZeroFS from "zero-dev-lib/ZeroFS";
+const zeroFS = new ZeroFS(zp);
+
 import ZeroDB from "zero-dev-lib/ZeroDB";
 const zeroDB = new ZeroDB(zp);
 
@@ -20,4 +23,4 @@ export const route = vue => {
 	router.router.check(router.router.getURL());
 };
 
-export {zp as zeroPage, zeroDB};
+export {zp as zeroPage, zeroDB, zeroFS};
