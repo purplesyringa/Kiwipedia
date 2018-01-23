@@ -4,7 +4,7 @@
  "background-color": "#FFF",
  "clone_root": "template-new",
  "cloned_from": "1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D",
- "description": "",
+ "description": "Template for ZeroWikipedia",
  "files": {
   "index.html": {
    "sha512": "d09673b02682be2bb8eccb39944234c8bcfeb497813790ec1d7de2103c706a00",
@@ -15,16 +15,22 @@
    "size": 3370
   }
  },
- "ignore": "",
+ "ignore": "data/.*",
+ "includes": {
+  "data/users/content.json": {
+   "signers": [],
+   "signers_required": 1
+  }
+ },
  "inner_path": "content.json",
- "modified": 1516724935,
+ "modified": 1516725283,
  "postmessage_nonce_security": true,
  "signers_sign": "G7J1uRdtQfq05Kd30OkruKNgiEuj9akWx+hn4GwMsYJ0ZxuenCiAY1KfJFXceocO8dpn38HhFte97zgwHCgDees=",
  "signs": {
-  "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP": "G6imkLUlEFsk+1mYuwWLr628HleAPzS7N6nNdgqkjPDPbbKOTApMXBm+ToUZGbtvqmbN8oJ7k2K4TzxEL6WkJqM="
+  "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP": "G1kUO47/fR1yw8+k9ykvzYflwMaXZJFaRPXHYVCyZTGSfqeMqEbsVVnxiRw5qGDCH4dOZbVmxf0HegTrQaY+L9U="
  },
  "signs_required": 1,
- "title": "my new site",
+ "title": "ZeroWikipedia template",
  "translate": ["js/all.js"],
  "zeronet_version": "0.6.1"
 }
