@@ -68,6 +68,12 @@ module.exports = {
 				from: "./dbschema.json",
 				to: "./dbschema.json"
 			}
+		]),
+		new CopyWebpackPlugin([
+			{
+				from: "./hub-template",
+				to: "./hub-template"
+			}
 		])
 	]
 };
