@@ -1,1 +1,27 @@
-{}
+{
+	"db_name": "ZeroWikipedia",
+	"db_file": "merged-ZeroWikipedia/ZeroWikipedia.db",
+	"version": 3,
+	"maps": {
+		".+/data/users/.+/content.json": {
+			"to_json_table": ["cert_user_id"],
+			"file_name": "data.json"
+		},
+		".+/data/users/.+/data.json": {
+			"to_table": []
+		}
+	},
+	"tables": {
+		"json": {
+			"cols": [
+				["json_id", "INTEGER PRIMARY KEY AUTOINCREMENT"],
+				["site", "TEXT"],
+				["directory", "TEXT"],
+				["file_name", "TEXT"],
+				["cert_user_id", "TEXT"]
+			],
+			"indexes": ["CREATE UNIQUE INDEX path ON json(directory, site, file_name)"],
+			"schema_changed": 4
+		}
+	}
+}
