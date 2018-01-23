@@ -7,8 +7,8 @@
  "description": "Template for ZeroWikipedia",
  "files": {
   "index.html": {
-   "sha512": "cd5b8af019f4c9acc0cc1a4469cd0b6b3640587da8abc1c5d2bd86678dd8cc17",
-   "size": 1338
+   "sha512": "d09673b02682be2bb8eccb39944234c8bcfeb497813790ec1d7de2103c706a00",
+   "size": 1161
   },
   "js/ZeroFrame.js": {
    "sha512": "42125c7aa72496455e044e3fd940e0f05db86824c781381edb7a70f71a5f0882",
@@ -23,11 +23,11 @@
   }
  },
  "inner_path": "content.json",
- "modified": 1516725574,
+ "modified": 1516725283,
  "postmessage_nonce_security": true,
  "signers_sign": "G7J1uRdtQfq05Kd30OkruKNgiEuj9akWx+hn4GwMsYJ0ZxuenCiAY1KfJFXceocO8dpn38HhFte97zgwHCgDees=",
  "signs": {
-  "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP": "HCKe1lT0am8xNmYWov2GDEVLZltUP1crxaPIqPusIOe0K2XdrCW25HqQw/jD5DqbgNuSSVPCCxBoXfVdFZNovkg="
+  "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP": "G1kUO47/fR1yw8+k9ykvzYflwMaXZJFaRPXHYVCyZTGSfqeMqEbsVVnxiRw5qGDCH4dOZbVmxf0HegTrQaY+L9U="
  },
  "signs_required": 1,
  "title": "ZeroWikipedia template",
