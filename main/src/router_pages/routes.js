@@ -1,6 +1,8 @@
 import Home from "./home/home.vue";
 import NewLanguage from "./new-language.vue";
 
+import * as config from "../config.js";
+
 export default (vue, zeroPage) => [
 	{
 		path: "",
@@ -13,8 +15,7 @@ export default (vue, zeroPage) => [
 		controller: async () => {
 			vue.currentView = NewLanguage;
 
-			const siteInfo = await zeroPage.getSiteInfo();
-			zeroPage.cmd("siteClone", [siteInfo.address, "hub-template"]);
+			zeroPage.cmd("siteClone", [config.templateAddress]);
 		}
 	}
 ];
