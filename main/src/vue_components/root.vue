@@ -11,6 +11,10 @@
 <style lang="sass" scoped>
 	.root
 		height: 100%
+
+	.current-view
+		float: left
+		padding: 16px
 </style>
 
 <script language="text/javascript">
