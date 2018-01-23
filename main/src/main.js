@@ -15,6 +15,9 @@ var app = new Vue({
 	}
 });
 
+import Setting from "./vue_components/setting/setting.vue";
+Vue.component("setting", Setting);
+
 import {route, zeroPage} from "./route.js";
 route(app);
 
