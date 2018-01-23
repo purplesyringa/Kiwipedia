@@ -2,7 +2,7 @@
 
 <template>
 	<aside>
-		<h1>Test</h1>
+		<h1>ZeroWikipedia</h1>
 	</aside>
 </template>
 
