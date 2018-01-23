@@ -1,5 +1,5 @@
 import Home from "./home/home.vue";
-import NewLanguage from "./new-language.vue";
+import NewHub from "./new-hub.vue";
 import InitHub from "./init-hub/init-hub.vue";
 
 import * as config from "../config.js";
@@ -13,9 +13,9 @@ export default (vue, zeroPage) => [
 		}
 	},
 	{
-		path: "new-language",
+		path: "new-hub",
 		controller: async () => {
-			vue.currentView = NewLanguage;
+			vue.currentView = NewHub;
 
 			await loadAdditional();
 			zeroPage.cmd("siteClone", [config.templateAddress]);

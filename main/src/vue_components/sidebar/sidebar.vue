@@ -12,7 +12,7 @@
 			<a href="?/" @click.prevent="$router.navigate('')">
 				Home
 			</a><br>
-			<a href="?/new-language" @click.prevent="$router.navigate('new-language')">
+			<a href="?/new-hub" @click.prevent="$router.navigate('new-hub')">
 				Don't see you language in list?
 			</a><br>
 			<a href="/13c2MpR9ztCzVm7r8cTfV9h9FFEEiQ6AKD">

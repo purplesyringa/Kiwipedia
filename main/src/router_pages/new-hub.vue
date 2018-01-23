@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>New Language</h1>
+		<h1>New Hub</h1>
 		<p>
 			ZeroWikipedia is creating your hub.
 		</p>
@@ -9,6 +9,6 @@
 
 <script type="text/javascript">
 	export default {
-		name: "new-language"
+		name: "new-hub"
 	};
 </script>
