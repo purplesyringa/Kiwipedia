@@ -1,0 +1,5 @@
+data.txt
+*.db
+*/data/users/*/*
+node_modules/
+main/dist/
