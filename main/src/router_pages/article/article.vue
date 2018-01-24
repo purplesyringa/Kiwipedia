@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<div v-if="status == 'no-article'">
-			<h1>No article</h1>
+			<h1>No article named <i>{{article}}</i></h1>
 			<p>
-				<a :href="'?/new-article/' + slug" @click.prevent="$router.navigate('new-article/' + slug)">Want to create one?</a>
+				<a :href="'?/new-article/' + slug + '/' + article" @click.prevent="$router.navigate('new-article/' + slug + '/' + article)">Want to create one?</a>
 			</p>
 		</div>
 		<div v-else>
@@ -24,6 +24,7 @@
 				content: "",
 				status: "",
 				slug: "",
+				article: "",
 
 				hub: null
 			};
@@ -33,7 +34,7 @@
 			const subgroup = this.$router.currentParams.subgroup || "";
 			this.slug = language + (subgroup && `/${subgroup}`);
 
-			const article = this.$router.currentParams.article;
+			this.article = this.$router.currentParams.article;
 
 			this.hub = new Hub(this.slug);
 			try {
@@ -45,9 +46,9 @@
 				return;
 			}
 
-			let articleData;
+			let article;
 			try {
-				articleData = await this.hub.getArticle(article);
+				article = await this.hub.getArticle(this.article);
 			} catch(e) {
 				if(e instanceof NotEnoughError) {
 					this.status = "no-article";
