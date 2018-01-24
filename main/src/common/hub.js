@@ -19,9 +19,9 @@ export default class Hub {
 		`, {slug});
 
 		if(result.length == 0) {
-			throw new RangeError(`No addresses found for slug ${slug}`);
+			throw new RangeError(`No addresses found for hub slug ${slug}`);
 		} else if(result.length > 1) {
-			throw new RangeError(`${result.length} addresses found for slug ${slug}`);
+			throw new RangeError(`${result.length} addresses found for hub slug ${slug}`);
 		}
 
 		return result[0].address;
