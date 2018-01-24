@@ -15,6 +15,7 @@
 	.current-view
 		float: left
 		padding: 16px
+		width: calc(100% - 250px - 32px - 32px)
 </style>
 
 <script language="text/javascript">
