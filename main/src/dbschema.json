@@ -1,13 +1,13 @@
 {
 	"db_name": "ZeroWikipedia",
-	"db_file": "merged-ZeroWikipedia/ZeroWikipedia.db",
+	"db_file": "ZeroWikipedia.db",
 	"version": 3,
 	"maps": {
-		".+/data/users/.+/content.json": {
+		"(^|.+/)data/users/.+/content.json": {
 			"to_json_table": ["cert_user_id"],
 			"file_name": "data.json"
 		},
-		".+/data/users/.+/data.json": {
+		"^data/users/.+/data.json": {
 			"to_table": [
 				"hubs"
 			]
