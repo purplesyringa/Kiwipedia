@@ -39,13 +39,9 @@
 				const subgroup = this.$refs.subgroup.value.trim();
 				const address = this.$router.currentParams.address;
 
-				await init(language, subgroup, address);
+				const slug = await init(language, subgroup, address);
 
-				this.$router.navigate(
-					`/wiki/${language}` +
-					(subgroup && `/${subgroup}`) +
-					"/home"
-				);
+				this.$router.navigate(`/wiki/${slug}/home`);
 			}
 		}
 	};
