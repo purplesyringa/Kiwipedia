@@ -10,6 +10,10 @@ const zeroFS = new ZeroFS(zp);
 import ZeroDB from "zero-dev-lib/ZeroDB";
 const zeroDB = new ZeroDB(zp);
 
+import ZeroAuth from "zero-dev-lib/ZeroAuth";
+const zeroAuth = new ZeroAuth(zp);
+zp.auth = zeroAuth;
+
 import Vue from "vue/dist/vue.min.js";
 import VueRouter from "./libs/vuerouter.js";
 const router = VueRouter(zp);
@@ -23,4 +27,4 @@ export const route = vue => {
 	router.router.check(router.router.getURL());
 };
 
-export {zp as zeroPage, zeroDB, zeroFS};
+export {zp as zeroPage, zeroDB, zeroFS, zeroAuth};
