@@ -7,7 +7,7 @@
 
 		<setting
 			name="Language"
-			description="English/Polish/etc."
+			description="en/pl/etc."
 			ref="language"
 		/>
 		<setting
@@ -23,19 +23,29 @@
 <style lang="sass" src="./init-hub.sass" scoped></style>
 
 <script type="text/javascript">
+	import init from "../../common/init-hub.js";
+
 	export default {
 		name: "init-hub",
 		data() {
 			return {
-				language: null
+				language: null,
+				subgroup: null
 			};
 		},
 		methods: {
-			init() {
+			async init() {
 				const language = this.$refs.language.value.trim();
 				const subgroup = this.$refs.subgroup.value.trim();
 				const address = this.$router.currentParams.address;
-				console.log(address);
+
+				await init(language, subgroup, address);
+
+				this.$router.navigate(
+					`/wiki/${language}` +
+					(subgroup && `/${subgroup}`) +
+					"/home"
+				);
 			}
 		}
 	};
