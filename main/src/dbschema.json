@@ -8,7 +8,9 @@
 			"file_name": "data.json"
 		},
 		".+/data/users/.+/data.json": {
-			"to_table": []
+			"to_table": [
+				"hubs"
+			]
 		}
 	},
 	"tables": {
@@ -22,6 +24,15 @@
 			],
 			"indexes": ["CREATE UNIQUE INDEX path ON json(directory, site, file_name)"],
 			"schema_changed": 4
+		},
+		"hubs": {
+			"cols": [
+				["language", "TEXT"],
+				["subgroup", "TEXT"],
+				["address", "TEXT"],
+				["json_id", "INTEGER PRIMARY KEY AUTOINCREMENT"]
+			],
+			"schema_changed": 1
 		}
 	}
 }
