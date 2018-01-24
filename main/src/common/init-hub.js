@@ -1,19 +1,22 @@
 import {zeroFS, zeroAuth, zeroDB, zeroPage} from "../route.js";
 
+export function toSlug(s) {
+	return s.replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-");
+};
+
 async function addToIndex(language, subgroup, address) {
 	const auth = await zeroAuth.requestAuth();
+
+	const slug = toSlug(language) + (subgroup && "/" + toSlug(subgroup));
 
 	await zeroDB.insertRow(
 		`data/users/${auth.address}/data.json`,
 		`data/users/${auth.address}/content.json`,
 		"hubs",
-		{
-			language,
-			subgroup,
-			address,
-			slug: subgroup.replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-")
-		}
+		{language, subgroup, address, slug}
 	);
+
+	return slug;
 };
 
 export default async function init(language, subgroup, address) {
@@ -28,5 +31,5 @@ export default async function init(language, subgroup, address) {
 	await zeroFS.writeFile(path, content);
 	await zeroPage.sign(path);
 
-	await addToIndex(language, subgroup, address);
+	return await addToIndex(language, subgroup, address);
 };
