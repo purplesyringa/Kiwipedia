@@ -30,7 +30,7 @@
 				await this.hub.init();
 			} catch(e) {
 				this.header = "Error";
-				this.content = e.stack;
+				this.content = e.message;
 				return;
 			}
 
