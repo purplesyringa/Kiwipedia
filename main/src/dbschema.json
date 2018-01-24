@@ -34,6 +34,17 @@
 				["json_id", "INTEGER PRIMARY KEY AUTOINCREMENT"]
 			],
 			"schema_changed": 2
+		},
+		"article": {
+			"cols": [
+				["title", "TEXT"],
+				["text", "TEXT"],
+				["slug", "TEXT"],
+				["date_updated", "INTEGER"],
+				["imported", "TEXT"],
+				["json_id", "INTEGER PRIMARY KEY AUTOINCREMENT"]
+			],
+			"schema_changed": 1
 		}
 	}
 }
