@@ -74,6 +74,12 @@ module.exports = {
 				from: "./content.json",
 				to: "./content.json"
 			}
+		]),
+		new CopyWebpackPlugin([
+			{
+				from: "./data",
+				to: "./data"
+			}
 		])
 	]
 };
