@@ -41,7 +41,7 @@
 			To create a new hub from this template, visit ZeroWikipedia and choose <b>Don't see you language in list?</b> in sidebar.
 		</p>
 		<p>
-			If this is your site, and you've just created a new hub, return to ZeroWikipedia via the following link: <a href="/18kRx9QWDmJSa1stwC2jgFoiSRGqvbtoAr/?/init-hub">init-hub</a>.
+			If this is your site, and you've just created a new hub, return to ZeroWikipedia via the following link: <a id="address">init-hub</a>.
 		</p>
 		<p>
 			<a href="/18kRx9QWDmJSa1stwC2jgFoiSRGqvbtoAr">ZeroWikipedia</a>
@@ -51,5 +51,13 @@
 		<p>
 			Made with &hearts; by <a href="/Mail.ZeroNetwork.bit/?to=gitcenter">GitCenter</a> and community.
 		</p>
+
+		<script type="text/javascript" src="js/ZeroFrame.js"></script>
+		<script type="text/javascript">
+			const zf = new ZeroFrame();
+			zf.cmd("siteInfo", [], siteInfo => {
+				document.getElementById("address").href = "/18kRx9QWDmJSa1stwC2jgFoiSRGqvbtoAr/?/init-hub/" + siteInfo.address;
+			});
+		</script>
 	</body>
 </html>
