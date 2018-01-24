@@ -22,7 +22,7 @@ export default (vue, zeroPage) => [
 		}
 	},
 	{
-		path: "init-hub",
+		path: "init-hub/:address",
 		controller: () => {
 			vue.currentView = InitHub;
 		}

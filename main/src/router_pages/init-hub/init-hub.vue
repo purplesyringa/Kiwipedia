@@ -34,6 +34,8 @@
 			init() {
 				const language = this.$refs.language.value.trim();
 				const subgroup = this.$refs.subgroup.value.trim();
+				const address = this.$router.currentParams.address;
+				console.log(address);
 			}
 		}
 	};
