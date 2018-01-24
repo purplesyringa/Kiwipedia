@@ -19,8 +19,8 @@ module.exports = class Router {
 		return path.toString().replace(/\/$/, "").replace(/^\//, "");
 	}
 
-	add(path, controller) {
-		this.routes.push({path, controller});
+	add(route) {
+		this.routes.push(route);
 	}
 	remove(arg) {
 		let index = this.routes.findIndex(route => route.controller == arg || route.path == arg);

@@ -19,7 +19,7 @@ import Routes from "./router_pages/routes.js";
 export const route = vue => {
 	const routes = Routes(vue, zp);
 
-	routes.forEach(route => router.router.add(route.path, route.controller));
+	routes.forEach(route => router.router.add(route));
 	router.router.check(router.router.getURL());
 };
 
