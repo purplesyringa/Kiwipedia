@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button class="s-button">{{value}}</button>
+		<button class="s-button" @click="$emit('click')">{{value}}</button>
 	</div>
 </template>
 
