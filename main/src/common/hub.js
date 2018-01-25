@@ -13,6 +13,21 @@ export default class Hub {
 		this.address = await Hub.slugToAddress(this.slug);
 	}
 
+	async getIndex() {
+		return await zeroDB.query(`
+			SELECT *
+			FROM article
+
+			LEFT JOIN json
+			USING (json_id)
+
+			WHERE json.directory LIKE "%${this.address}/"
+			AND json.site = "merged-ZeroWikipedia"
+
+			GROUP BY article.slug
+		`);
+	}
+
 	async getArticle(slug) {
 		const result = await zeroDB.query(`
 			SELECT *
