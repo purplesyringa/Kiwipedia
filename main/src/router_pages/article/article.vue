@@ -66,6 +66,9 @@
 			} catch(e) {
 				if(e instanceof NotEnoughError) {
 					this.status = "no-article";
+				} else {
+					this.error = e.message;
+					this.status = "error";
 				}
 				return;
 			}
