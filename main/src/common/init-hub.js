@@ -1,5 +1,6 @@
 import {zeroFS, zeroAuth, zeroDB, zeroPage} from "../route.js";
 
+import {addMergedSite} from "./startup.js";
 import {toSlug} from "./hub.js";
 
 async function addToIndex(language, subgroup, address) {
@@ -18,6 +19,8 @@ async function addToIndex(language, subgroup, address) {
 };
 
 export default async function init(language, subgroup, address) {
+	await addMergedSite(address);
+
 	const path = `merged-ZeroWikipedia/${address}/content.json`;
 
 	let content = await zeroFS.readFile(path);
