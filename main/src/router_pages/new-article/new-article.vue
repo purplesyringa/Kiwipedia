@@ -7,6 +7,10 @@
 		<div v-else>
 			<h1>Create a new article</h1>
 
+			<p v-if="isFirst">
+				This is the first article, so it will be marked as <b>home</b>.
+			</p>
+
 			<setting
 				name="Title"
 				description=""
@@ -34,6 +38,8 @@
 				status: "",
 				error: "",
 
+				isFirst: false,
+
 				hub: null
 			};
 		},
@@ -50,6 +56,11 @@
 				this.error = e.message;
 				this.status = "error";
 				return;
+			}
+
+			const index = await this.hub.getIndex();
+			if(index.length == 0) {
+				this.isFirst = true;
 			}
 		}
 	};
