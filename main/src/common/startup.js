@@ -1,7 +1,7 @@
 import {zeroPage, zeroFS} from "../route.js";
 import * as config from "../config.js";
 
-async function addMergedSite(address) {
+export async function addMergedSite(address) {
 	const list = await zeroPage.cmd("mergerSiteList");
 	if(list[address]) {
 		return;
