@@ -28,7 +28,7 @@
 				You are viewing an outdated version. For latest version, <a :href="`?/wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">look here</a>.
 			</p>
 
-			<render-article :text="articleNode.text" />
+			<render-article :text="articleNode.text" :slug="slug" />
 		</div>
 		<loading v-else />
 	</div>

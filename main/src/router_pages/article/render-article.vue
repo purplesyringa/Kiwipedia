@@ -1,21 +1,37 @@
 <template>
-	<div v-html="markdown"></div>
+	<div v-html="rendered"></div>
 </template>
 
 <script type="text/javascript">
-	import marked from "marked";
+	import InstaView from "instaview";
 
 	export default {
 		name: "markdown-article",
-		props: ["text"],
+		props: ["text", "slug"],
+		created() {
+			InstaView.conf.wiki = {
+				lang: "language",
+				interwiki: "",
+				default_thumb_width: 180
+			};
+			InstaView.conf.paths = {
+				base_href: "./",
+				articles: `?/wiki/${this.slug}/`,
+				math: "/math/", // TODO
+				images: "",
+				images_fallback: "", // TODO
+				magnify_icon: "" // TODO
+			};
+		},
 		data() {
 			return {
-				text: ""
+				text: "",
+				slug: ""
 			};
 		},
 		computed: {
-			markdown() {
-				return marked(this.text);
+			rendered() {
+				return InstaView.convert(this.text);
 			}
 		}
 	};

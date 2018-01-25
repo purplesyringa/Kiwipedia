@@ -22,7 +22,7 @@
 				<b v-if="hub.subgroup != ''"> | {{hub.subgroup}}</b>
 			</p>
 
-			<render-article :text="articleNode.text" />
+			<render-article :text="articleNode.text" :slug="slug" />
 		</div>
 		<loading v-else />
 	</div>
