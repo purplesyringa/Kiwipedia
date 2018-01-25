@@ -39,7 +39,16 @@ export default class Hub {
 	}
 
 	async getArticle(slug) {
-		const result = await zeroDB.query(`
+		const history = await this.getArticleHistory(slug);
+
+		if(history.length == 0) {
+			throw new NotEnoughError(`No articles found for slug ${slug} in hub ${this.slug}`);
+		}
+
+		return history[0];
+	}
+	async getArticleHistory(slug) {
+		return await zeroDB.query(`
 			SELECT *
 			FROM article
 
@@ -52,12 +61,6 @@ export default class Hub {
 
 			ORDER BY date_updated DESC
 		`, {slug});
-
-		if(result.length == 0) {
-			throw new NotEnoughError(`No articles found for slug ${slug} in hub ${this.slug}`);
-		}
-
-		return result[0];
 	}
 
 	async publishArticle(title, text) {
