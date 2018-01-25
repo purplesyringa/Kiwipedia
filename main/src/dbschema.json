@@ -31,9 +31,9 @@
 				["subgroup", "TEXT"],
 				["address", "TEXT"],
 				["slug", "TEXT"],
-				["json_id", "INTEGER PRIMARY KEY AUTOINCREMENT"]
+				["json_id", "INTEGER"]
 			],
-			"schema_changed": 2
+			"schema_changed": 3
 		},
 		"article": {
 			"cols": [
@@ -42,9 +42,9 @@
 				["slug", "TEXT"],
 				["date_updated", "INTEGER"],
 				["imported", "TEXT"],
-				["json_id", "INTEGER PRIMARY KEY AUTOINCREMENT"]
+				["json_id", "INTEGER"]
 			],
-			"schema_changed": 1
+			"schema_changed": 2
 		}
 	}
 }
