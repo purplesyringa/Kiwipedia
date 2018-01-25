@@ -49,12 +49,12 @@ export default class Hub {
 			WHERE slug = :slug
 			AND json.directory LIKE "${this.address}/%"
 			AND json.site = "merged-ZeroWikipedia"
+
+			ORDER BY date_updated DESC
 		`, {slug});
 
 		if(result.length == 0) {
 			throw new NotEnoughError(`No articles found for slug ${slug} in hub ${this.slug}`);
-		} else if(result.length > 1) {
-			throw new TooMuchError(`${result.length} articles found for slug ${slug} in hub ${this.slug}`);
 		}
 
 		return result[0];
