@@ -16,7 +16,7 @@
 			ref="subgroup"
 		/>
 
-		<button @click="init">Init</button>
+		<s-button @click="init" value="Init" />
 	</div>
 </template>
 
