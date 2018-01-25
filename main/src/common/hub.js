@@ -31,7 +31,7 @@ export default class Hub {
 			LEFT JOIN json
 			USING (json_id)
 
-			WHERE json.directory LIKE "%${this.address}/"
+			WHERE json.directory LIKE "${this.address}/%"
 			AND json.site = "merged-ZeroWikipedia"
 
 			GROUP BY article.slug
