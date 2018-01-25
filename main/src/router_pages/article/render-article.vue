@@ -37,10 +37,22 @@
 		},
 		methods: {
 			render(text) {
+				const renderData = this.initTemplates();
+
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
-				const rendered = this.renderTemplates(replaced, renderingTemplates);
+				const rendered = this.renderTemplates(replaced, renderingTemplates, renderData);
 				const html = InstaView.convert(rendered);
 				return html;
+			},
+
+			initTemplates() {
+				let renderData = {};
+				for(let template of Object.values(Templates)) {
+					if(template.init) {
+						template.init.call(renderData);
+					}
+				}
+				return renderData;
 			},
 
 			replaceTemplates(text) {
@@ -63,7 +75,7 @@
 
 				return {renderingTemplates, replaced};
 			},
-			renderTemplates(text, renderingTemplates) {
+			renderTemplates(text, renderingTemplates, renderData) {
 				const templateRegexp = /MY_AWESOME_TEMPLATE_NUMBER_(.+?)_GOES_HERE_PLEASE_DONT_USE_THIS_CONSTANT_ANYWHERE_IN_ARTICLE/g;
 
 				const rendered = text.replace(templateRegexp, (all, id) => {
@@ -72,11 +84,11 @@
 					const {name, params} = this.parseTemplate(template);
 					for(let paramName of Object.keys(params)) {
 						let paramValue = params[paramName];
-						paramValue = this.renderTemplates(paramValue, renderingTemplates);
+						paramValue = this.renderTemplates(paramValue, renderingTemplates, renderData);
 						params[paramName] = paramValue;
 					}
 
-					return this.renderTemplate(name, params);
+					return this.renderTemplate(name, params, renderData);
 				});
 
 				return rendered;
@@ -120,13 +132,13 @@
 				return res;
 			},
 
-			renderTemplate(template, params) {
+			renderTemplate(template, params, renderData) {
 				template = template[0].toLowerCase() + template.substr(1);
 				if(!Templates[template]) {
 					return "\n\nNo template {{" + template + "}}\n\n";
 				}
 
-				return Templates[template].render(params);
+				return Templates[template].render.call(renderData, params);
 			},
 
 			todo() {
