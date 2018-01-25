@@ -1,5 +1,5 @@
 <template>
-	<a class="version" :href="`?/version/${slug}/${article}/${date}`" @click.prevent="$router.navigate(`version/${slug}/${article}/${date}`)">
+	<a class="version" :href="`?/article-version/${slug}/${article}/${date}`" @click.prevent="$router.navigate(`article-version/${slug}/${article}/${date}`)">
 		<div class="title">{{formatDate(date)}}</div>
 		<div class="editor">Editor: {{editor}}</div>
 	</a>
