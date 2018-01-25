@@ -15,8 +15,11 @@
 			</p>
 
 			<version
-				:date="Date.now()"
-				editor="gitcenter@zeroid.bit"
+				v-for="version in versions"
+				:key="version.date_updated"
+
+				:date="version.date_updated"
+				:editor="version.cert_user_id"
 			/>
 		</div>
 		<loading v-else />
@@ -36,9 +39,6 @@
 				slug: "",
 				status: "",
 				error: "",
-
-				title: "",
-				content: "",
 
 				hub: null,
 
@@ -63,14 +63,10 @@
 
 			this.article = this.$router.currentParams.article;
 			this.articleNode = await this.hub.getArticle(this.article);
-
-			this.content = this.articleNode.text;
 		},
-		methods: {
-			async publish() {
-				const slug = await this.hub.publishArticle(this.articleNode.title, this.content);
-
-				this.$router.navigate(`wiki/${this.slug}/${slug}`);
+		asyncComputed: {
+			async versions() {
+				return this.hub.getArticleHistory(this.article);
 			}
 		},
 		components: {
