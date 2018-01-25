@@ -6,18 +6,22 @@
 				<a :href="'?/new-article/' + slug" @click.prevent="$router.navigate('new-article/' + slug)">Want to create one?</a>
 			</p>
 		</div>
-		<div v-else>
+		<div v-else-if="status == 'error'">
+			<h1>Error</h1>
+			<p>{{error}}</p>
+		</div>
+		<div v-else-if="articleNode">
 			<h1>
-				{{header}}
+				{{articleNode.title}}
 				<a class="edit-icon" :href="`?/edit-article/${slug}/${article}`" @click.prevent="$router.navigate(`edit-article/${slug}/${article}`)">&#9998;</a>
 			</h1>
 
-			<p v-if="hub">
+			<p>
 				From <b>{{hub.language}}</b>
 				<b v-if="hub.subgroup != ''"> | {{hub.subgroup}}</b>
 			</p>
 
-			<p>{{content}}</p>
+			<p>{{articleNode.text}}</p>
 		</div>
 	</div>
 </template>
@@ -31,13 +35,13 @@
 		name: "article",
 		data() {
 			return {
-				header: "",
-				content: "",
+				error: "",
 				status: "",
 				slug: "",
 				article: "",
 
-				hub: null
+				hub: null,
+				articleNode: null
 			};
 		},
 		async mounted() {
@@ -51,24 +55,19 @@
 			try {
 				await this.hub.init();
 			} catch(e) {
-				this.header = "Error";
-				this.content = e.message;
+				this.error = e.message;
 				this.status = "error";
 				return;
 			}
 
-			let article;
 			try {
-				article = await this.hub.getArticle(this.article);
+				this.articleNode = await this.hub.getArticle(this.article);
 			} catch(e) {
 				if(e instanceof NotEnoughError) {
 					this.status = "no-article";
 				}
 				return;
 			}
-
-			this.header = article.title;
-			this.content = article.text;
 		}
 	};
 </script>
