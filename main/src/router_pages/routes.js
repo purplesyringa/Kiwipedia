@@ -1,5 +1,6 @@
 import Home from "./home/home.vue";
 import NewHub from "./new-hub.vue";
+import HubList from "./hub-list/hub-list.vue";
 import InitHub from "./init-hub/init-hub.vue";
 import Article from "./article/article.vue";
 import NewArticle from "./new-article/new-article.vue";
@@ -21,6 +22,12 @@ export default (vue, zeroPage) => [
 
 			await loadAdditional();
 			zeroPage.cmd("siteClone", [config.templateAddress]);
+		}
+	},
+	{
+		path: "hub-list",
+		controller: async () => {
+			vue.currentView = HubList;
 		}
 	},
 	{
