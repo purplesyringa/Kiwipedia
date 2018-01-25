@@ -61,6 +61,28 @@ export default class Hub {
 
 		return res[0];
 	}
+	async getArticleVersion(slug, date) {
+		const res = await zeroDB.query(`
+			SELECT *
+			FROM article
+
+			LEFT JOIN json
+			USING (json_id)
+
+			WHERE slug = :slug
+			AND json.directory LIKE "${this.address}/%"
+			AND json.site = "merged-ZeroWikipedia"
+			AND article.date_updated = :date
+
+			LIMIT 1
+		`, {slug, date});
+
+		if(res.length == 0) {
+			throw new NotEnoughError(`No article found for slug ${slug} and version ${date} in hub ${this.slug}`);
+		}
+
+		return res[0];
+	}
 	async getArticleHistory(slug) {
 		return await zeroDB.query(`
 			SELECT *
