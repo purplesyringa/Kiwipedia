@@ -3,7 +3,7 @@ export default {
 		this.refs = [];
 	},
 
-	render() {
+	render(params, renderer) {
 		const formatAuthor = ref => {
 			let author = ref.last ? `${ref.first} ${ref.last}` : ref.author || "";
 			return ref.authorlink ? `[[${ref.authorlink}|${author}]]` : author;
@@ -12,7 +12,6 @@ export default {
 		return (
 			"<ol>" +
 				this.refs.map(ref => {
-					console.log(ref);
 					return `
 						<li>
 							<a href="${ref.url}">${ref.title}</a>
