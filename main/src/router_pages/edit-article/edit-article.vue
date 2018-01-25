@@ -72,9 +72,9 @@
 		},
 		methods: {
 			async publish() {
-				//const slug = await this.hub.publishArticle(this.title, this.content);
+				const slug = await this.hub.publishArticle(this.articleNode.title, this.content);
 
-				//this.$router.navigate(`wiki/${this.slug}/${slug}`);
+				this.$router.navigate(`wiki/${this.slug}/${slug}`);
 			}
 		}
 	};
