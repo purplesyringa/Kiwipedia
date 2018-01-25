@@ -3,7 +3,7 @@
 		<div v-if="status == 'no-article'">
 			<h1>No article named <i>{{article}}</i></h1>
 			<p>
-				<a :href="'?/new-article/' + slug + '/' + article" @click.prevent="$router.navigate('new-article/' + slug + '/' + article)">Want to create one?</a>
+				<a :href="'?/new-article/' + slug" @click.prevent="$router.navigate('new-article/' + slug)">Want to create one?</a>
 			</p>
 		</div>
 		<div v-else>

@@ -44,13 +44,13 @@ export default (vue, zeroPage) => [
 	},
 
 	{
-		path: "new-article/:language/:subgroup/:article",
+		path: "new-article/:language/:subgroup",
 		controller: () => {
 			vue.currentView = NewArticle;
 		}
 	},
 	{
-		path: "new-article/:language/:article",
+		path: "new-article/:language",
 		controller: () => {
 			vue.currentView = NewArticle;
 		}

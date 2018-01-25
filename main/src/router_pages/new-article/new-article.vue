@@ -34,8 +34,6 @@
 				status: "",
 				error: "",
 
-				article: "",
-
 				hub: null
 			};
 		},
@@ -43,8 +41,6 @@
 			const language = this.$router.currentParams.language;
 			const subgroup = this.$router.currentParams.subgroup || "";
 			this.slug = language + (subgroup && `/${subgroup}`);
-
-			this.article = this.$router.currentParams.article;
 
 			this.hub = new Hub(this.slug);
 			try {
