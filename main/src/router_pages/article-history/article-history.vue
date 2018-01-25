@@ -18,6 +18,8 @@
 				v-for="version in versions"
 				:key="version.date_updated"
 
+				:slug="slug"
+				:article="article"
 				:date="version.date_updated"
 				:editor="version.cert_user_id"
 			/>

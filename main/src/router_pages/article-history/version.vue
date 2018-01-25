@@ -1,5 +1,5 @@
 <template>
-	<a class="version" :href="`?/version/${slug}/${date}`" @click.prevent="$router.navigate(`version/${slug}/${date}`)">
+	<a class="version" :href="`?/version/${slug}/${article}/${date}`" @click.prevent="$router.navigate(`version/${slug}/${article}/${date}`)">
 		<div class="title">{{formatDate(date)}}</div>
 		<div class="editor">Editor: {{editor}}</div>
 	</a>
@@ -10,7 +10,7 @@
 <script type="text/javascript">
 	export default {
 		name: "version",
-		props: ["slug", "date", "editor"],
+		props: ["slug", "article", "date", "editor"],
 		data() {
 			return {};
 		},
