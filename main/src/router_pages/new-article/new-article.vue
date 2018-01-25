@@ -15,6 +15,7 @@
 				name="Title"
 				description=""
 				ref="title"
+				v-model="title"
 			/>
 
 			<setting
@@ -22,6 +23,7 @@
 				description="Markdown supported"
 				ref="content"
 				:multiline="true"
+				v-model="content"
 			/>
 
 			<s-button value="Publish" />
@@ -39,6 +41,9 @@
 				slug: "",
 				status: "",
 				error: "",
+
+				title: "",
+				content: "",
 
 				isFirst: false,
 
@@ -64,7 +69,7 @@
 			if(index.length == 0) {
 				this.isFirst = true;
 				this.$refs.title.disabled = true;
-				this.$refs.title.value = "Home";
+				this.title = "Home";
 			}
 		}
 	};
