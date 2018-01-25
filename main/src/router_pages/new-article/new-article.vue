@@ -26,7 +26,7 @@
 				v-model="content"
 			/>
 
-			<s-button value="Publish" />
+			<s-button value="Publish" @click="publish" />
 		</div>
 	</div>
 </template>
@@ -70,6 +70,13 @@
 				this.isFirst = true;
 				this.$refs.title.disabled = true;
 				this.title = "Home";
+			}
+		},
+		methods: {
+			async publish() {
+				const slug = await this.hub.publishArticle(this.title, this.content);
+
+				this.$router.navigate(`wiki/${this.slug}/${slug}`);
 			}
 		}
 	};
