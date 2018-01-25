@@ -3,12 +3,23 @@
 		<div class="name">{{name}}</div>
 		<div class="description">{{description}}</div>
 
-		<div v-if="multiline">
-			<textarea v-model="value" :disabled="disabled"></textarea>
-		</div>
-		<div v-else>
-			<input type="text" v-model="value" :disabled="disabled">
-		</div>
+		<textarea
+			v-if="multiline"
+
+			ref="input"
+			:disabled="disabled"
+			:value="value"
+			@input="update"
+		/>
+		<input
+			v-else
+
+			ref="input"
+			type="text"
+			:disabled="disabled"
+			:value="value"
+			@input="update"
+		/>
 	</div>
 </template>
 
@@ -17,12 +28,18 @@
 <script type="text/javascript">
 	export default {
 		name: "init-hub",
-		props: ["name", "description", "multiline"],
+		props: ["name", "description", "multiline", "value"],
 		data() {
 			return {
 				value: "",
 				disabled: false
 			};
+		},
+
+		methods: {
+			update() {
+				this.$emit("input", this.$refs.input.value);
+			}
 		}
 	};
 </script>
