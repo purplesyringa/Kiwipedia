@@ -23,6 +23,8 @@
 				ref="content"
 				:multiline="true"
 			/>
+
+			<s-button value="Publish" />
 		</div>
 	</div>
 </template>
@@ -61,6 +63,8 @@
 			const index = await this.hub.getIndex();
 			if(index.length == 0) {
 				this.isFirst = true;
+				this.$refs.title.disabled = true;
+				this.$refs.title.value = "Home";
 			}
 		}
 	};
