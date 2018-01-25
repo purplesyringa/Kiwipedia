@@ -1,7 +1,7 @@
 import {zeroPage, zeroDB, zeroAuth} from "../route.js";
 
 export function toSlug(s) {
-	return s.replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-");
+	return s.replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-").toLowerCase();
 };
 
 class NotEnoughError extends Error {};
