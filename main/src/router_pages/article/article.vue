@@ -22,7 +22,7 @@
 				<b v-if="hub.subgroup != ''"> | {{hub.subgroup}}</b>
 			</p>
 
-			<p>{{articleNode.text}}</p>
+			<render-article :text="articleNode.text" />
 		</div>
 		<loading v-else />
 	</div>
@@ -32,6 +32,7 @@
 
 <script type="text/javascript">
 	import Hub, {NotEnoughError, TooMuchError} from "../../common/hub.js";
+	import RenderArticle from "./render-article.vue";
 
 	export default {
 		name: "article",
@@ -73,6 +74,9 @@
 				}
 				return;
 			}
+		},
+		components: {
+			"render-article": RenderArticle
 		}
 	};
 </script>

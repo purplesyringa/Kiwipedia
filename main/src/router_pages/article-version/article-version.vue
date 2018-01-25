@@ -28,7 +28,7 @@
 				You are viewing an outdated version. For latest version, <a :href="`?/wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">look here</a>.
 			</p>
 
-			<p>{{articleNode.text}}</p>
+			<render-article :text="articleNode.text" />
 		</div>
 		<loading v-else />
 	</div>
@@ -38,6 +38,7 @@
 
 <script type="text/javascript">
 	import Hub, {NotEnoughError, TooMuchError} from "../../common/hub.js";
+	import RenderArticle from "../article/render-article.vue";
 
 	export default {
 		name: "article-version",
@@ -92,6 +93,9 @@
 				}
 				return;
 			}
+		},
+		components: {
+			"render-article": RenderArticle
 		}
 	};
 </script>
