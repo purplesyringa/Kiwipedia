@@ -10,12 +10,15 @@
 
 <style lang="sass" scoped>
 	.root
-		height: 100%
+		height: calc(100% - 32px)
 
 	.current-view
 		float: left
 		padding: 16px
 		width: calc(100% - 250px - 32px - 32px)
+		height: 100%
+
+		overflow: auto;
 </style>
 
 <script language="text/javascript">
