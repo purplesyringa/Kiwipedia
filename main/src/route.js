@@ -19,6 +19,8 @@ import VueRouter from "./libs/vuerouter.js";
 const router = VueRouter(zp);
 Vue.use(router.plugin);
 
+zp.on("wrapperPopState", res => router.router.listenForBack(res.params));
+
 import Routes from "./router_pages/routes.js";
 export const route = vue => {
 	const routes = Routes(vue, zp);

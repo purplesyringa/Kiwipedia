@@ -64,15 +64,8 @@ module.exports = class Router {
 		this.check(this.currentRoute);
 	}
 
-	listenForBack(cmd, message) {
-		if(cmd == "wrapperPopState") {
-			if(message.params.state) {
-				if(!message.params.state.url) {
-					message.params.state.url = message.params.href.replace(/.*\?/, "");
-				}
-				this.navigate(message.params.state.url.replace(/^\//, ""), false);
-			}
-		}
+	listenForBack(params) {
+		this.navigate(params.href.replace(/.*\?/, "").replace(/^\//, ""), false);
 	}
 
 	navigate(path, doPush=true) {
