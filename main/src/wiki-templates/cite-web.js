@@ -4,8 +4,8 @@ export default {
 	},
 
 	render(params) {
-		const id = this.refs.push(params) - 1;
+		const id = this.refs.push(params);
 
-		return ` [${params.url} ${params.title}] `;
+		return `<sup><a href="${params.url}">[${id}]</a></sup>`;
 	}
 };
