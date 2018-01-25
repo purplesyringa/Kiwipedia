@@ -21,6 +21,9 @@ Vue.component("setting", Setting);
 import SButton from "./vue_components/s-button/s-button.vue";
 Vue.component("s-button", SButton);
 
+import Loading from "./vue_components/loading/loading.vue";
+Vue.component("loading", Loading);
+
 import {route, zeroPage} from "./route.js";
 route(app);
 
