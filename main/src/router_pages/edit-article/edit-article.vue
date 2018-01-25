@@ -24,6 +24,7 @@
 
 			<s-button value="Publish" @click="publish" />
 		</div>
+		<loading v-else />
 	</div>
 </template>
 

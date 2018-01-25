@@ -23,6 +23,7 @@
 
 			<p>{{articleNode.text}}</p>
 		</div>
+		<loading v-else />
 	</div>
 </template>
 
