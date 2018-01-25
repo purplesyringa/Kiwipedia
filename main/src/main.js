@@ -18,6 +18,9 @@ var app = new Vue({
 import Setting from "./vue_components/setting/setting.vue";
 Vue.component("setting", Setting);
 
+import SButton from "./vue_components/s-button/s-button.vue";
+Vue.component("s-button", SButton);
+
 import {route, zeroPage} from "./route.js";
 route(app);
 
