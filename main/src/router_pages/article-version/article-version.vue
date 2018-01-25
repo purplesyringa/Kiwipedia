@@ -9,7 +9,7 @@
 		<div v-else-if="status == 'no-version'">
 			<h1>No version <i>{{version}}</i> of article <i>{{article}}</i></h1>
 			<p>
-				<a :href="`?/edit-article/${slug}/${article}`" @click.prevent="$router.navigate(`edit-article/${slug}/${article}`)">Want to update this article</a> or <a :href="`?/article/${slug}/${article}`" @click.prevent="$router.navigate(`article/${slug}/${article}`)">look at to latest version</a>?
+				<a :href="`?/edit-article/${slug}/${article}`" @click.prevent="$router.navigate(`edit-article/${slug}/${article}`)">Want to update this article</a> or <a :href="`?/wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">look at to latest version</a>?
 			</p>
 		</div>
 		<div v-else-if="status == 'error'">
@@ -25,7 +25,7 @@
 			<p class="origin">
 				From <b>{{hub.language}}</b>
 				<b v-if="hub.subgroup != ''"> | {{hub.subgroup}}</b><br>
-				You are viewing an outdated version. For latest version, <a :href="`?/article/${slug}/${article}`" @click.prevent="$router.navigate(`article/${slug}/${article}`)">look here</a>.
+				You are viewing an outdated version. For latest version, <a :href="`?/wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">look here</a>.
 			</p>
 
 			<p>{{articleNode.text}}</p>
