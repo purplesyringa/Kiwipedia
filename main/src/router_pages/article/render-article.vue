@@ -5,6 +5,7 @@
 <script type="text/javascript">
 	import InstaView from "instaview";
 	import Templates from "../../wiki-templates/templates.js";
+	import {toSlug} from "../../common/hub.js";
 
 	export default {
 		name: "markdown-article",
@@ -17,7 +18,7 @@
 			};
 			InstaView.conf.paths = {
 				base_href: "./",
-				articles: `?/wiki/${this.slug}/`,
+				articles: `ARTICLENAMEGOESHERE`,
 				math: "/math/", // TODO
 				images: "",
 				images_fallback: "", // TODO
@@ -41,7 +42,11 @@
 
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
 				const rendered = this.renderTemplates(replaced, renderingTemplates, renderData);
-				const html = InstaView.convert(rendered);
+				let html = InstaView.convert(rendered);
+				html = html.replace(/ARTICLENAMEGOESHERE(.*?)'/g, (all, article) => {
+					return `?/wiki/${this.slug}/${toSlug(article)}'`;
+				});
+
 				return html;
 			},
 
