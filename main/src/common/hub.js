@@ -54,6 +54,27 @@ export default class Hub {
 		return result[0];
 	}
 
+	async publishArticle(title, text) {
+		const auth = await zeroAuth.requestAuth();
+
+		const slug = toSlug(title);
+
+		await zeroDB.insertRow(
+			`merged-ZeroWikipedia/${this.address}/data/users/${auth.address}/data.json`,
+			`merged-ZeroWikipedia/${this.address}/data/users/${auth.address}/content.json`,
+			"article",
+			{
+				title,
+				text,
+				slug,
+				date_updated: Date.now(),
+				imported: ""
+			}
+		);
+
+		return slug;
+	}
+
 	static async slugToAddress(slug) {
 		const result = await zeroDB.query(`
 			SELECT *
