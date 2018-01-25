@@ -2,7 +2,13 @@
 	<div>
 		<div class="name">{{name}}</div>
 		<div class="description">{{description}}</div>
-		<input type="text" v-model="value">
+
+		<div v-if="multiline">
+			<textarea v-model="value"></textarea>
+		</div>
+		<div v-else>
+			<input type="text" v-model="value">
+		</div>
 	</div>
 </template>
 
@@ -11,7 +17,7 @@
 <script type="text/javascript">
 	export default {
 		name: "init-hub",
-		props: ["name", "description"],
+		props: ["name", "description", "multiline"],
 		data() {
 			return {
 				value: ""
