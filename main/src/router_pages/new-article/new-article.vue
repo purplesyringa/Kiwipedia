@@ -4,6 +4,22 @@
 			<h1>Error</h1>
 			<p>{{error}}</p>
 		</div>
+		<div v-else>
+			<h1>Create a new article</h1>
+
+			<setting
+				name="Title"
+				description=""
+				ref="title"
+			/>
+
+			<setting
+				name="Content"
+				description="Markdown supported"
+				ref="content"
+				:multiline="true"
+			/>
+		</div>
 	</div>
 </template>
 
