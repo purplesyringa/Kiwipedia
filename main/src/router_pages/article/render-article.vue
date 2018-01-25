@@ -138,7 +138,11 @@
 					return "\n\nNo template {{" + template + "}}\n\n";
 				}
 
-				return Templates[template].render.call(renderData, params);
+				const renderer = (template, params) => {
+					return this.renderTemplate(template, params, renderData);
+				};
+
+				return Templates[template].render.call(renderData, params, renderer);
 			},
 
 			todo() {

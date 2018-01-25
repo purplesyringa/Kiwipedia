@@ -1,4 +1,5 @@
 import "./sass/main.sass";
+import "./sass/styles.sass";
 
 import Vue from "vue/dist/vue.min.js";
 
