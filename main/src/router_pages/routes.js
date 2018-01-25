@@ -5,6 +5,7 @@ import InitHub from "./init-hub/init-hub.vue";
 import Article from "./article/article.vue";
 import NewArticle from "./new-article/new-article.vue";
 import EditArticle from "./edit-article/edit-article.vue";
+import ArticleHistory from "./article-history/article-history.vue";
 
 import * as config from "../config.js";
 import {loadAdditional} from "../common/startup.js";
@@ -74,6 +75,19 @@ export default (vue, zeroPage) => [
 		path: "edit-article/:language/:article",
 		controller: () => {
 			vue.currentView = EditArticle;
+		}
+	},
+
+	{
+		path: "article-history/:language/:subgroup/:article",
+		controller: () => {
+			vue.currentView = ArticleHistory;
+		}
+	},
+	{
+		path: "article-history/:language/:article",
+		controller: () => {
+			vue.currentView = ArticleHistory;
 		}
 	}
 ];
