@@ -138,14 +138,16 @@
 			},
 
 			renderTemplate(template, params, renderData) {
-				template = template[0].toLowerCase() + template.substr(1);
-				if(!Templates[template]) {
-					return "\n\nNo template {{" + template + "}}\n\n";
-				}
-
 				const renderer = (template, params) => {
 					return this.renderTemplate(template, params, renderData);
 				};
+
+				template = template[0].toLowerCase() + template.substr(1);
+				if(!Templates[template]) {
+					return Templates["unexisting-template"].render.call(renderData, {
+						name: template
+					}, renderer);
+				}
 
 				return Templates[template].render.call(renderData, params, renderer);
 			},
