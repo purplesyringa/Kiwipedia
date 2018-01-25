@@ -38,8 +38,8 @@ module.exports = class Router {
 						"^" +
 						route.path
 							.replace(/:([^\/]+)/g, "([^\/]*)")
-							.replace(/\*/g, '(?:.*)') +
-						"(?:\/|$)"
+							.replace(/\*/g, '(?:[^/]*)') +
+						"$"
 					)
 				);
 
