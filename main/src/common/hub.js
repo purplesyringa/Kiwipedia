@@ -41,7 +41,7 @@ export default class Hub {
 			USING (json_id)
 
 			WHERE slug = :slug
-			AND json.directory LIKE "%${this.address}/"
+			AND json.directory LIKE "${this.address}/%"
 			AND json.site = "merged-ZeroWikipedia"
 		`, {slug});
 
