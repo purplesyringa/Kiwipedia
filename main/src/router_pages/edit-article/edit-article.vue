@@ -66,6 +66,8 @@
 
 			this.article = this.$router.currentParams.article;
 			this.articleNode = await this.hub.getArticle(this.article);
+
+			this.content = this.articleNode.text;
 		},
 		methods: {
 			async publish() {
