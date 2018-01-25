@@ -58,6 +58,7 @@
 			this.slug = language + (subgroup && `/${subgroup}`);
 
 			this.article = this.$router.currentParams.article;
+			this.version = this.$router.currentParams.date;
 
 			this.hub = new Hub(this.slug);
 			try {
@@ -69,10 +70,22 @@
 			}
 
 			try {
-				this.articleNode = await this.hub.getArticle(this.article);
+				await this.hub.getArticle(this.article);
 			} catch(e) {
 				if(e instanceof NotEnoughError) {
 					this.status = "no-article";
+				} else {
+					this.error = e.message;
+					this.status = "error";
+				}
+				return;
+			}
+
+			try {
+				this.articleNode = await this.hub.getArticleVersion(this.article, this.version);
+			} catch(e) {
+				if(e instanceof NotEnoughError) {
+					this.status = "no-version";
 				} else {
 					this.error = e.message;
 					this.status = "error";
