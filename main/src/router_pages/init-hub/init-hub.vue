@@ -8,12 +8,12 @@
 		<setting
 			name="Language"
 			description="en/pl/etc."
-			ref="language"
+			v-model="language"
 		/>
 		<setting
 			name="Subgroup (optional)"
 			description="ZeroNet development/America/etc."
-			ref="subgroup"
+			v-model="subgroup"
 		/>
 
 		<s-button @click="init" value="Init" />
@@ -35,8 +35,8 @@
 		},
 		methods: {
 			async init() {
-				const language = this.$refs.language.value.trim();
-				const subgroup = this.$refs.subgroup.value.trim();
+				const language = this.language.trim();
+				const subgroup = this.subgroup.trim();
 				const address = this.$router.currentParams.address;
 
 				const slug = await init(language, subgroup, address);
