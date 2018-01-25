@@ -18,6 +18,7 @@
 		width: calc(100% - 250px - 32px - 32px)
 		height: 100%
 
+		position: relative
 		overflow: auto;
 </style>
 
