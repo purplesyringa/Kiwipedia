@@ -7,11 +7,16 @@
 			</p>
 		</div>
 		<div v-else>
-			<h1>{{header}}</h1>
+			<h1>
+				{{header}}
+				<a class="edit-icon" :href="`?/edit-article/${slug}/${article}`" @click.prevent="$router.navigate(`edit-article/${slug}/${article}`)">&#9998;</a>
+			</h1>
 			<p>{{content}}</p>
 		</div>
 	</div>
 </template>
+
+<style lang="sass" src="./article.sass"></style>
 
 <script type="text/javascript">
 	import Hub, {NotEnoughError, TooMuchError} from "../../common/hub.js";
