@@ -11,6 +11,11 @@
 			"to_table": [
 				"hubs"
 			]
+		},
+		"^merged-ZeroWikipedia/.+/data/users/.+/data.json": {
+			"to_table": [
+				"article"
+			]
 		}
 	},
 	"tables": {
