@@ -126,7 +126,7 @@
 					return "\n\nNo template {{" + template + "}}\n\n";
 				}
 
-				return Templates[template](params);
+				return Templates[template].render(params);
 			},
 
 			todo() {

@@ -1,3 +1,5 @@
-export default function render(params) {
-	return "'''rendering'''";
+export default {
+	render(params) {
+		return ` [${params.url} ${params.title}] `;
+	}
 };
