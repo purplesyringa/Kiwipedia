@@ -55,6 +55,9 @@
 				}
 				return;
 			}
+
+			this.header = article.title;
+			this.content = article.text;
 		}
 	};
 </script>
