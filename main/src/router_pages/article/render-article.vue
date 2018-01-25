@@ -107,11 +107,12 @@
 				let res = {};
 
 				params.split("|").forEach(param => {
+					param = param.trim();
 					if(param.indexOf("=") == -1) {
 						res[index++] = param;
 					} else {
-						let name = params.substr(0, param.indexOf("="));
-						let value = params.substr(param.indexOf("=") + 1);
+						let name = param.substr(0, param.indexOf("="));
+						let value = param.substr(param.indexOf("=") + 1);
 						res[name] = value;
 					}
 				});
@@ -139,8 +140,6 @@
 				const params = `(?:(?:${param})\\|)*(?:${param})`;
 
 				const templateRegexp = `^(?:${templateName})(?:\\|(?:${params})|)$`;
-
-				console.log("name|unnamed1".match(templateRegexp));
 			}
 		}
 	};
