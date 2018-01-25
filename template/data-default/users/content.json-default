@@ -1,0 +1,23 @@
+{
+ "address": "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP",
+ "files": {},
+ "ignore": ".*",
+ "inner_path": "data/users/content.json",
+ "modified": 1516867912,
+ "signs": {
+  "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP": "HGLsVdH1rbM12BKZeZwljYNrB3K1kd/Hcqczh7xo9/YZDkrAfp5K8c23BWZvHEq0JssJe6oMuGy7D+9IIHB6k40="
+ },
+ "user_contents": {
+  "cert_signers": {
+   "kaffie.bit": ["1KH5BdNnqxh2KRWMMT8wUXzUgz4vVQ4S8p"],
+   "zeroid.bit": ["1iD5ZQJMNXu43w1qLB8sfdHVKppVMduGz"]
+  },
+  "permission_rules": {
+   ".*": {
+    "files_allowed": "data.json",
+    "max_size": 50000
+   }
+  },
+  "permissions": {}
+ }
+}

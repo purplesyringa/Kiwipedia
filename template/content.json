@@ -6,29 +6,30 @@
  "cloned_from": "1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D",
  "description": "Template for ZeroWikipedia",
  "files": {
+  "content.json-default": {
+   "sha512": "b3bbdf53db44a525d1d342e8be2a5744182f32343cea6cc54e87f1379097e3dc",
+   "size": 894
+  },
+  "data-default/users/content.json-default": {
+   "sha512": "979549e5b227409987877fa302520bb712ae12d657f35d1599c47b424febb65e",
+   "size": 579
+  },
   "index.html": {
-   "sha512": "568201af08bb8373f1569e084b79248b100d4e8ac829310f3fa889d015933db4",
-   "size": 1287
+   "sha512": "defb63c0611c4ab88e3885dbd38fbbe5470008c0b287c0a486fe2bb35f6d296d",
+   "size": 1744
   },
   "js/ZeroFrame.js": {
    "sha512": "42125c7aa72496455e044e3fd940e0f05db86824c781381edb7a70f71a5f0882",
    "size": 3370
   }
  },
- "ignore": "data/.*",
- "includes": {
-  "data/users/content.json": {
-   "signers": [],
-   "signers_required": 1
-  }
- },
  "inner_path": "content.json",
  "merged_type": "ZeroWikipedia",
- "modified": 1516733403,
+ "modified": 1516868302,
  "postmessage_nonce_security": true,
  "signers_sign": "G7J1uRdtQfq05Kd30OkruKNgiEuj9akWx+hn4GwMsYJ0ZxuenCiAY1KfJFXceocO8dpn38HhFte97zgwHCgDees=",
  "signs": {
-  "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP": "GyTkPPxK8cbjWN4udKzuqfMLu6GBzVnwJONtvY0Q1AuuKn4+yVmzKoBMijksK8dVqaCUR252P7WwlSMiGyooM1E="
+  "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP": "G9e7ZLZAbwwvuHsRfXeKvV5CAA+oyZRkGYYHmzbpQhLKWAsncMtp352KE6vpHdHalLnTvpFQGpzz50UisKifV+g="
  },
  "signs_required": 1,
  "title": "ZeroWikipedia template",

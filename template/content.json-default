@@ -1,0 +1,28 @@
+{
+ "address": "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP",
+ "address_index": 93644710,
+ "background-color": "#FFF",
+ "clone_root": "template-new",
+ "cloned_from": "1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D",
+ "description": " new ZeroWikipedia hub",
+ "files": {},
+ "ignore": "data/.*",
+ "includes": {
+  "data/users/content.json": {
+   "signers": [],
+   "signers_required": 1
+  }
+ },
+ "inner_path": "content.json",
+ "merged_type": "ZeroWikipedia",
+ "modified": 1516867910,
+ "postmessage_nonce_security": true,
+ "signers_sign": "G7J1uRdtQfq05Kd30OkruKNgiEuj9akWx+hn4GwMsYJ0ZxuenCiAY1KfJFXceocO8dpn38HhFte97zgwHCgDees=",
+ "signs": {
+  "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP": "G8eZ1hx+F3/5rUZZzIrbbPB0vVZuPyw1YbEC8GkBUBTxI5yLOgbB89J1CwNbL/T3preHCts+MdFRdfMdp2dCARQ="
+ },
+ "signs_required": 1,
+ "title": "ZeroWikipedia template",
+ "translate": ["js/all.js"],
+ "zeronet_version": "0.6.1"
+}
