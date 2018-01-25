@@ -1,8 +1,6 @@
 import {zeroFS, zeroAuth, zeroDB, zeroPage} from "../route.js";
 
-export function toSlug(s) {
-	return s.replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-");
-};
+import {toSlug} from "./hub.js";
 
 async function addToIndex(language, subgroup, address) {
 	const auth = await zeroAuth.requestAuth();

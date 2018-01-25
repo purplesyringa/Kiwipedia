@@ -1,5 +1,9 @@
 import {zeroPage, zeroDB} from "../route.js";
 
+export function toSlug(s) {
+	return s.replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-");
+};
+
 class NotEnoughError extends Error {};
 class TooMuchError extends Error {};
 export {NotEnoughError, TooMuchError};
