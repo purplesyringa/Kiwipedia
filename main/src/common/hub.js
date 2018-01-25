@@ -39,13 +39,27 @@ export default class Hub {
 	}
 
 	async getArticle(slug) {
-		const history = await this.getArticleHistory(slug);
+		const res = await zeroDB.query(`
+			SELECT *
+			FROM article
 
-		if(history.length == 0) {
+			LEFT JOIN json
+			USING (json_id)
+
+			WHERE slug = :slug
+			AND json.directory LIKE "${this.address}/%"
+			AND json.site = "merged-ZeroWikipedia"
+
+			ORDER BY date_updated DESC
+
+			LIMIT 1
+		`, {slug});
+
+		if(res.length == 0) {
 			throw new NotEnoughError(`No articles found for slug ${slug} in hub ${this.slug}`);
 		}
 
-		return history[0];
+		return res[0];
 	}
 	async getArticleHistory(slug) {
 		return await zeroDB.query(`
