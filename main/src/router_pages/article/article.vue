@@ -11,6 +11,11 @@
 				{{header}}
 				<a class="edit-icon" :href="`?/edit-article/${slug}/${article}`" @click.prevent="$router.navigate(`edit-article/${slug}/${article}`)">&#9998;</a>
 			</h1>
+			<p>
+				From <b>{{hub.language}}</b>
+				<b v-if="hub.subgroup != ''"> | {{hub.subgroup}}</b>
+			</p>
+
 			<p>{{content}}</p>
 		</div>
 	</div>

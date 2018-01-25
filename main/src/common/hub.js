@@ -14,7 +14,10 @@ export default class Hub {
 	}
 
 	async init() {
-		this.address = await Hub.slugToAddress(this.slug);
+		const data = await Hub.slugToData(this.slug);
+		this.address = data.address;
+		this.language = data.language;
+		this.subgroup = data.subgroup;
 	}
 
 	async getIndex() {
@@ -75,7 +78,7 @@ export default class Hub {
 		return slug;
 	}
 
-	static async slugToAddress(slug) {
+	static async slugToData(slug) {
 		const result = await zeroDB.query(`
 			SELECT *
 			FROM hubs
@@ -90,6 +93,6 @@ export default class Hub {
 			throw new TooMuchError(`${result.length} addresses found for hub slug ${slug}`);
 		}
 
-		return result[0].address;
+		return result[0];
 	}
 };
