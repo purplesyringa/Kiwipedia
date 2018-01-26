@@ -14,6 +14,7 @@
 	import {toSlug} from "../../common/hub.js";
 	import {getHubList} from "../../common/hub-manager.js";
 	import htmlparser from "htmlparser";
+	import stringReplaceAsync from "string-replace-async";
 
 	export default {
 		name: "markdown-article",
@@ -38,21 +39,26 @@
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
 				const rendered = this.renderTemplates(replaced, renderingTemplates, renderData);
 				let html = InstaView.convert(rendered);
-				html = html.replace(/ARTICLENAMEGOESHERE(.*?)(['"])/g, (all, article, quote) => {
+
+				html = await stringReplaceAsync(html, /ARTICLENAMEGOESHERE(.*?)(['"])/g, async (all, article, quote) => {
+					let wiki;
+
 					if(article.indexOf(":") == -1) {
 						// Local link
-						return `?/wiki/${this.slug}/${toSlug(article)}${quote}`;
+						wiki = this.slug;
 					} else {
 						// Interwiki
 						article = article.replace(/^:/, "");
 
-						let wiki = article.substr(0, article.indexOf(":"));
+						wiki = article.substr(0, article.indexOf(":"));
 						article = article.substr(article.indexOf(":") + 1);
 
 						wiki = toSlug(wiki.replace("/", "MYAWESOMECONSTANT")).replace(toSlug("MYAWESOMECONSTANT"), "/");
-
-						return `?/wiki/${wiki}/${toSlug(article)}${quote}`;
 					}
+
+					article = toSlug(article);
+
+					return `?/wiki/${wiki}/${article}${quote}`;
 				});
 
 				return html;
