@@ -4,23 +4,10 @@ export default {
 	},
 
 	render(params, renderer) {
-		const formatAuthor = ref => {
-			let author = ref.last ? `${ref.first} ${ref.last}` : ref.author || "";
-			return ref.authorlink ? `[[${ref.authorlink}|${author}]]` : author;
-		};
-
 		return (
 			"<ol>" +
-				this.refs.map((ref, id) => {
-					return `
-						<li>
-							<a href="${ref.url}" name="ref_${id + 1}">${ref.title}</a>
-							${ref.last || ref.author ? ` &#8212; ${formatAuthor(ref)}` : ""}
-							${ref.description ? ` <i>${ref.description}</i>` : ""}
-							${ref.website || ""}
-							${ref.publisher ? "published by " + ref.publisher : ""}
-						</li>
-					`;
+				this.refs.map(ref => {
+					return `<li>${ref}</li>`;
 				}).join("") +
 			"</ol>"
 		);
