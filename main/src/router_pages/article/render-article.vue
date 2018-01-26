@@ -1,6 +1,12 @@
 <template>
-	<div v-html="rendered"></div>
+	<div class="rendered" v-html="rendered"></div>
 </template>
+
+<style lang="sass" scoped>
+.rendered
+	font-family: "Verdana", "Arial", sans-serif
+	font-size: 16px
+</style>
 
 <script type="text/javascript">
 	import InstaView from "instaview";
