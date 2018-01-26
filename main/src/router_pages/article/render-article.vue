@@ -86,11 +86,14 @@
 
 				const renderingTemplates = {};
 
+				// Remove <!-- --> comments
+				text = text.replace(/<!--[\s\S]*?-->/g, "");
+
 				// First, replace {{templates}} with constants
 				let replaced = text, oldReplaced;
 				do {
 					oldReplaced = replaced;
-					replaced = replaced.replace(/{{(.*?)}}/g, (all, template) => {
+					replaced = this.replace(replaced, template => {
 						const id = lastTemplateId++;
 						renderingTemplates[id] = template;
 						return templateConstant.replace("{{id}}", id);
@@ -99,13 +102,51 @@
 
 				return {renderingTemplates, replaced};
 			},
+			replace(text, callback) {
+				// First tokenize
+				let tokens = [];
+				let state = "";
+				text.split("").forEach(char => {
+					if(char == "{" && state == "{") {
+						state = "";
+						tokens.pop();
+						tokens.push("\x00");
+					} else if(char == "{" && state != "{") {
+						state = "{";
+						tokens.push(state);
+					} else if(char == "}" && state == "}") {
+						state = "";
+						tokens.pop();
+						tokens.push("\x01");
+					} else if(char == "}" && state != "}") {
+						state = "}";
+						tokens.push(state);
+					} else {
+						tokens.push(char);
+					}
+				});
+
+				tokens = tokens.join("");
+
+				return tokens.replace(/\x00([^\x00\x01]*?)\x01/g, (all, template) => {
+					return callback(template);
+				}).replace(/\x00/g, "{{").replace(/\x01/g, "}}");
+			},
 			renderTemplates(text, renderingTemplates, renderData) {
 				const templateRegexp = /MY_AWESOME_TEMPLATE_NUMBER_(.+?)_GOES_HERE_PLEASE_DONT_USE_THIS_CONSTANT_ANYWHERE_IN_ARTICLE/g;
 
 				const rendered = text.replace(templateRegexp, (all, id) => {
 					const template = renderingTemplates[id];
 
-					const {name, params} = this.parseTemplate(template);
+					let {name, params} = this.parseTemplate(template);
+
+					name = name[0].toLowerCase() + name.substr(1);
+					if(!Templates[name]) {
+						return this.renderTemplate("unexisting-template", {
+							name: name
+						}, renderData);
+					}
+
 					for(let paramName of Object.keys(params)) {
 						let paramValue = params[paramName];
 						paramValue = this.renderTemplates(paramValue, renderingTemplates, renderData);
@@ -119,10 +160,10 @@
 			},
 
 			parseTemplate(template) {
-				let match = template.match(/^([^#<>\[\]\|\{\}]+?)\|(.*)$/);
+				let match = template.match(/^([^#<>\[\]\|\{\}]+?)\|([\s\S]*)$/);
 				if(match) {
 					return {
-						name: match[1],
+						name: match[1].trim(),
 						params: this.parseTemplateParams(match[2])
 					};
 				}
@@ -130,7 +171,7 @@
 				match = template.match(/^([^#<>\[\]\|\{\}]+?)$/);
 				if(match) {
 					return {
-						name: match[1],
+						name: match[1].trim(),
 						params: {}
 					};
 				}
