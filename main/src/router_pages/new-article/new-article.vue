@@ -5,6 +5,8 @@
 			<p>{{error}}</p>
 		</div>
 		<div v-else>
+			<hub-header :hub="hub" v-if="status == 'hubLoaded'" />
+
 			<h1>Create a new article</h1>
 
 			<p v-if="isFirst">
@@ -71,6 +73,8 @@
 				this.$refs.title.disabled = true;
 				this.title = "Home";
 			}
+
+			this.status = "hubLoaded";
 		},
 		methods: {
 			async publish() {
