@@ -10,34 +10,21 @@
 	export default {
 		name: "markdown-article",
 		props: ["text", "slug"],
-		created() {
-			InstaView.conf.wiki = {
-				lang: "language",
-				interwiki: "",
-				default_thumb_width: 180
-			};
-			InstaView.conf.paths = {
-				base_href: "./",
-				articles: `ARTICLENAMEGOESHERE`,
-				math: "/math/", // TODO
-				images: "",
-				images_fallback: "", // TODO
-				magnify_icon: "" // TODO
-			};
-		},
 		data() {
 			return {
 				text: "",
 				slug: ""
 			};
 		},
-		computed: {
-			rendered() {
-				return this.render(this.text);
+		asyncComputed: {
+			async rendered() {
+				return await this.render(this.text);
 			}
 		},
 		methods: {
-			render(text) {
+			async render(text) {
+				await this.init();
+
 				const renderData = this.initTemplates();
 
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
@@ -59,6 +46,22 @@
 				});
 
 				return html;
+			},
+
+			async init() {
+				InstaView.conf.wiki = {
+					lang: "language",
+					interwiki: "",
+					default_thumb_width: 180
+				};
+				InstaView.conf.paths = {
+					base_href: "./",
+					articles: `ARTICLENAMEGOESHERE`,
+					math: "/math/", // TODO
+					images: "",
+					images_fallback: "", // TODO
+					magnify_icon: "" // TODO
+				};
 			},
 
 			initTemplates() {
