@@ -25,7 +25,13 @@ export default class Hub {
 
 	async getIndex() {
 		return await zeroDB.query(`
-			SELECT *
+			SELECT
+				article.title,
+				article.text,
+				article.slug,
+				MAX(article.date_updated) AS date_updated,
+				article.imported,
+				article.json_id
 			FROM article
 
 			LEFT JOIN json

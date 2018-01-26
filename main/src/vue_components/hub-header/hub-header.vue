@@ -12,6 +12,8 @@
 		<a :href="`?/wiki/${hub.slug}/home`" @click.prevent="$router.navigate(`wiki/${hub.slug}/home`)">Home</a>
 		<div class="bar" />
 		<a :href="`?/new-article/${hub.slug}`" @click.prevent="$router.navigate(`new-article/${hub.slug}`)">Create a new article</a>
+		<div class="bar" />
+		<a :href="`?/article-index/${hub.slug}`" @click.prevent="$router.navigate(`article-index/${hub.slug}`)">Article index</a>
 	</div>
 </template>
 

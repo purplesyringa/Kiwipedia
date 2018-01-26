@@ -24,7 +24,7 @@
 				<a class="history-icon" :href="`?/article-history/${slug}/${article}`" @click.prevent="$router.navigate(`article-history/${slug}/${article}`)">&#9776;</a>
 			</h1>
 
-			<div class="ambox ambox-delete">
+			<div class="ambox ambox-notice">
 				<b>You are viewing an outdated version.</b><br>
 				For latest version, <a :href="`?wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">look here</a>.
 			</div>

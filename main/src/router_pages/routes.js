@@ -7,6 +7,7 @@ import NewArticle from "./new-article/new-article.vue";
 import EditArticle from "./edit-article/edit-article.vue";
 import ArticleHistory from "./article-history/article-history.vue";
 import ArticleVersion from "./article-version/article-version.vue";
+import ArticleIndex from "./article-index/article-index.vue";
 
 import * as config from "../config.js";
 import {loadAdditional} from "../common/startup.js";
@@ -102,6 +103,19 @@ export default (vue, zeroPage) => [
 		path: "article-version/:language/:article/:date",
 		controller: () => {
 			vue.currentView = ArticleVersion;
+		}
+	},
+
+	{
+		path: "article-index/:language/:subgroup",
+		controller: () => {
+			vue.currentView = ArticleIndex;
+		}
+	},
+	{
+		path: "article-index/:language",
+		controller: () => {
+			vue.currentView = ArticleIndex;
 		}
 	}
 ];
