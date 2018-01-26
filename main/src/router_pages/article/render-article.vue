@@ -6,6 +6,7 @@
 	import InstaView from "instaview";
 	import Templates from "../../wiki-templates/templates.js";
 	import {toSlug} from "../../common/hub.js";
+	import {getHubList} from "../../common/hub-manager.js";
 
 	export default {
 		name: "markdown-article",
@@ -49,9 +50,13 @@
 			},
 
 			async init() {
+				let hubs = await getHubList();
+				hubs = hubs.map(hub => hub.slug);
+				hubs = hubs.join("|");
+
 				InstaView.conf.wiki = {
 					lang: "language",
-					interwiki: "",
+					interwiki: hubs,
 					default_thumb_width: 180
 				};
 				InstaView.conf.paths = {
