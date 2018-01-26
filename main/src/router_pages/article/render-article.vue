@@ -31,10 +31,10 @@
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
 				const rendered = this.renderTemplates(replaced, renderingTemplates, renderData);
 				let html = InstaView.convert(rendered);
-				html = html.replace(/ARTICLENAMEGOESHERE(.*?)'/g, (all, article) => {
+				html = html.replace(/ARTICLENAMEGOESHERE(.*?)(['"])/g, (all, article, quote) => {
 					if(article.indexOf(":") == -1) {
 						// Local link
-						return `?/wiki/${this.slug}/${toSlug(article)}'`;
+						return `?/wiki/${this.slug}/${toSlug(article)}${quote}`;
 					} else {
 						// Interwiki
 						article = article.replace(/^:/, "");
@@ -44,7 +44,7 @@
 
 						wiki = toSlug(wiki.replace("/", "MYAWESOMECONSTANT")).replace(toSlug("MYAWESOMECONSTANT"), "/");
 
-						return `?/wiki/${wiki}/${toSlug(article)}'`;
+						return `?/wiki/${wiki}/${toSlug(article)}${quote}`;
 					}
 				});
 
