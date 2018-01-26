@@ -44,7 +44,18 @@
 				const rendered = this.renderTemplates(replaced, renderingTemplates, renderData);
 				let html = InstaView.convert(rendered);
 				html = html.replace(/ARTICLENAMEGOESHERE(.*?)'/g, (all, article) => {
-					return `?/wiki/${this.slug}/${toSlug(article)}'`;
+					if(article.indexOf(":") == -1) {
+						// Local link
+						return `?/wiki/${this.slug}/${toSlug(article)}'`;
+					} else {
+						// Interwiki
+						let wiki = article.substr(0, article.indexOf(":"));
+						article = article.substr(article.indexOf(":") + 1);
+
+						wiki = toSlug(wiki.replace("/", "MYAWESOMECONSTANT")).replace(toSlug("MYAWESOMECONSTANT"), "/");
+
+						return `?/wiki/${wiki}/${toSlug(article)}'`;
+					}
 				});
 
 				return html;
