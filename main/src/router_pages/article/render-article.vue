@@ -37,6 +37,8 @@
 						return `?/wiki/${this.slug}/${toSlug(article)}'`;
 					} else {
 						// Interwiki
+						article = article.replace(/^:/, "");
+
 						let wiki = article.substr(0, article.indexOf(":"));
 						article = article.substr(article.indexOf(":") + 1);
 
