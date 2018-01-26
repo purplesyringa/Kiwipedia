@@ -7,6 +7,7 @@
 	import Templates from "../../wiki-templates/templates.js";
 	import {toSlug} from "../../common/hub.js";
 	import {getHubList} from "../../common/hub-manager.js";
+	import htmlparser from "htmlparser";
 
 	export default {
 		name: "markdown-article",
@@ -31,7 +32,7 @@
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
 				const rendered = this.renderTemplates(replaced, renderingTemplates, renderData);
 				let html = InstaView.convert(rendered);
-				html = this.convertTagTemplates(html);
+				html = this.convertTagTemplates(html, renderData);
 				html = html.replace(/ARTICLENAMEGOESHERE(.*?)(['"])/g, (all, article, quote) => {
 					if(article.indexOf(":") == -1) {
 						// Local link
@@ -216,10 +217,28 @@
 					.replace(/\n/g, "");
 			},
 
-			convertTagTemplates(html) {
-				const node = document.createElement("div");
-				node.innerHTML = html;
-				return node.innerHTML;
+			convertTagTemplates(html, renderData) {
+				const handler = new htmlparser.DefaultHandler((error, dom) => {});
+				const parser = new htmlparser.Parser(handler);
+				parser.parseComplete(`<div>${html}</div>`);
+
+				const convert = elem => {
+					if(elem.type == "text") {
+						return elem.data;
+					} else if(elem.type == "tag") {
+						let renderedInside = (elem.children || []).map(convert).join("");
+
+						let template = `<${elem.name}>`;
+						if(Templates[template]) {
+							let params = {_: renderedInside};
+							Object.assign(params, elem.attribs || {});
+							return this.renderTemplate(template, params, renderData);
+						} else {
+							return `<${elem.data}>${renderedInside}</${elem.name}>`;
+						}
+					}
+				};
+				return convert(handler.dom[0]);
 			}
 		}
 	};
