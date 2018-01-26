@@ -153,7 +153,7 @@
 					if(!Templates[name]) {
 						return `
 							<zerowikipedia-template is="unexisting-template">
-								<param name="name">${name}</param>
+								<zerowikipedia-param name="name">${name}</zerowikipedia-param>
 							</zerowikipedia-template>
 						`;
 					}
@@ -170,7 +170,7 @@
 								let paramValue = params[paramName];
 								paramValue = this.renderCurlyTemplates(paramValue, renderingTemplates, renderData);
 
-								return `<param name="${paramName}">${paramValue}</param>`;
+								return `<zerowikipedia-param name="${paramName}">${paramValue}</zerowikipedia-param>`;
 							}).join("") +
 						`</zerowikipedia-template>`
 					);
@@ -243,7 +243,7 @@
 
 					const params = {};
 					(elem.children || [])
-						.filter(child => child.type == "tag" && child.name == "param")
+						.filter(child => child.type == "tag" && child.name == "zerowikipedia-param")
 						.forEach(child => {
 							const paramName = child.attribs.name;
 							const paramValue = (child.children || []).map(convert).join("");
