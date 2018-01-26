@@ -5,14 +5,12 @@
 			<p>{{error}}</p>
 		</div>
 		<div v-else-if="articleNode">
+			<hub-header :hub="hub" />
+
 			<h1>
 				{{articleNode.title}}
 				<a class="view-icon" :href="`?/wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">&#128065;</a>
 			</h1>
-			<p class="origin">
-				From <b>{{hub.language}}</b>
-				<b v-if="hub.subgroup != ''"> | {{hub.subgroup}}</b>
-			</p>
 
 			<setting
 				name="Content"

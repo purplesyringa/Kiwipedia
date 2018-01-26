@@ -11,16 +11,13 @@
 			<p>{{error}}</p>
 		</div>
 		<div v-else-if="articleNode">
+			<hub-header :hub="hub" />
+
 			<h1>
 				{{articleNode.title}}
 				<a class="edit-icon" :href="`?/edit-article/${slug}/${article}`" @click.prevent="$router.navigate(`edit-article/${slug}/${article}`)">&#9998;</a>
 				<a class="history-icon" :href="`?/article-history/${slug}/${article}`" @click.prevent="$router.navigate(`article-history/${slug}/${article}`)">&#9776;</a>
 			</h1>
-
-			<p class="origin">
-				From <b>{{hub.language}}</b>
-				<b v-if="hub.subgroup != ''"> | {{hub.subgroup}}</b>
-			</p>
 
 			<render-article :text="articleNode.text" :slug="slug" />
 		</div>

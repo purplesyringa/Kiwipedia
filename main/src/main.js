@@ -25,6 +25,9 @@ Vue.component("s-button", SButton);
 import Loading from "./vue_components/loading/loading.vue";
 Vue.component("loading", Loading);
 
+import HubHeader from "./vue_components/hub-header/hub-header.vue";
+Vue.component("hub-header", HubHeader);
+
 import {route, zeroPage} from "./route.js";
 route(app);
 

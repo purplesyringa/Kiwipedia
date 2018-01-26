@@ -17,16 +17,16 @@
 			<p>{{error}}</p>
 		</div>
 		<div v-else-if="articleNode">
+			<hub-header :hub="hub" />
+
 			<h1>
 				{{articleNode.title}}
 				<a class="history-icon" :href="`?/article-history/${slug}/${article}`" @click.prevent="$router.navigate(`article-history/${slug}/${article}`)">&#9776;</a>
 			</h1>
 
-			<p class="origin">
-				From <b>{{hub.language}}</b>
-				<b v-if="hub.subgroup != ''"> | {{hub.subgroup}}</b><br>
-				You are viewing an outdated version. For latest version, <a :href="`?/wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">look here</a>.
-			</p>
+			<blockquote>
+				You are viewing an outdated version. For latest version, <a :href="`?wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">look here</a>.
+			</blockquote>
 
 			<render-article :text="articleNode.text" :slug="slug" />
 		</div>
