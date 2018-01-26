@@ -11,7 +11,7 @@
 <script type="text/javascript">
 	import InstaView from "instaview";
 	import Templates from "../../wiki-templates/templates.js";
-	import {toSlug} from "../../common/hub.js";
+	import Hub, {toSlug} from "../../common/hub.js";
 	import {getHubList} from "../../common/hub-manager.js";
 	import htmlparser from "htmlparser";
 	import stringReplaceAsync from "string-replace-async";
@@ -58,7 +58,20 @@
 
 					article = toSlug(article);
 
-					return `?/wiki/${wiki}/${article}${quote}`;
+					const hub = new Hub(wiki);
+					try {
+						await hub.init();
+					} catch(e) {
+						return `?/wiki/${wiki}/${article}${quote} class='interwiki-invalid'`;
+					}
+
+					try {
+						await hub.getArticle(article);
+					} catch(e) {
+						return `?/wiki/${wiki}/${article}${quote} class='interwiki-error'`;
+					}
+
+					return `?/wiki/${wiki}/${article}${quote} class='interwiki-exists'`;
 				});
 
 				return html;
