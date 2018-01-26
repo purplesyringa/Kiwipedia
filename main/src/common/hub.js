@@ -1,5 +1,5 @@
 import {zeroPage, zeroDB, zeroAuth} from "../route.js";
-import {addMergedSite} from "./startup.js";
+import startup, {addMergedSite} from "./startup.js";
 
 export function toSlug(s) {
 	return s.replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-").toLowerCase();
@@ -15,6 +15,8 @@ export default class Hub {
 	}
 
 	async init() {
+		await startup();
+
 		const data = await Hub.slugToData(this.slug);
 		this.address = data.address;
 		this.language = data.language;

@@ -29,8 +29,8 @@
 		name: "init-hub",
 		data() {
 			return {
-				language: null,
-				subgroup: null
+				language: "",
+				subgroup: ""
 			};
 		},
 		methods: {
