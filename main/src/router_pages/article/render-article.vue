@@ -31,8 +31,8 @@
 
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
 				const rendered = this.renderTemplates(replaced, renderingTemplates, renderData);
-				let html = InstaView.convert(rendered);
-				html = this.convertTagTemplates(html, renderData);
+				let html = this.convertTagTemplates(rendered, renderData);
+				html = InstaView.convert(html);
 				html = html.replace(/ARTICLENAMEGOESHERE(.*?)(['"])/g, (all, article, quote) => {
 					if(article.indexOf(":") == -1) {
 						// Local link
