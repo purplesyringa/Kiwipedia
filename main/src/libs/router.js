@@ -1,8 +1,9 @@
 module.exports = class Router {
 	constructor(zeroPage) {
 		this.routes = [];
-		this.currentRoute = [];
+		this.currentRoute = "";
 		this.currentParams = {};
+		this.currentHash = "";
 		this.zeroPage = zeroPage;
 
 		this.check("");
@@ -54,6 +55,7 @@ module.exports = class Router {
 
 				this.currentParams = routeParams;
 				this.currentRoute = route.path;
+				this.currentHash = hash;
 
 				route.controller(routeParams);
 			}
