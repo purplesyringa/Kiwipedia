@@ -25,7 +25,20 @@ import Routes from "./router_pages/routes.js";
 export const route = vue => {
 	const routes = Routes(vue, zp);
 
-	routes.forEach(route => router.router.add(route));
+	routes.forEach(route => {
+		router.router.add({
+			path: route.path,
+			controller(params) {
+				const oldView = vue.currentView;
+
+				route.controller(params);
+				if(oldView == vue.currentView) {
+					vue.currentView = null;
+					vue.$nextTick(() => vue.currentView = oldView);
+				}
+			}
+		});
+	});
 	router.router.check(router.router.getURL());
 };
 
