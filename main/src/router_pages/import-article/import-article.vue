@@ -26,18 +26,19 @@
 
 			<setting
 				name="Source"
-				description=""
+				description="Use http[s]://{language}.wikipedia.org/wiki/{article} for Wikipedia.org, zerowiki://article for original ZeroWiki and zerowiki://{address}/article for ZeroWiki clones"
 				ref="source"
 				v-model="source"
 			/>
 
-			<s-button value="Publish" @click="publish" />
+			<s-button value="Import" @click="importArticle" />
 		</div>
 	</div>
 </template>
 
 <script type="text/javascript">
 	import Hub, {NotEnoughError, TooMuchError} from "../../common/hub.js";
+	import importer from "../../common/importer.js";
 
 	export default {
 		name: "import-article",
@@ -48,7 +49,7 @@
 				error: "",
 
 				title: "",
-				content: "",
+				source: "",
 
 				isFirst: false,
 
@@ -80,12 +81,18 @@
 			this.status = "hubLoaded";
 		},
 		methods: {
-			async publish() {
-				/*
-				const slug = await this.hub.publishArticle(this.title, this.content);
+			async importArticle() {
+				let content;
+				try {
+					content = await importer(this.source);
+				} catch(e) {
+					this.$zeroPage.error(e.message);
+					return;
+				}
+
+				const slug = await this.hub.publishArticle(this.title, content);
 
 				this.$router.navigate(`wiki/${this.slug}/${slug}`);
-				*/
 			}
 		}
 	};
