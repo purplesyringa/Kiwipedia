@@ -49,6 +49,7 @@
     "htmlparser": "^1.7.7",
     "instaview": "git+https://github.com/roblabla/instaview.git",
     "node-sass": "^4.7.2",
+    "string-replace-async": "^1.2.1",
     "vue": "^2.5.13",
     "vue-async-computed": "^3.3.1",
     "vue-hot-reload-api": "^2.2.4",
