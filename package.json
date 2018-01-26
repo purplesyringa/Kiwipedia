@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "babel-plugin-transform-builtin-extend": "^1.1.2",
-    "instaview": "git+https://github.com/roblabla/instaview.git",
+    "instaview": "git+https://github.com/imachug/instaview.git",
     "node-sass": "^4.7.2",
     "vue": "^2.5.13",
     "vue-async-computed": "^3.3.1",
