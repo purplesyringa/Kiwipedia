@@ -135,6 +135,7 @@
 					return callback(template);
 				}).replace(/\x00/g, "{{").replace(/\x01/g, "}}");
 			},
+
 			renderTemplates(text, renderingTemplates, renderData) {
 				let rendered = this.renderCurlyTemplates(text, renderingTemplates, renderData);
 				rendered = this.convertTagTemplates(rendered, renderData);
@@ -150,18 +151,29 @@
 
 					name = name[0].toLowerCase() + name.substr(1);
 					if(!Templates[name]) {
-						return this.renderTemplate("unexisting-template", {
-							name: name
-						}, renderData);
+						return `
+							<zerowikipedia-template is="unexisting-template">
+								<param name="name">${name}</param>
+							</zerowikipedia-template>
+						`;
 					}
 
 					for(let paramName of Object.keys(params)) {
 						let paramValue = params[paramName];
-						paramValue = this.renderTemplates(paramValue, renderingTemplates, renderData);
+						paramValue = this.renderCurlyTemplates(paramValue, renderingTemplates, renderData);
 						params[paramName] = paramValue;
 					}
 
-					return this.renderTemplate(name, params, renderData);
+					return (
+						`<zerowikipedia-template is="${name}">` +
+							Object.keys(params).map(paramName => {
+								let paramValue = params[paramName];
+								paramValue = this.renderCurlyTemplates(paramValue, renderingTemplates, renderData);
+
+								return `<param name="${paramName}">${paramValue}</param>`;
+							}).join("") +
+						`</zerowikipedia-template>`
+					);
 				});
 
 				return rendered;
@@ -226,10 +238,30 @@
 				const parser = new htmlparser.Parser(handler);
 				parser.parseComplete(`<div>${html}</div>`);
 
+				const renderTagTemplate = elem => {
+					const template = elem.attribs.is;
+
+					const params = {};
+					(elem.children || [])
+						.filter(child => child.type == "tag" && child.name == "param")
+						.forEach(child => {
+							const paramName = child.attribs.name;
+							const paramValue = (child.children || []).map(convert).join("");
+
+							params[paramName] = paramValue;
+						});
+
+					return this.renderTemplate(template, params, renderData);
+				};
+
 				const convert = elem => {
 					if(elem.type == "text") {
 						return elem.data;
 					} else if(elem.type == "tag") {
+						if(elem.name == "zerowikipedia-template") {
+							return renderTagTemplate(elem);
+						}
+
 						let renderedInside = (elem.children || []).map(convert).join("");
 
 						let template = `<${elem.name}>`;
