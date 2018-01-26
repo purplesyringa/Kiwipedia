@@ -4,6 +4,7 @@ import HubList from "./hub-list/hub-list.vue";
 import InitHub from "./init-hub/init-hub.vue";
 import Article from "./article/article.vue";
 import NewArticle from "./new-article/new-article.vue";
+import ImportArticle from "./import-article/import-article.vue";
 import EditArticle from "./edit-article/edit-article.vue";
 import ArticleHistory from "./article-history/article-history.vue";
 import ArticleVersion from "./article-version/article-version.vue";
@@ -64,6 +65,19 @@ export default (vue, zeroPage) => [
 		path: "new-article/:language",
 		controller: () => {
 			vue.currentView = NewArticle;
+		}
+	},
+
+	{
+		path: "import-article/:language/:subgroup",
+		controller: () => {
+			vue.currentView = ImportArticle;
+		}
+	},
+	{
+		path: "import-article/:language",
+		controller: () => {
+			vue.currentView = ImportArticle;
 		}
 	},
 

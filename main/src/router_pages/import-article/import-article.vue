@@ -7,10 +7,10 @@
 		<div v-else>
 			<hub-header :hub="hub" v-if="status == 'hubLoaded'" />
 
-			<h1>Create a new article</h1>
+			<h1>Import an article</h1>
 
 			<p>
-				<a :href="`?/import-article/${slug}`" @click.prevent="$router.navigate(`import-article/${slug}`)">or import it.</a>
+				<a :href="`?/new-article/${slug}`" @click.prevent="$router.navigate(`new-article/${slug}`)">or create it from scratch.</a>
 			</p>
 
 			<p v-if="isFirst">
@@ -25,11 +25,10 @@
 			/>
 
 			<setting
-				name="Content"
-				description="Markdown supported"
-				ref="content"
-				:multiline="true"
-				v-model="content"
+				name="Source"
+				description=""
+				ref="source"
+				v-model="source"
 			/>
 
 			<s-button value="Publish" @click="publish" />
@@ -41,7 +40,7 @@
 	import Hub, {NotEnoughError, TooMuchError} from "../../common/hub.js";
 
 	export default {
-		name: "new-article",
+		name: "import-article",
 		data() {
 			return {
 				slug: "",
@@ -82,9 +81,11 @@
 		},
 		methods: {
 			async publish() {
+				/*
 				const slug = await this.hub.publishArticle(this.title, this.content);
 
 				this.$router.navigate(`wiki/${this.slug}/${slug}`);
+				*/
 			}
 		}
 	};
