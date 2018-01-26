@@ -11,10 +11,10 @@ export default {
 
 		return (
 			"<ol>" +
-				this.refs.map(ref => {
+				this.refs.map((ref, id) => {
 					return `
 						<li>
-							<a href="${ref.url}">${ref.title}</a>
+							<a href="${ref.url}" name="ref_${id + 1}">${ref.title}</a>
 							${ref.last || ref.author ? ` &#8212; ${formatAuthor(ref)}` : ""}
 							${ref.description ? ` <i>${ref.description}</i>` : ""}
 							${ref.website || ""}
