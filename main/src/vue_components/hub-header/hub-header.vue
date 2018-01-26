@@ -1,11 +1,14 @@
 <template>
-	<p class="origin">
-		From <b>{{hub.language}}</b>
-		<b v-if="hub.subgroup != ''"> | {{hub.subgroup}}</b>
-	</p>
+	<div class="hub-header">
+		<b>{{hub.language}}</b>
+		<b v-if="hub.subgroup != ''">
+			<div class="bar" />
+			{{hub.subgroup}}
+		</b>
+	</div>
 </template>
 
-<style lang="sass" src="./hub-header.sass"></style>
+<style lang="sass" src="./hub-header.sass" scoped></style>
 
 <script type="text/javascript">
 	export default {
