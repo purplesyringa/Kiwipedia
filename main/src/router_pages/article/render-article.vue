@@ -1,5 +1,5 @@
 <template>
-	<div class="rendered" v-html="rendered"></div>
+	<div class="rendered" v-html="rendered" @click="clicked"></div>
 </template>
 
 <style lang="sass" scoped>
@@ -281,6 +281,21 @@
 					}
 				};
 				return convert(handler.dom[0]);
+			},
+
+			clicked(e) {
+				let parent = e.target;
+				while(parent) {
+					if(typeof parent.tagName == "string" && parent.tagName.toLowerCase() == "a") {
+						const href = parent.getAttribute("href") || "";
+						if(href[0] == "?") {
+							this.$router.navigate(href.replace(/^\?\/?/, ""));
+						}
+						e.preventDefault();
+						break;
+					}
+					parent = parent.parentNode;
+				}
 			}
 		}
 	};
