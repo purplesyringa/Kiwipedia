@@ -211,7 +211,8 @@
 					}, renderData);
 				}
 
-				return Templates[template].render.call(renderData, params, renderer);
+				return Templates[template].render.call(renderData, params, renderer)
+					.replace(/\n/g, "");
 			},
 
 			todo() {
