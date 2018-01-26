@@ -31,8 +31,7 @@
 
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
 				const rendered = this.renderTemplates(replaced, renderingTemplates, renderData);
-				let html = this.convertTagTemplates(rendered, renderData);
-				html = InstaView.convert(html);
+				let html = InstaView.convert(rendered);
 				html = html.replace(/ARTICLENAMEGOESHERE(.*?)(['"])/g, (all, article, quote) => {
 					if(article.indexOf(":") == -1) {
 						// Local link
@@ -137,6 +136,11 @@
 				}).replace(/\x00/g, "{{").replace(/\x01/g, "}}");
 			},
 			renderTemplates(text, renderingTemplates, renderData) {
+				let rendered = this.renderCurlyTemplates(text, renderingTemplates, renderData);
+				rendered = this.convertTagTemplates(rendered, renderData);
+				return rendered;
+			},
+			renderCurlyTemplates(text, renderingTemplates, renderData) {
 				const templateRegexp = /MY_AWESOME_TEMPLATE_NUMBER_(.+?)_GOES_HERE_PLEASE_DONT_USE_THIS_CONSTANT_ANYWHERE_IN_ARTICLE/g;
 
 				const rendered = text.replace(templateRegexp, (all, id) => {
