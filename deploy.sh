@@ -38,6 +38,6 @@ echo "Loading private key"
 privatekey=$(cat "$data_path/users.json" | python -c "import json, sys; p = json.load(sys.stdin); p = p[list(p.keys())[0]]; print(p['sites']['$site_address']['privatekey'])")
 
 echo "Signing"
-$zeronet_path siteSign $site_address $privatekey
+$zeronet_path sitePublish $site_address $privatekey
 
 popd >/dev/null 2>&1
