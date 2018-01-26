@@ -15,7 +15,7 @@ export default {
 					return `
 						<li>
 							<a href="${ref.url}">${ref.title}</a>
-							${ref.last || ref.author ? ` &mdash; ${formatAuthor(ref)}` : ""}
+							${ref.last || ref.author ? ` &#8212; ${formatAuthor(ref)}` : ""}
 							${ref.description ? ` <i>${ref.description}</i>` : ""}
 							${ref.website || ""}
 							${ref.publisher ? "published by " + ref.publisher : ""}
