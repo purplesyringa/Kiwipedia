@@ -2,7 +2,9 @@
 
 <template>
 	<aside>
-		<h1>ZeroWikipedia</h1>
+		<img src="./kiwi.svg" class="logo">
+		<h1 class="title">Zero<span>Wikipedia</span></h1>
+
 		<p>
 			Wikipedia for ZeroNet with auto-import.<br>
 			Made with &#128155; by <a href="/Mail.ZeroNetwork.bit/?to=gitcenter">GitCenter</a> and community.
