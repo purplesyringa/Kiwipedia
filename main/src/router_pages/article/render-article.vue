@@ -31,6 +31,7 @@
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
 				const rendered = this.renderTemplates(replaced, renderingTemplates, renderData);
 				let html = InstaView.convert(rendered);
+				html = this.convertTagTemplates(html);
 				html = html.replace(/ARTICLENAMEGOESHERE(.*?)(['"])/g, (all, article, quote) => {
 					if(article.indexOf(":") == -1) {
 						// Local link
@@ -215,17 +216,10 @@
 					.replace(/\n/g, "");
 			},
 
-			todo() {
-				const unnamedParam = `([^\\{\\}=]+?)`;
-
-				const paramName = `([^#<>\\[\\]\\|\\{\\}=]+)`;
-				const paramValue = `([^\\{\\}]+?)`;
-				const namedParam = `(?:${paramName})=(?:${paramValue})`;
-
-				const param = `(?:${unnamedParam})|(?:${namedParam})`;
-				const params = `(?:(?:${param})\\|)*(?:${param})`;
-
-				const templateRegexp = `^(?:${templateName})(?:\\|(?:${params})|)$`;
+			convertTagTemplates(html) {
+				const node = document.createElement("div");
+				node.innerHTML = html;
+				return node.innerHTML;
 			}
 		}
 	};
