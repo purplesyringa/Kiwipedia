@@ -6,7 +6,7 @@
  "cloned_from": "1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D",
  "description": "Wikipedia for ZeroNet with auto-import",
  "files": {},
- "ignore": "data/.*|merged-.*",
+ "ignore": "data/.*|merged-.*|.*\\.db",
  "includes": {
   "data/users/content.json": {
    "signers": [],
