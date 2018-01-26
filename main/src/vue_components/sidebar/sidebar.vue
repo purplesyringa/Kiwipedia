@@ -4,6 +4,9 @@
 	<aside>
 		<img src="./kiwi.svg" class="logo">
 		<h1 class="title">Zero<span>Wikipedia</span></h1>
+		<p>
+			Logo by <a href="https://www.iconfinder.com/zapolzun">Anastasia Kuznetsova</a>
+		</p>
 
 		<p>
 			Wikipedia for ZeroNet with auto-import.<br>
