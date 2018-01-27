@@ -114,7 +114,7 @@
 			}
 
 			try {
-				this.articleNode = await this.hub.getArticle(this.article, this.imported);
+				this.articleNode = await this.hub.getArticle(this.article, "");
 			} catch(e) {
 				if(e instanceof NotEnoughError) {
 					this.status = "no-article";
