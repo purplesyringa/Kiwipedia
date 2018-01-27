@@ -33,7 +33,7 @@ function markdownToWikiText(markdown) {
 		.replace(/\[\//g, "[zero://");
 
 	return wiki;
-}
+};
 
 async function importZeroWiki(address, slug) {
 	await zeroPage.cmd("corsPermission", [address]);
@@ -67,7 +67,46 @@ async function importZeroWiki(address, slug) {
 	progress.done();
 
 	return markdown;
-}
+};
+
+async function importWikipedia(address, article) {
+	const backend = `${address}/w/api.php`;
+	const url = `${backend}?action=query&titles=${encodeURIComponent(article)}&prop=revisions&rvprop=content&rvlimit=1&format=json&formatversion=2&origin=*`;
+
+	let progress = zeroPage.progress("Querying article from wikipedia...");
+	progress.setPercent(20);
+
+	let query;
+	try {
+		query = await fetch(url, {
+			headers: new Headers({
+				"Api-User-Agent": "ZeroWikipedia/1.0",
+				"Content-Type": "application/json; charset=UTF-8"
+			})
+		});
+	} catch(e) {
+		progress.setMessage("Failed");
+		progress.setPercent(-1);
+		throw e;
+	}
+
+	progress.setMessage("Parsing result...");
+	progress.setPercent(50);
+
+	let parsed;
+	try {
+		parsed = await query.json();
+	} catch(e) {
+		progress.setMessage("Failed");
+		progress.setPercent(-1);
+		throw e;
+	}
+
+	progress.setMessage("Done");
+	progress.done();
+
+	return parsed.query.pages[0].revisions[0].content;
+};
 
 export default async function importer(source) {
 	if(source.startsWith("zerowiki://") && source.indexOf("/", "zerowiki://".length) == -1) {
@@ -79,6 +118,11 @@ export default async function importer(source) {
 		const article = source.substr(source.substr(source.indexOf("/")) + 1);
 
 		return await importZeroWiki(address, article);
+	} else if(source.indexOf("/wiki/") > -1) {
+		const address = source.substr(0, source.indexOf("/wiki/"));
+		const article = source.substr(source.indexOf("/wiki/") + 6).replace(/\/$/, "");
+
+		return await importWikipedia(address, article);
 	} else {
 		throw new Error(`Unknown source ${source}`);
 	}
