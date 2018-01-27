@@ -32,7 +32,8 @@
 			</h1>
 
 			<div class="ambox ambox-notice" v-if="origins.length > 0">
-				This article has imported version(s) you may want to look at. Choose between
+				<b>This article has imported version(s) you may want to look at.</b><br>
+				Choose between
 				<span v-for="origin in origins">
 					<a :href="`?/imported/${slug}/${toSlug(origin)}/${article}`" @click.prevent="$router.navigate(`imported/${slug}/${toSlug(origin)}/${article}`)">{{origin}}</a>
 					<span v-if="$last">, </span>
