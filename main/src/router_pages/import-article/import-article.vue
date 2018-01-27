@@ -26,7 +26,7 @@
 
 			<setting
 				name="Source"
-				description="Use http[s]://{language}.wikipedia.org/wiki/{article} for Wikipedia.org, zerowiki://article for original ZeroWiki and zerowiki://{address}/article for ZeroWiki clones"
+				description="Use http[s]://{language}.wikipedia.org/wiki/{article} for Wikipedia.org, zerowiki://{article} for original ZeroWiki and zerowiki://{address}/{article} for ZeroWiki clones"
 				ref="source"
 				v-model="source"
 			/>
