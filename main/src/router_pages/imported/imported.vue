@@ -21,14 +21,14 @@
 				This is an imported article, though it wasn't imported from <b>{{$router.currentParams.origin}}</b>. Choose between
 				<span v-for="origin in origins">
 					<a :href="`?/imported/${slug}/${toSlug(origin)}/${article}`" @click.prevent="$router.navigate(`imported/${slug}/${toSlug(origin)}/${article}`)">{{origin}}</a>
-					<span v-if="$last">, </span>
+					<span> </span>
 				</span> origins.
 			</p>
 			<p v-else-if="imported == 'localAndImported'">
 				This is both a local and an imported article, though it wasn't imported from <b>{{$router.currentParams.origin}}</b>. Choose between
 				<span v-for="origin in origins">
 					<a :href="`?/imported/${slug}/${toSlug(origin)}/${article}`" @click.prevent="$router.navigate(`imported/${slug}/${toSlug(origin)}/${article}`)">{{origin}}</a>
-					<span v-if="$last">, </span>
+					<span> </span>
 				</span> origins or <a :href="`?/wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">open a local version</a>.
 			</p>
 		</div>
@@ -50,7 +50,7 @@
 				Choose between
 				<span v-for="origin in origins">
 					<a :href="`?/imported/${slug}/${toSlug(origin)}/${article}`" @click.prevent="$router.navigate(`imported/${slug}/${toSlug(origin)}/${article}`)">{{origin}}</a>
-					<span v-if="$last">, </span>
+					<span> </span>
 				</span>.
 			</div>
 			<div class="ambox ambox-notice" v-else-if="imported == 'localAndImported'">
@@ -58,7 +58,7 @@
 				Choose between
 				<span v-for="origin in origins">
 					<a :href="`?/imported/${slug}/${toSlug(origin)}/${article}`" @click.prevent="$router.navigate(`imported/${slug}/${toSlug(origin)}/${article}`)">{{origin}}</a>
-					<span v-if="$last">, </span>
+					<span> </span>
 				</span> or <a :href="`?/wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">open a local version</a>.
 			</div>
 

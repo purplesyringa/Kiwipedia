@@ -18,7 +18,7 @@
 				This is an imported article, and there are several versions you may want to look at. Choose between
 				<span v-for="origin in origins">
 					<a :href="`?/imported/${slug}/${toSlug(origin)}/${article}`" @click.prevent="$router.navigate(`imported/${slug}/${toSlug(origin)}/${article}`)">{{origin}}</a>
-					<span v-if="$last">, </span>
+					<span> </span>
 				</span> origins.
 			</p>
 		</div>
@@ -36,7 +36,7 @@
 				Choose between
 				<span v-for="origin in origins">
 					<a :href="`?/imported/${slug}/${toSlug(origin)}/${article}`" @click.prevent="$router.navigate(`imported/${slug}/${toSlug(origin)}/${article}`)">{{origin}}</a>
-					<span v-if="$last">, </span>
+					<span> </span>
 				</span>.
 			</div>
 
