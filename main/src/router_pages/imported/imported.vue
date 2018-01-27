@@ -37,7 +37,6 @@
 
 			<h1>
 				{{articleNode.title}}
-				<a class="edit-icon" :href="`?/edit-article/${slug}/${article}`" @click.prevent="$router.navigate(`edit-article/${slug}/${article}`)">&#9998;</a>
 				<a class="history-icon" :href="`?/article-history/${slug}/${article}`" @click.prevent="$router.navigate(`article-history/${slug}/${article}`)">&#9776;</a>
 			</h1>
 
