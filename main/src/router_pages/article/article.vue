@@ -10,6 +10,18 @@
 			<h1>Error</h1>
 			<p>{{error}}</p>
 		</div>
+		<div v-else-if="imported == 'ask'">
+			<hub-header :hub="hub" />
+
+			<h1>Imported</h1>
+			<p>
+				This is an imported article, and there are several versions you may want to look at. Choose between
+				<span v-for="origin in origins">
+					<a :href="`?/imported/${slug}/${toSlug(origin)}/${article}`" @click.prevent="$router.navigate(`imported/${slug}/${toSlug(origin)}/${article}`)">{{origin}}</a>
+					<span v-if="$last">, </span>
+				</span> origins.
+			</p>
+		</div>
 		<div v-else-if="articleNode">
 			<hub-header :hub="hub" />
 
@@ -18,6 +30,14 @@
 				<a class="edit-icon" :href="`?/edit-article/${slug}/${article}`" @click.prevent="$router.navigate(`edit-article/${slug}/${article}`)">&#9998;</a>
 				<a class="history-icon" :href="`?/article-history/${slug}/${article}`" @click.prevent="$router.navigate(`article-history/${slug}/${article}`)">&#9776;</a>
 			</h1>
+
+			<div class="ambox ambox-notice" v-if="origins.length > 0">
+				This article has imported version(s) you may want to look at. Choose between
+				<span v-for="origin in origins">
+					<a :href="`?/imported/${slug}/${toSlug(origin)}/${article}`" @click.prevent="$router.navigate(`imported/${slug}/${toSlug(origin)}/${article}`)">{{origin}}</a>
+					<span v-if="$last">, </span>
+				</span>.
+			</div>
 
 			<render-article :text="articleNode.text" :slug="slug" />
 		</div>
@@ -28,7 +48,7 @@
 <style lang="sass" src="./article.sass"></style>
 
 <script type="text/javascript">
-	import Hub, {NotEnoughError, TooMuchError} from "../../common/hub.js";
+	import Hub, {toSlug, NotEnoughError, TooMuchError} from "../../common/hub.js";
 	import RenderArticle from "./render-article.vue";
 
 	export default {
@@ -39,6 +59,9 @@
 				status: "",
 				slug: "",
 				article: "",
+
+				imported: "",
+				origins: [],
 
 				hub: null,
 				articleNode: null
@@ -61,7 +84,37 @@
 			}
 
 			try {
-				this.articleNode = await this.hub.getArticle(this.article);
+				this.origins = await this.hub.getAritcleOrigins(this.article);
+			} catch(e) {
+				if(e instanceof NotEnoughError) {
+					this.status = "no-article";
+				} else {
+					this.error = e.message;
+					this.status = "error";
+				}
+				return;
+			}
+
+			if(this.origins.indexOf("") > -1 && this.origins.length > 1) {
+				// There are both imported and local versions
+				this.imported = "";
+				this.origins.splice(this.origins.indexOf(""), 1);
+			} else if(this.origins.indexOf("") == -1 && this.origins.length > 1) {
+				// There are only imported versions
+				this.imported = "ask";
+				return;
+			} else if(this.origins.length == 1 && this.origins[0] == "") {
+				// There is only local version
+				this.imported = "";
+				this.origins = [];
+			} else {
+				// There is only imported version
+				this.$router.navigate(`imported/${this.slug}/${toSlug(this.origins[0])}/${this.article}`);
+				return;
+			}
+
+			try {
+				this.articleNode = await this.hub.getArticle(this.article, this.imported);
 			} catch(e) {
 				if(e instanceof NotEnoughError) {
 					this.status = "no-article";
@@ -74,6 +127,9 @@
 		},
 		components: {
 			"render-article": RenderArticle
+		},
+		methods: {
+			toSlug
 		}
 	};
 </script>
