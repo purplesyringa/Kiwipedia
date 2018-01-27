@@ -150,6 +150,7 @@
 						state = "}";
 						tokens.push(state);
 					} else {
+						state = "";
 						tokens.push(char);
 					}
 				});
@@ -205,6 +206,17 @@
 			},
 
 			parseTemplate(template) {
+				if(template.startsWith("#if:")) {
+					let match = template.match(/^#if:(.*?)\|(\[\s\S]*)$/);
+					return {
+						name: "#if",
+						params: {
+							expr: match[1],
+							_: match[2]
+						}
+					};
+				}
+
 				let match = template.match(/^([^#<>\[\]\|\{\}]+?)\|([\s\S]*)$/);
 				if(match) {
 					return {
