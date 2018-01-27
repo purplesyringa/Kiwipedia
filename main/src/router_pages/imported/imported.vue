@@ -37,6 +37,7 @@
 
 			<h1>
 				{{articleNode.title}}
+				<a class="reimport-icon" href="" @click.prevent="reimport">&#8635;</a>
 				<a class="history-icon" :href="`?/article-history/${slug}/${article}`" @click.prevent="$router.navigate(`article-history/${slug}/${article}`)">&#9776;</a>
 			</h1>
 
@@ -72,6 +73,7 @@
 <script type="text/javascript">
 	import Hub, {toSlug, NotEnoughError, TooMuchError} from "../../common/hub.js";
 	import RenderArticle from "../article/render-article.vue";
+	import importer from "../../common/importer.js";
 
 	export default {
 		name: "imported",
@@ -84,6 +86,7 @@
 
 				imported: "",
 				origins: [],
+				source: "",
 
 				hub: null,
 				articleNode: null
@@ -132,6 +135,7 @@
 			}
 
 			origin = this.origins[index];
+			this.source = origin;
 
 			this.origins.splice(index, 1);
 
@@ -164,7 +168,20 @@
 			"render-article": RenderArticle
 		},
 		methods: {
-			toSlug
+			toSlug,
+			async reimport() {
+				let content;
+				try {
+					content = await importer(this.source);
+				} catch(e) {
+					this.$zeroPage.error(e.message);
+					return;
+				}
+
+				const slug = await this.hub.publishArticle(this.articleNode.title, content, this.source);
+
+				this.$router.navigate(`imported/${this.slug}/${toSlug(this.source)}/${slug}`);
+			}
 		}
 	};
 </script>
