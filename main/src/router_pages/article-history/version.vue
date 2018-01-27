@@ -2,6 +2,7 @@
 	<a class="version" :href="`?/article-version/${slug}/${article}/${date}`" @click.prevent="$router.navigate(`article-version/${slug}/${article}/${date}`)">
 		<div class="title">{{formatDate(date)}}</div>
 		<div class="editor">Editor: {{editor}}</div>
+		<div class="imported" v-if="imported != ''">Imported from: {{imported}}</div>
 	</a>
 </template>
 
@@ -10,7 +11,7 @@
 <script type="text/javascript">
 	export default {
 		name: "version",
-		props: ["slug", "article", "date", "editor"],
+		props: ["slug", "article", "date", "editor", "imported"],
 		data() {
 			return {};
 		},

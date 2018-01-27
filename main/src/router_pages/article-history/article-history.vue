@@ -20,6 +20,7 @@
 				:article="article"
 				:date="version.date_updated"
 				:editor="version.cert_user_id"
+				:imported="version.imported"
 			/>
 		</div>
 		<loading v-else />
