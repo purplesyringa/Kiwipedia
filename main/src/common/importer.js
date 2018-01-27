@@ -26,9 +26,10 @@ function markdownToWikiText(markdown) {
 			}
 		})
 		.replace(/_([^_]*)_/g, "<strong>$1</strong>")
-		.replace(/\[img:(.*?)\]/, (all, img) => {
+		.replace(/\[img:(.*?)\]/g, (all, img) => {
 			return `{{external media|image1=${img}}}`;
-		});
+		})
+		.replace(/\[\//g, "[zero://");
 
 	return wiki;
 }
