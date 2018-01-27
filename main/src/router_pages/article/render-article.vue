@@ -235,7 +235,7 @@
 				}
 
 				return {
-					name: "invalid template",
+					name: "invalid-template",
 					params: {
 						code: template
 					}
