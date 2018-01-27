@@ -90,7 +90,7 @@
 					return;
 				}
 
-				const slug = await this.hub.publishArticle(this.title, content);
+				const slug = await this.hub.publishArticle(this.title, content, this.source);
 
 				this.$router.navigate(`wiki/${this.slug}/${slug}`);
 			}

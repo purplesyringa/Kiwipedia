@@ -107,7 +107,7 @@ export default class Hub {
 		`, {slug});
 	}
 
-	async publishArticle(title, text) {
+	async publishArticle(title, text, imported="") {
 		const auth = await zeroAuth.requestAuth();
 
 		const slug = toSlug(title);
@@ -121,7 +121,7 @@ export default class Hub {
 				text,
 				slug,
 				date_updated: Date.now(),
-				imported: ""
+				imported: imported
 			}
 		);
 
