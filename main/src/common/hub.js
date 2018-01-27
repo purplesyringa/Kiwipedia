@@ -46,7 +46,31 @@ export default class Hub {
 		`);
 	}
 
-	async getArticle(slug) {
+	async getArticle(slug, importOrigin="") {
+		const res = await zeroDB.query(`
+			SELECT *
+			FROM article
+
+			LEFT JOIN json
+			USING (json_id)
+
+			WHERE slug = :slug
+			AND json.directory LIKE "${this.address}/%"
+			AND json.site = "merged-ZeroWikipedia"
+			AND imported = :importOrigin
+
+			ORDER BY date_updated DESC
+
+			LIMIT 1
+		`, {slug, importOrigin});
+
+		if(res.length == 0) {
+			throw new NotEnoughError(`No articles found for slug ${slug} in hub ${this.slug}`);
+		}
+
+		return res[0];
+	}
+	async getAritcleOrigins(slug) {
 		const res = await zeroDB.query(`
 			SELECT *
 			FROM article
@@ -58,16 +82,14 @@ export default class Hub {
 			AND json.directory LIKE "${this.address}/%"
 			AND json.site = "merged-ZeroWikipedia"
 
-			ORDER BY date_updated DESC
-
-			LIMIT 1
+			GROUP BY imported
 		`, {slug});
 
 		if(res.length == 0) {
 			throw new NotEnoughError(`No articles found for slug ${slug} in hub ${this.slug}`);
 		}
 
-		return res[0];
+		return res.map(row => row.imported);
 	}
 	async getArticleVersion(slug, date) {
 		const res = await zeroDB.query(`
