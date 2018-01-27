@@ -207,7 +207,8 @@
 
 			parseTemplate(template) {
 				if(template.startsWith("#if:")) {
-					let match = template.match(/^#if:(.*?)\|(\[\s\S]*)$/);
+					let match = template.match(/^#if:([\s\S]*?)\|([\s\S]*)$/);
+
 					return {
 						name: "#if",
 						params: {
@@ -233,7 +234,12 @@
 					};
 				}
 
-				return "";
+				return {
+					name: "invalid template",
+					params: {
+						code: template
+					}
+				};
 			},
 
 			parseTemplateParams(params) {
