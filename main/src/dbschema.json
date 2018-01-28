@@ -12,7 +12,7 @@
 				"hubs"
 			]
 		},
-		"^merged-Kiwipedia/.+/data/users/.+/data.json": {
+		"^merged-Kiwipedia/.+/data/users/.+/.+.json": {
 			"to_table": [
 				"article"
 			]
