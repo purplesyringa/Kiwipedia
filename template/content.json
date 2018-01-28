@@ -1,22 +1,22 @@
 {
- "address": "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP",
+ "address": "1LAdo54S3sDzKWHrv1Pp1Ncj78fL5LU8gR",
  "address_index": 93644710,
  "background-color": "#FFF",
  "clone_root": "template-new",
  "cloned_from": "1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D",
- "description": "Template for ZeroWikipedia",
+ "description": "Template for Kiwipedia",
  "files": {
   "content.json-default": {
-   "sha512": "b3bbdf53db44a525d1d342e8be2a5744182f32343cea6cc54e87f1379097e3dc",
-   "size": 894
+   "sha512": "3b12bb6d5a5e3ab1ca03c2bc915dee93fb5ff9c9b289f17791cde5b6f0c84a1d",
+   "size": 857
   },
   "data-default/users/content.json-default": {
    "sha512": "979549e5b227409987877fa302520bb712ae12d657f35d1599c47b424febb65e",
    "size": 579
   },
   "index.html": {
-   "sha512": "defb63c0611c4ab88e3885dbd38fbbe5470008c0b287c0a486fe2bb35f6d296d",
-   "size": 1744
+   "sha512": "584356a6e03397901b3625f8d9fdd7cebf4116d5da9156d16c083c63979acd9f",
+   "size": 1720
   },
   "js/ZeroFrame.js": {
    "sha512": "42125c7aa72496455e044e3fd940e0f05db86824c781381edb7a70f71a5f0882",
@@ -24,15 +24,15 @@
   }
  },
  "inner_path": "content.json",
- "merged_type": "ZeroWikipedia",
- "modified": 1516868302,
+ "merged_type": "Kiwipedia",
+ "modified": 1517123689,
  "postmessage_nonce_security": true,
- "signers_sign": "G7J1uRdtQfq05Kd30OkruKNgiEuj9akWx+hn4GwMsYJ0ZxuenCiAY1KfJFXceocO8dpn38HhFte97zgwHCgDees=",
+ "signers_sign": "G31Jp+BeGLlAtbqO1GqLh1pFxdRDJnNdhK0OL6i2O4AhHKs7E/nypC822fcCVwp7N+kNcVNL2eFve6KZPJPBlxk=",
  "signs": {
-  "1M7BAXsXhx4N4zf6qoqgHB2UNQVMSMe6KP": "G9e7ZLZAbwwvuHsRfXeKvV5CAA+oyZRkGYYHmzbpQhLKWAsncMtp352KE6vpHdHalLnTvpFQGpzz50UisKifV+g="
+  "1LAdo54S3sDzKWHrv1Pp1Ncj78fL5LU8gR": "G1BtSzdigqDLRfaqmGir1KD0e6VDCLPHxNg/8adzwlUQREodBfrYDkpc43eoXcKKnwsiMgCGCSd31f+WYSvCRr0="
  },
  "signs_required": 1,
- "title": "ZeroWikipedia template",
+ "title": "Kiwipedia template",
  "translate": ["js/all.js"],
  "zeronet_version": "0.6.1"
 }
