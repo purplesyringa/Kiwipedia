@@ -7,6 +7,7 @@ import ExternalMedia from "./external-media.js";
 import Ref from "./ref.js";
 import HashIf from "./#if.js";
 import If from "./if.js";
+import NumberOfArticles from "./numberofarticles.js";
 
 export default {
 	"cite web": CiteWeb,
@@ -17,5 +18,6 @@ export default {
 	"external media": ExternalMedia,
 	"<ref>": Ref,
 	"#if": HashIf,
-	"if": If
+	"if": If,
+	"nUMBEROFARTICLES": NumberOfArticles
 };
