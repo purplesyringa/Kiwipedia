@@ -206,15 +206,13 @@
 			},
 
 			parseTemplate(template) {
-				if(template.startsWith("#if:")) {
-					let match = template.match(/^#if:([\s\S]*?)\|([\s\S]*)$/);
+				if(template[0] == "#") {
+					let name = template.substr(0, template.indexOf(":"));
+					let params = template.substr(template.indexOf(":") + 1);
 
 					return {
-						name: "#if",
-						params: {
-							expr: match[1],
-							_: match[2]
-						}
+						name: name,
+						params: this.parseTemplateParams(params, false)
 					};
 				}
 
@@ -242,12 +240,15 @@
 				};
 			},
 
-			parseTemplateParams(params) {
+			parseTemplateParams(params, trim=true) {
 				let index = 1;
 				let res = {};
 
 				params.split("|").forEach(param => {
-					param = param.trim();
+					if(trim) {
+						param = param.trim();
+					}
+
 					if(param.indexOf("=") == -1) {
 						res[index++] = param;
 					} else {
