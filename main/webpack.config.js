@@ -6,11 +6,13 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
 	context: path.resolve(__dirname, "./src"),
-	entry: ["babel-polyfill", "./main.js"],
+	entry: {
+		main: ["babel-polyfill", "./main.js"]
+	},
 	output: {
 		path: path.resolve(__dirname, "./dist"),
 		publicPath: "./",
-		filename: "build.js"
+		filename: "[name].js"
 	},
 	module: {
 		rules: [
@@ -87,6 +89,28 @@ module.exports = {
 				from: "./data",
 				to: "./data"
 			}
-		])
+		]),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "vendor",
+			minChunks: module => {
+				return module.context.includes("node_modules");
+			}
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "core-js",
+			minChunks: module => {
+				// Thank you CommonsChunkPlugin syntax: we include
+				// instaview both here and in `instaview` chunk
+				// because CommonsChunkPlugin extracts data only
+				// from previous CommonsChunkPlugin call
+				return module.context.includes("core-js") || module.context.includes("instaview");
+			}
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "instaview",
+			minChunks: module => {
+				return module.context.includes("instaview");
+			}
+		})
 	]
 };
