@@ -135,7 +135,7 @@ export default class Hub {
 		const slug = toSlug(title);
 
 		await zeroDB.insertRow(
-			`merged-Kiwipedia/${this.address}/data/users/${auth.address}/data.json`,
+			`merged-Kiwipedia/${this.address}/data/users/${auth.address}/${slug}.json`,
 			`merged-Kiwipedia/${this.address}/data/users/${auth.address}/content.json`,
 			"article",
 			{
