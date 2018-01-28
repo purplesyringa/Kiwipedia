@@ -36,6 +36,11 @@ function markdownToWikiText(markdown) {
 };
 
 async function importZeroWiki(address, slug) {
+	const serverInfo = await zeroPage.cmd("serverInfo");
+	if(serverInfo.rev < 3230) {
+		throw new Error("Please update ZeroNet to at least rev3230 to import from ZeroWiki.");
+	}
+
 	await zeroPage.cmd("corsPermission", [address]);
 
 	let progress = zeroPage.progress("Querying article from database...");
