@@ -5,6 +5,7 @@ import UnexistingTemplate from "./unexisting-template.js";
 import InvalidTemplate from "./invalid-template.js";
 import ExternalMedia from "./external-media.js";
 import Ref from "./ref.js";
+import HashIf from "./#if.js";
 
 export default {
 	"cite web": CiteWeb,
@@ -13,5 +14,6 @@ export default {
 	"unexisting-template": UnexistingTemplate,
 	"invalid-template": InvalidTemplate,
 	"external media": ExternalMedia,
-	"<ref>": Ref
+	"<ref>": Ref,
+	"#if": HashIf
 };
