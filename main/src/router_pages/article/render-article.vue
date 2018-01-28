@@ -279,7 +279,7 @@
 			convertTagTemplates(html, renderData) {
 				const handler = new htmlparser.DefaultHandler((error, dom) => {});
 				const parser = new htmlparser.Parser(handler);
-				parser.parseComplete(`<div>${html}</div>`);
+				parser.parseComplete(`<div>\n${html}\n</div>`);
 
 				const renderTagTemplate = elem => {
 					const template = elem.attribs.is;
