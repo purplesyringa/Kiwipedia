@@ -18,7 +18,7 @@
 
 	export default {
 		name: "markdown-article",
-		props: ["text", "slug", "context"],
+		props: ["text", "slug", "article", "imported"],
 		data() {
 			return {
 				text: "",
