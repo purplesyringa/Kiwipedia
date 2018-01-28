@@ -68,7 +68,7 @@
 					}
 
 					try {
-						await hub.getArticle(article);
+						await hub.getArticleOrigins(article);
 					} catch(e) {
 						return `?/wiki/${wiki}/${article}${quote} class='interwiki-error'`;
 					}
