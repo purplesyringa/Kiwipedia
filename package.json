@@ -56,7 +56,7 @@
     "vue-hot-reload-api": "^2.2.4",
     "vue-loading-template": "^0.1.7",
     "vueify": "^9.4.1",
-    "zero-dev-lib": "^1.0.0"
+    "zero-dev-lib": "^1.0.4"
   },
   "browser": {
     "vue": "vue/dist/vue.common.js"

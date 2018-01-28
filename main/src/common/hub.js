@@ -144,7 +144,9 @@ export default class Hub {
 				slug,
 				date_updated: Date.now(),
 				imported: imported
-			}
+			},
+			null,
+			null
 		);
 
 		return slug;
