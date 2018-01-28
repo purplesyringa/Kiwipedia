@@ -3,7 +3,7 @@ export default {
 		return renderer("ambox", {
 			type: "style",
 			text: "'''Unknown template'''",
-			"text-small": `Template '''${params.name}''' was referenced, though is doesn't exist. If it looks like a correct WikiMedia template, [[:en/zerowikipedia-test:TODO templates|add it to TODO templates]].`
+			"text-small": `Template '''${params.name}''' was referenced, though is doesn't exist. If it looks like a correct WikiMedia template, [[:en/kiwipedia-test:TODO templates|add it to TODO templates]].`
 		});
 	}
 };

@@ -3,7 +3,7 @@
 <template>
 	<aside>
 		<img src="./kiwi.svg" class="logo">
-		<h1 class="title">Zero<span>Wikipedia</span></h1>
+		<h1 class="title"><span>Kiwi</span>pedia</h1>
 		<p>
 			Logo by <a href="https://www.iconfinder.com/zapolzun">Anastasia Kuznetsova</a>
 		</p>

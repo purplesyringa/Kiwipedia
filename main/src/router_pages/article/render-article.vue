@@ -178,9 +178,9 @@
 					name = name[0].toLowerCase() + name.substr(1);
 					if(!Templates[name]) {
 						return `
-							<zerowikipedia-template is="unexisting-template">
-								<zerowikipedia-param name="name">${name}</zerowikipedia-param>
-							</zerowikipedia-template>
+							<kiwipedia-template is="unexisting-template">
+								<kiwipedia-param name="name">${name}</kiwipedia-param>
+							</kiwipedia-template>
 						`;
 					}
 
@@ -191,14 +191,14 @@
 					}
 
 					return (
-						`<zerowikipedia-template is="${name}">` +
+						`<kiwipedia-template is="${name}">` +
 							Object.keys(params).map(paramName => {
 								let paramValue = params[paramName];
 								paramValue = this.renderCurlyTemplates(paramValue, renderingTemplates, renderData);
 
-								return `<zerowikipedia-param name="${paramName}">${paramValue}</zerowikipedia-param>`;
+								return `<kiwipedia-param name="${paramName}">${paramValue}</kiwipedia-param>`;
 							}).join("") +
-						`</zerowikipedia-template>`
+						`</kiwipedia-template>`
 					);
 				});
 
@@ -286,7 +286,7 @@
 
 					const params = {};
 					(elem.children || [])
-						.filter(child => child.type == "tag" && child.name == "zerowikipedia-param")
+						.filter(child => child.type == "tag" && child.name == "kiwipedia-param")
 						.forEach(child => {
 							const paramName = child.attribs.name;
 							const paramValue = (child.children || []).map(convert).join("");
@@ -301,7 +301,7 @@
 					if(elem.type == "text") {
 						return elem.data;
 					} else if(elem.type == "tag") {
-						if(elem.name == "zerowikipedia-template") {
+						if(elem.name == "kiwipedia-template") {
 							return renderTagTemplate(elem);
 						}
 

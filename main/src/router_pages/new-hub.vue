@@ -2,7 +2,7 @@
 	<div>
 		<h1>New Hub</h1>
 		<p>
-			ZeroWikipedia is creating your hub.
+			Kiwipedia is creating your hub.
 		</p>
 	</div>
 </template>

@@ -80,7 +80,7 @@ async function importWikipedia(address, article) {
 	try {
 		query = await fetch(url, {
 			headers: new Headers({
-				"Api-User-Agent": "ZeroWikipedia/1.0",
+				"Api-User-Agent": "Kiwipedia/1.0",
 				"Content-Type": "application/json; charset=UTF-8"
 			})
 		});

@@ -63,7 +63,7 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			title: "ZeroWikipedia",
+			title: "Kiwipedia",
 			template: "./index.html",
 			seo: {
 				keywords: "wikipedia",

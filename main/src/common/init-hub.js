@@ -21,12 +21,12 @@ async function addToIndex(language, subgroup, address) {
 export default async function init(language, subgroup, address) {
 	await addMergedSite(address);
 
-	const path = `merged-ZeroWikipedia/${address}/content.json`;
+	const path = `merged-Kiwipedia/${address}/content.json`;
 
 	let content = await zeroFS.readFile(path);
 	content = JSON.parse(content);
 
-	content.title = `ZeroWikipedia hub | ${language}` + (subgroup && ` | ${subgroup}`);
+	content.title = `Kiwipedia hub | ${language}` + (subgroup && ` | ${subgroup}`);
 
 	content = JSON.stringify(content, null, 4);
 	await zeroFS.writeFile(path, content);

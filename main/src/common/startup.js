@@ -9,15 +9,15 @@ export async function addMergedSite(address) {
 
 	await zeroPage.cmd("mergerSiteAdd", [address]);
 
-	await zeroFS.readFile("merged-ZeroWikipedia/" + address + "/content.json");
+	await zeroFS.readFile("merged-Kiwipedia/" + address + "/content.json");
 }
 
 
 async function startup() {
 	const siteInfo = await zeroPage.getSiteInfo();
 
-	if(siteInfo.settings.permissions.indexOf("Merger:ZeroWikipedia") == -1) {
-		await zeroPage.cmd("wrapperPermissionAdd", ["Merger:ZeroWikipedia"]);
+	if(siteInfo.settings.permissions.indexOf("Merger:Kiwipedia") == -1) {
+		await zeroPage.cmd("wrapperPermissionAdd", ["Merger:Kiwipedia"]);
 	}
 };
 export default startup;

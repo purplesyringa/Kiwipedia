@@ -40,7 +40,7 @@ export default class Hub {
 			USING (json_id)
 
 			WHERE json.directory LIKE "${this.address}/%"
-			AND json.site = "merged-ZeroWikipedia"
+			AND json.site = "merged-Kiwipedia"
 
 			GROUP BY article.slug
 		`);
@@ -56,7 +56,7 @@ export default class Hub {
 
 			WHERE slug = :slug
 			AND json.directory LIKE "${this.address}/%"
-			AND json.site = "merged-ZeroWikipedia"
+			AND json.site = "merged-Kiwipedia"
 			AND imported = :importOrigin
 
 			ORDER BY date_updated DESC
@@ -80,7 +80,7 @@ export default class Hub {
 
 			WHERE slug = :slug
 			AND json.directory LIKE "${this.address}/%"
-			AND json.site = "merged-ZeroWikipedia"
+			AND json.site = "merged-Kiwipedia"
 
 			GROUP BY imported
 		`, {slug});
@@ -101,7 +101,7 @@ export default class Hub {
 
 			WHERE slug = :slug
 			AND json.directory LIKE "${this.address}/%"
-			AND json.site = "merged-ZeroWikipedia"
+			AND json.site = "merged-Kiwipedia"
 			AND article.date_updated = :date
 
 			LIMIT 1
@@ -123,7 +123,7 @@ export default class Hub {
 
 			WHERE slug = :slug
 			AND json.directory LIKE "${this.address}/%"
-			AND json.site = "merged-ZeroWikipedia"
+			AND json.site = "merged-Kiwipedia"
 
 			ORDER BY date_updated DESC
 		`, {slug});
@@ -135,8 +135,8 @@ export default class Hub {
 		const slug = toSlug(title);
 
 		await zeroDB.insertRow(
-			`merged-ZeroWikipedia/${this.address}/data/users/${auth.address}/data.json`,
-			`merged-ZeroWikipedia/${this.address}/data/users/${auth.address}/content.json`,
+			`merged-Kiwipedia/${this.address}/data/users/${auth.address}/data.json`,
+			`merged-Kiwipedia/${this.address}/data/users/${auth.address}/content.json`,
 			"article",
 			{
 				title,

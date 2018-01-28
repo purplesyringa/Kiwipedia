@@ -1,6 +1,6 @@
 {
-	"db_name": "ZeroWikipedia",
-	"db_file": "ZeroWikipedia.db",
+	"db_name": "Kiwipedia",
+	"db_file": "Kiwipedia.db",
 	"version": 3,
 	"maps": {
 		"(^|.+/)data/users/.+/content.json": {
@@ -12,7 +12,7 @@
 				"hubs"
 			]
 		},
-		"^merged-ZeroWikipedia/.+/data/users/.+/data.json": {
+		"^merged-Kiwipedia/.+/data/users/.+/data.json": {
 			"to_table": [
 				"article"
 			]
