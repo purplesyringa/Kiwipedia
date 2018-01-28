@@ -211,7 +211,7 @@
 					let params = template.substr(template.indexOf(":") + 1);
 
 					return {
-						name: name,
+						name: name.trimLeft(),
 						params: this.parseTemplateParams(params, false)
 					};
 				}
@@ -246,15 +246,15 @@
 
 				params.split("|").forEach(param => {
 					if(trim) {
-						param = param.trim();
-					}
-
-					if(param.indexOf("=") == -1) {
-						res[index++] = param;
+						if(param.indexOf("=") == -1) {
+							res[index++] = param;
+						} else {
+							let name = param.substr(0, param.indexOf("=")).trim();
+							let value = param.substr(param.indexOf("=") + 1).trim();
+							res[name] = value;
+						}
 					} else {
-						let name = param.substr(0, param.indexOf("="));
-						let value = param.substr(param.indexOf("=") + 1);
-						res[name] = value;
+						res[index++] = param.trim();
 					}
 				});
 
