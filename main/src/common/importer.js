@@ -41,7 +41,17 @@ async function importZeroWiki(address, slug) {
 	let progress = zeroPage.progress("Querying article from database...");
 	progress.setPercent(20);
 
-	const versions = await zeroPage.cmd("fileQuery", [`cors-${address}/data/users/*/data.json`, `pages.slug=${slug}`])
+	const versions = await zeroPage.cmd("as", [address, "dbQuery", [`
+		SELECT *
+		FROM pages
+
+		WHERE slug = :slug
+
+		ORDER BY date_added DESC
+		LIMIT 1
+	`, {
+		slug
+	}]]);
 	if(versions.length == 0) {
 		progress.setPercent(-1);
 		throw new NotEnoughError(`No article with slug <b>${slug}</b> was found on ZeroWiki (<b>${address}</b>)`);
@@ -50,13 +60,7 @@ async function importZeroWiki(address, slug) {
 	progress.setMessage("Searching for latest version...");
 	progress.setPercent(60);
 
-	const latest = versions.reduce((a, b) => {
-		if(a.date_added < b.date_added) {
-			return b;
-		} else {
-			return a;
-		}
-	});
+	const latest = versions[0];
 
 	progress.setMessage("Translating Markdown into WikiText...");
 	progress.setPercent(80);
