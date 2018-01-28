@@ -3,7 +3,7 @@ export default {
 		this.refs = [];
 	},
 
-	render(params, renderer) {
+	async render(params, renderer) {
 		return (
 			"<ol>" +
 				this.refs.map(ref => {

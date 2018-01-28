@@ -1,5 +1,5 @@
 export default {
-	render(params, renderer) {
+	async render(params, renderer) {
 		const formatAuthor = () => {
 			let author = params.last ? `${params.first} ${params.last}` : params.author || "";
 			return params.authorlink ? `[[${params.authorlink}|${author}]]` : author;

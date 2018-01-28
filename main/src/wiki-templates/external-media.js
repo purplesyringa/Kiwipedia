@@ -1,5 +1,5 @@
 export default {
-	render(params, renderer) {
+	async render(params, renderer) {
 		let images = [params.image1, params.image2, params.image3];
 		images = images.filter(image => image);
 		images = images.map(image => `<img src="${image}" />`);

@@ -1,5 +1,5 @@
 export default {
-	render(params, renderer) {
+	async render(params, renderer) {
 		return `
 			<div class='ambox ${params.type ? `ambox-${params.type}` : "ambox-notice"}'>
 				${params.text || ""}

@@ -1,6 +1,6 @@
 export default {
-	render(params, renderer) {
-		return renderer(
+	async render(params, renderer) {
+		return await renderer(
 			"if",
 			{
 				1: "",

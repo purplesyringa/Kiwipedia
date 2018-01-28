@@ -1,11 +1,11 @@
 export default {
-	render(params, renderer) {
+	async render(params, renderer) {
 		if(params[1] == "") {
 			// Simple if
 
 			let settings = (params[5] || "").split(",");
 			if(params[2].indexOf("was referenced, though is doesn't exist") > -1 && settings.indexOf("-unknown") == -1) {
-				return renderer(
+				return await renderer(
 					"ambox",
 					{
 						type: "serious",
@@ -19,7 +19,7 @@ export default {
 				return params[4];
 			}
 		} else {
-			return renderer(
+			return await renderer(
 				"unexisting-template",
 				{
 					name: `if|${params[1]}`

@@ -4,7 +4,7 @@ export default {
 		this.refNames = [];
 	},
 
-	render(params, renderer) {
+	async render(params, renderer) {
 		if(!params.name && !params._) {
 			return "";
 		}
