@@ -11,9 +11,6 @@ import ArticleHistory from "./article-history/article-history.vue";
 import ArticleVersion from "./article-version/article-version.vue";
 import ArticleIndex from "./article-index/article-index.vue";
 
-import * as config from "../config.js";
-import {loadAdditional} from "../common/startup.js";
-
 export default (vue, zeroPage) => [
 	{
 		path: "",
@@ -25,9 +22,6 @@ export default (vue, zeroPage) => [
 		path: "new-hub",
 		controller: async () => {
 			vue.currentView = NewHub;
-
-			await loadAdditional();
-			zeroPage.cmd("siteClone", [config.templateAddress]);
 		}
 	},
 	{
