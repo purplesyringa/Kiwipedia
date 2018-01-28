@@ -1,5 +1,6 @@
 <template>
-	<div class="rendered" v-html="rendered" @click="clicked"></div>
+	<div v-if="rendered != ''" class="rendered" v-html="rendered" @click="clicked" />
+	<loading v-else />
 </template>
 
 <style lang="sass" scoped>
@@ -24,13 +25,12 @@
 				text: "",
 				slug: "",
 				article: "",
-				imported: ""
+				imported: "",
+				rendered: ""
 			};
 		},
-		asyncComputed: {
-			async rendered() {
-				return await this.render(this.text);
-			}
+		async mounted() {
+			this.rendered = await this.render(this.text);
 		},
 		methods: {
 			async render(text) {
