@@ -29,7 +29,7 @@
 				For latest version, <a :href="`?wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">look here</a>.
 			</div>
 
-			<render-article :text="articleNode.text" :slug="slug" />
+			<render-article :text="articleNode.text" :slug="slug" :article="article" :imported="articleNode.imported" />
 		</div>
 		<loading v-else />
 	</div>
@@ -49,6 +49,7 @@
 				status: "",
 				slug: "",
 				article: "",
+				imported: "",
 
 				hub: null,
 				articleNode: null

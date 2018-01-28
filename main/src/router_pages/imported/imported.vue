@@ -62,7 +62,7 @@
 				</span> or <a :href="`?/wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">open a local version</a>.
 			</div>
 
-			<render-article :text="articleNode.text" :slug="slug" />
+			<render-article :text="articleNode.text" :slug="slug" :article="article" :imported="source" />
 		</div>
 		<loading v-else />
 	</div>

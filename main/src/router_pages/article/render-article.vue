@@ -18,11 +18,13 @@
 
 	export default {
 		name: "markdown-article",
-		props: ["text", "slug"],
+		props: ["text", "slug", "context"],
 		data() {
 			return {
 				text: "",
-				slug: ""
+				slug: "",
+				article: "",
+				imported: ""
 			};
 		},
 		asyncComputed: {
@@ -273,7 +275,13 @@
 					}, renderData);
 				}
 
-				return Templates[template].render.call(renderData, params, renderer)
+				const context = {
+					slug: this.slug,
+					article: this.article,
+					imported: this.imported
+				};
+
+				return Templates[template].render.call(renderData, params, renderer, context)
 					.replace(/\n/g, "");
 			},
 
