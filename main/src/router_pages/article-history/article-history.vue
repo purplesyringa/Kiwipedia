@@ -56,14 +56,27 @@
 			try {
 				await this.hub.init();
 			} catch(e) {
-				this.header = "Error";
 				this.error = e.message;
 				this.status = "error";
 				return;
 			}
 
 			this.article = this.$router.currentParams.article;
-			this.articleNode = await this.hub.getArticle(this.article);
+
+			let origin;
+			try {
+				origin = (await this.hub.getArticleOrigins(this.article))[0];
+			} catch(e) {
+				if(e instanceof NotEnoughError) {
+					this.error = `No articles with slug ${article}`;
+				} else {
+					this.error = e.message;
+				}
+				this.status = "error";
+				return;
+			}
+
+			this.articleNode = await this.hub.getArticle(this.article, origin);
 		},
 		asyncComputed: {
 			async versions() {

@@ -70,7 +70,7 @@ export default class Hub {
 
 		return res[0];
 	}
-	async getAritcleOrigins(slug) {
+	async getArticleOrigins(slug) {
 		const res = await zeroDB.query(`
 			SELECT *
 			FROM article

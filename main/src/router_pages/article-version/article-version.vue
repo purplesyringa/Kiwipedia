@@ -72,7 +72,7 @@
 			}
 
 			try {
-				await this.hub.getArticle(this.article);
+				await this.hub.getArticleOrigins(this.article);
 			} catch(e) {
 				if(e instanceof NotEnoughError) {
 					this.status = "no-article";
