@@ -3,8 +3,6 @@ export default {
 		if(params[1] == "") {
 			// Simple if
 
-			console.log(params);
-
 			let settings = (params[5] || "").split(",");
 			if(params[2].indexOf("was referenced, though is doesn't exist") > -1 && settings.indexOf("-unknown") == -1) {
 				return renderer(
