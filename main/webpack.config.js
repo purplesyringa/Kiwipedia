@@ -54,8 +54,15 @@ module.exports = {
 				exclude: /node_modules/
 			},
 			{
-				test: /\.(gif|jpe?g|svg|png)$/,
+				test: /\.(gif|jpe?g|png)$/,
 				loader: "file-loader"
+			},
+			{
+				test: /\.svg$/,
+				loader: "url-loader",
+				options: {
+					mimetype: "image/svg+xml"
+				}
 			},
 			{
 				test: /\.(ttf|otf|eot|woff2?)$/,
