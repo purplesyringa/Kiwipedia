@@ -25,11 +25,11 @@
  },
  "inner_path": "content.json",
  "merged_type": "Kiwipedia",
- "modified": 1517123689,
+ "modified": 1517142326,
  "postmessage_nonce_security": true,
  "signers_sign": "G31Jp+BeGLlAtbqO1GqLh1pFxdRDJnNdhK0OL6i2O4AhHKs7E/nypC822fcCVwp7N+kNcVNL2eFve6KZPJPBlxk=",
  "signs": {
-  "1LAdo54S3sDzKWHrv1Pp1Ncj78fL5LU8gR": "G1BtSzdigqDLRfaqmGir1KD0e6VDCLPHxNg/8adzwlUQREodBfrYDkpc43eoXcKKnwsiMgCGCSd31f+WYSvCRr0="
+  "1LAdo54S3sDzKWHrv1Pp1Ncj78fL5LU8gR": "HCNgW+7fh3/DozMw9ZGmcfYSFRX+bYra4KjK55Z7I27Kfq4eGopMTWcxU8q285I9N0YSuzQMPM2P6XO2lctZWks="
  },
  "signs_required": 1,
  "title": "Kiwipedia template",
