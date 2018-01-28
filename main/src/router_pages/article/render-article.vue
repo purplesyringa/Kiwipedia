@@ -39,7 +39,7 @@
 				const renderData = this.initTemplates();
 
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
-				const rendered = this.renderTemplates(replaced, renderingTemplates, renderData);
+				const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData);
 				let html = InstaView.convert(rendered);
 
 				html = await stringReplaceAsync(html, /ARTICLENAMEGOESHERE(.*?)(['"])/g, async (all, article, quote) => {
@@ -164,9 +164,9 @@
 				}).replace(/\x00/g, "{{").replace(/\x01/g, "}}");
 			},
 
-			renderTemplates(text, renderingTemplates, renderData) {
+			async renderTemplates(text, renderingTemplates, renderData) {
 				let rendered = this.renderCurlyTemplates(text, renderingTemplates, renderData);
-				rendered = this.convertTagTemplates(rendered, renderData);
+				rendered = await this.convertTagTemplates(rendered, renderData);
 				return rendered;
 			},
 			renderCurlyTemplates(text, renderingTemplates, renderData) {
@@ -263,14 +263,14 @@
 				return res;
 			},
 
-			renderTemplate(template, params, renderData) {
-				const renderer = (template, params) => {
-					return this.renderTemplate(template, params, renderData);
+			async renderTemplate(template, params, renderData) {
+				const renderer = async (template, params) => {
+					return await this.renderTemplate(template, params, renderData);
 				};
 
 				template = template[0].toLowerCase() + template.substr(1);
 				if(!Templates[template]) {
-					return this.renderTemplate("unexisting-template", {
+					return await this.renderTemplate("unexisting-template", {
 						name: template
 					}, renderData);
 				}
@@ -281,52 +281,53 @@
 					imported: this.imported
 				};
 
-				return Templates[template].render.call(renderData, params, renderer, context)
+				return (await Templates[template].render.call(renderData, params, renderer, context))
 					.replace(/\n/g, "");
 			},
 
-			convertTagTemplates(html, renderData) {
+			async convertTagTemplates(html, renderData) {
 				const handler = new htmlparser.DefaultHandler((error, dom) => {});
 				const parser = new htmlparser.Parser(handler);
 				parser.parseComplete(`<div>\n${html}\n</div>`);
 
-				const renderTagTemplate = elem => {
+				const renderTagTemplate = async elem => {
 					const template = elem.attribs.is;
 
 					const params = {};
-					(elem.children || [])
-						.filter(child => child.type == "tag" && child.name == "kiwipedia-param")
-						.forEach(child => {
-							const paramName = child.attribs.name;
-							const paramValue = (child.children || []).map(convert).join("");
+					const children = (elem.children || [])
+						.filter(child => child.type == "tag" && child.name == "kiwipedia-param");
 
-							params[paramName] = paramValue;
-						});
+					for(const child of children) {
+						const paramName = child.attribs.name;
+						const paramValue = (await Promise.all((child.children || []).map(convert))).join("");
 
-					return this.renderTemplate(template, params, renderData);
+						params[paramName] = paramValue;
+					}
+
+					return await this.renderTemplate(template, params, renderData);
 				};
 
-				const convert = elem => {
+				const convert = async elem => {
 					if(elem.type == "text") {
 						return elem.data;
 					} else if(elem.type == "tag") {
 						if(elem.name == "kiwipedia-template") {
-							return renderTagTemplate(elem);
+							return await renderTagTemplate(elem);
 						}
 
-						let renderedInside = (elem.children || []).map(convert).join("");
+						let renderedInside = (await Promise.all((elem.children || []).map(convert))).join("");
 
 						let template = `<${elem.name}>`;
 						if(Templates[template]) {
 							let params = {_: renderedInside};
 							Object.assign(params, elem.attribs || {});
-							return this.renderTemplate(template, params, renderData);
+							return await this.renderTemplate(template, params, renderData);
 						} else {
 							return `<${elem.data}>${renderedInside}</${elem.name}>`;
 						}
 					}
 				};
-				return convert(handler.dom[0]);
+				return await convert(handler.dom[0]);
 			},
 
 			clicked(e) {
