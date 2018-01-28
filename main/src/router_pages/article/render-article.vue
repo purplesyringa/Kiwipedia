@@ -268,7 +268,7 @@
 
 				template = template[0].toLowerCase() + template.substr(1);
 				if(!Templates[template]) {
-					return renderTemplate("unexisting-template", {
+					return this.renderTemplate("unexisting-template", {
 						name: template
 					}, renderData);
 				}
