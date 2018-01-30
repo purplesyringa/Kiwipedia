@@ -26,7 +26,7 @@
 
 			<div class="ambox ambox-notice">
 				<b>You are viewing an outdated version.</b><br>
-				For latest version, <a :href="`?wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">look here</a>.
+				For the latest version, <a :href="`?wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">look here</a>.
 			</div>
 
 			<render-article :text="articleNode.text" :slug="slug" :article="article" :imported="articleNode.imported" />

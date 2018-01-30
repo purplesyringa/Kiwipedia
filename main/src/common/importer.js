@@ -62,7 +62,7 @@ async function importZeroWiki(address, slug) {
 		throw new NotEnoughError(`No article with slug <b>${slug}</b> was found on ZeroWiki (<b>${address}</b>)`);
 	}
 
-	progress.setMessage("Searching for latest version...");
+	progress.setMessage("Searching for the latest version...");
 	progress.setPercent(60);
 
 	const latest = versions[0];
