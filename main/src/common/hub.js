@@ -48,15 +48,22 @@ export default class Hub {
 
 	async getArticle(slug, importOrigin="") {
 		const res = await zeroDB.query(`
-			SELECT *
+			SELECT
+				article.*,
+				json_content.cert_user_id
 			FROM article
 
-			LEFT JOIN json
-			USING (json_id)
+			LEFT JOIN json USING (json_id)
+
+			LEFT JOIN json AS json_content ON (
+				json.directory = json_content.directory
+				AND json.site = json_content.site
+				AND json_content.file_name = "content.json"
+			)
 
 			WHERE slug = :slug
-			AND json.directory LIKE "${this.address}/%"
-			AND json.site = "merged-Kiwipedia"
+			AND json_content.directory LIKE "${this.address}/%"
+			AND json_content.site = "merged-Kiwipedia"
 			AND imported = :importOrigin
 
 			ORDER BY date_updated DESC
@@ -72,15 +79,22 @@ export default class Hub {
 	}
 	async getArticleOrigins(slug) {
 		const res = await zeroDB.query(`
-			SELECT *
+			SELECT
+				article.*,
+				json_content.cert_user_id
 			FROM article
 
-			LEFT JOIN json
-			USING (json_id)
+			LEFT JOIN json USING (json_id)
+
+			LEFT JOIN json AS json_content ON (
+				json.directory = json_content.directory
+				AND json.site = json_content.site
+				AND json_content.file_name = "content.json"
+			)
 
 			WHERE slug = :slug
-			AND json.directory LIKE "${this.address}/%"
-			AND json.site = "merged-Kiwipedia"
+			AND json_content.directory LIKE "${this.address}/%"
+			AND json_content.site = "merged-Kiwipedia"
 
 			GROUP BY imported
 		`, {slug});
@@ -93,15 +107,22 @@ export default class Hub {
 	}
 	async getArticleVersion(slug, date) {
 		const res = await zeroDB.query(`
-			SELECT *
+			SELECT
+				article.*,
+				json_content.cert_user_id
 			FROM article
 
-			LEFT JOIN json
-			USING (json_id)
+			LEFT JOIN json USING (json_id)
+
+			LEFT JOIN json AS json_content ON (
+				json.directory = json_content.directory
+				AND json.site = json_content.site
+				AND json_content.file_name = "content.json"
+			)
 
 			WHERE slug = :slug
-			AND json.directory LIKE "${this.address}/%"
-			AND json.site = "merged-Kiwipedia"
+			AND json_content.directory LIKE "${this.address}/%"
+			AND json_content.site = "merged-Kiwipedia"
 			AND article.date_updated = :date
 
 			LIMIT 1
@@ -115,15 +136,22 @@ export default class Hub {
 	}
 	async getArticleHistory(slug) {
 		return await zeroDB.query(`
-			SELECT *
+			SELECT
+				article.*,
+				json_content.cert_user_id
 			FROM article
 
-			LEFT JOIN json
-			USING (json_id)
+			LEFT JOIN json USING (json_id)
+
+			LEFT JOIN json AS json_content ON (
+				json.directory = json_content.directory
+				AND json.site = json_content.site
+				AND json_content.file_name = "content.json"
+			)
 
 			WHERE slug = :slug
-			AND json.directory LIKE "${this.address}/%"
-			AND json.site = "merged-Kiwipedia"
+			AND json_content.directory LIKE "${this.address}/%"
+			AND json_content.site = "merged-Kiwipedia"
 
 			ORDER BY date_updated DESC
 		`, {slug});
