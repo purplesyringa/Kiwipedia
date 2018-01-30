@@ -3,9 +3,8 @@
 	"db_file": "Kiwipedia.db",
 	"version": 3,
 	"maps": {
-		"(^|.+/)data/users/.+/content.json": {
-			"to_json_table": ["cert_user_id"],
-			"file_name": "data.json"
+		".*data/users/.+/content.json": {
+			"to_json_table": ["cert_user_id"]
 		},
 		"^data/users/.+/data.json": {
 			"to_table": [
