@@ -2,8 +2,10 @@
 
 <template>
 	<aside>
-		<img src="./kiwi.svg" class="logo">
-		<h1 class="title"><span>Kiwi</span>pedia</h1>
+		<a href="?/" @click.prevent="$router.navigate('')" class="logo-container">
+			<img src="./kiwi.svg" class="logo">
+			<h1 class="title"><span>Kiwi</span>pedia</h1>
+		</a>
 		<p>
 			Logo by <a href="https://www.iconfinder.com/zapolzun">Anastasia Kuznetsova</a>
 		</p>
