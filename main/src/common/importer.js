@@ -111,10 +111,16 @@ async function importWikipedia(address, article) {
 		throw e;
 	}
 
+	const page = parsed.query.pages[0];
+	if(page.missing) {
+		progress.setPercent(-1);
+		throw new NotEnoughError(`No article <b>${article}</b> was found on MediaWiki (<b>${address}</b>)`);
+	}
+
 	progress.setMessage("Done");
 	progress.done();
 
-	return parsed.query.pages[0].revisions[0].content;
+	return page.revisions[0].content;
 };
 
 export default async function importer(source) {
