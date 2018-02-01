@@ -7,9 +7,23 @@ export async function addMergedSite(address) {
 		return;
 	}
 
-	await zeroPage.cmd("mergerSiteAdd", [address]);
+	await new Promise((resolve, reject) => {
+		// Wait for some file to download
+		let handler = siteInfo => {
+			if(siteInfo.params.address != address) {
+				return;
+			}
 
-	await zeroFS.readFile("merged-Kiwipedia/" + address + "/content.json");
+			let event = siteInfo.params.event;
+			if(event[0] == "file_done") {
+				zeroPage.off("setSiteInfo", handler);
+				resolve(true);
+			}
+		};
+		zeroPage.on("setSiteInfo", handler);
+
+		zeroPage.cmd("mergerSiteAdd", [address]);
+	});
 }
 
 
