@@ -82,6 +82,11 @@
 		},
 		methods: {
 			async publish() {
+				if(!this.title) {
+					this.$zeroPage.error("Please fill title");
+					return;
+				}
+
 				const slug = await this.hub.publishArticle(this.title, this.content);
 
 				this.$router.navigate(`wiki/${this.slug}/${slug}`);
