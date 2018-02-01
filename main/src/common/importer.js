@@ -70,12 +70,26 @@ async function importZeroWiki(address, slug) {
 	progress.setMessage("Translating Markdown into WikiText...");
 	progress.setPercent(80);
 
-	const markdown = markdownToWikiText(latest.body);
+	let markdown = latest.body;
+
+	// Move #... rows to title
+	let title = "";
+	let rows = markdown.split("\n");
+	let rowIndex = rows.findIndex(row => row.startsWith("#") && !row.startsWith("##"));
+	if(rowIndex != -1) {
+		title = rows[rowIndex].replace(/^#|#$/, "").trim();
+		markdown = rows.filter((currentRow, i) => i != rowIndex).join("\n").trimLeft();
+	}
+
+	const wikitext = markdownToWikiText(markdown);
 
 	progress.setMessage("Done");
 	progress.done();
 
-	return markdown;
+	return {
+		title: title,
+		content: wikitext
+	};
 };
 
 async function importWikipedia(address, article) {
@@ -120,7 +134,10 @@ async function importWikipedia(address, article) {
 	progress.setMessage("Done");
 	progress.done();
 
-	return page.revisions[0].content;
+	return {
+		title: page.revisions[0].title,
+		content: page.revisions[0].content
+	};
 };
 
 export default async function importer(source) {

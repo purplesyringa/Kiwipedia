@@ -82,15 +82,24 @@
 		},
 		methods: {
 			async importArticle() {
-				let content;
+				let content, title;
 				try {
-					content = await importer(this.source);
+					const res = await importer(this.source);
+					content = res.content;
+					title = res.title;
 				} catch(e) {
 					this.$zeroPage.error(e.message);
 					return;
 				}
 
-				const slug = await this.hub.publishArticle(this.title, content, this.source);
+				title = this.title || title;
+
+				if(!title) {
+					this.$zeroPage.error("Please fill title");
+					return;
+				}
+
+				const slug = await this.hub.publishArticle(title, content, this.source);
 
 				this.$router.navigate(`wiki/${this.slug}/${slug}`);
 			}
