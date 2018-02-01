@@ -3,7 +3,9 @@
 		<div v-if="status == 'no-article'">
 			<h1>No article named <i>{{article}}</i></h1>
 			<p>
-				<a :href="'?/new-article/' + slug" @click.prevent="$router.navigate('new-article/' + slug)">Want to create one?</a>
+				<a :href="'?/new-article/' + slug" @click.prevent="$router.navigate('new-article/' + slug)">Create this article</a>
+				or
+				<a :href="'?/import-article/' + slug" @click.prevent="$router.navigate('import-article/' + slug)">import it</a>.
 			</p>
 		</div>
 		<div v-else-if="status == 'no-version'">
