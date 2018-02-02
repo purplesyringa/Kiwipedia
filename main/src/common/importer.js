@@ -135,7 +135,7 @@ async function importWikipedia(address, article) {
 	progress.done();
 
 	return {
-		title: page.revisions[0].title,
+		title: page.title,
 		content: page.revisions[0].content
 	};
 };
