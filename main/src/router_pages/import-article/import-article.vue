@@ -18,17 +18,17 @@
 			</p>
 
 			<setting
-				name="Source"
-				description="Use http[s]://{language}.wikipedia.org/wiki/{article} for Wikipedia.org, zerowiki://{article} for original ZeroWiki and zerowiki://{address}/{article} for ZeroWiki clones"
-				ref="source"
-				v-model="source"
-			/>
-
-			<setting
 				name="Title"
 				description="Leave it empty to use title from article source"
 				ref="title"
 				v-model="title"
+			/>
+
+			<setting
+				name="Source"
+				description="Use http[s]://{language}.wikipedia.org/wiki/{article} for Wikipedia.org, zerowiki://{article} for original ZeroWiki and zerowiki://{address}/{article} for ZeroWiki clones"
+				ref="source"
+				v-model="source"
 			/>
 
 			<s-button value="Import" @click="importArticle" />
