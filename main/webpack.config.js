@@ -135,9 +135,53 @@ module.exports = {
 			}
 		}),
 		new webpack.optimize.CommonsChunkPlugin({
-			name: "katex",
+			name: "katex1",
 			minChunks: module => {
 				return module.context.includes("katex");
+			}
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "katex2",
+			minChunks: module => {
+				// Move half of KaTeX to separate bundle
+				const name = module.resource.split(/\\|\//).slice(-1)[0];
+				return [
+					"buildHTML.js",
+					"buildCommon.js",
+					"delimiter.js",
+					"domTree.js",
+					"array.js",
+					"macros.js",
+					"Options.js",
+					"Lexer.js",
+					"functions.js",
+					"genfrac.js",
+					"stretchy.js",
+					"sqrt.js",
+					"buildMathML.js",
+					"unicodeSymbols.js",
+					"Parser.js",
+					"symbols.js",
+					"fontMetrics.js",
+					"fontMetricsData.js",
+					"delimsizing.js",
+					"op.js"
+				].indexOf(name) > -1;
+			}
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "katex3",
+			minChunks: module => {
+				// Move half of KaTeX to separate bundle
+				const name = module.resource.split(/\\|\//).slice(-1)[0];
+				return [
+					"Parser.js",
+					"symbols.js",
+					"fontMetrics.js",
+					"fontMetricsData.js",
+					"delimsizing.js",
+					"op.js"
+				].indexOf(name) > -1;
 			}
 		})
 	]
