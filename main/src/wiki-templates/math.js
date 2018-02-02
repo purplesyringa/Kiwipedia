@@ -3,7 +3,7 @@ import katex from "katex/katex.js";
 export default {
 	async render(params, renderer) {
 		try {
-			return `<div class="formula">${katex.renderToString(params._)}</div>`;
+			return `<span class="math">${katex.renderToString(params._)}</span>`;
 		} catch(e) {
 			if(e instanceof katex.ParseError) {
 				return await renderer(
