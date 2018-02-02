@@ -14,7 +14,7 @@
 
 			<setting
 				name="Content"
-				description="Markdown supported"
+				description="Wikitext supported"
 				ref="content"
 				:multiline="true"
 				v-model="content"
