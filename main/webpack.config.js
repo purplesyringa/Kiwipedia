@@ -110,13 +110,19 @@ module.exports = {
 				// instaview both here and in `instaview` chunk
 				// because CommonsChunkPlugin extracts data only
 				// from previous CommonsChunkPlugin call
-				return module.context.includes("core-js") || module.context.includes("instaview");
+				return module.context.includes("core-js") || module.context.includes("instaview") || module.context.includes("katex");
 			}
 		}),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: "instaview",
 			minChunks: module => {
-				return module.context.includes("instaview");
+				return module.context.includes("instaview") || module.context.includes("katex");
+			}
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "katex",
+			minChunks: module => {
+				return module.context.includes("katex");
 			}
 		})
 	]
