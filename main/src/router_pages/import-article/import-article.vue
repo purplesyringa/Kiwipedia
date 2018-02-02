@@ -24,6 +24,11 @@
 				v-model="title"
 			/>
 
+			<s-button value="Import from Wikipedia" @click="importWikipedia" />
+			<s-button value="Import from ZeroWiki" @click="importZeroWiki" />
+
+			<p>Or</p>
+
 			<setting
 				name="Source"
 				description="Use http[s]://{language}.wikipedia.org/wiki/{article} for Wikipedia.org, zerowiki://{article} for original ZeroWiki and zerowiki://{address}/{article} for ZeroWiki clones"
@@ -37,7 +42,7 @@
 </template>
 
 <script type="text/javascript">
-	import Hub, {NotEnoughError, TooMuchError} from "../../common/hub.js";
+	import Hub, {NotEnoughError, TooMuchError, toSlug} from "../../common/hub.js";
 	import importer from "../../common/importer.js";
 
 	export default {
@@ -102,6 +107,27 @@
 				const slug = await this.hub.publishArticle(title, content, this.source);
 
 				this.$router.navigate(`wiki/${this.slug}/${slug}`);
+			},
+			async importWikipedia() {
+				if(!this.title) {
+					this.$zeroPage.error("Please fill title");
+					return;
+				}
+
+				const language = this.slug.split("/")[0];
+				this.source = `https://${language}.wikipedia.org/wiki/${this.title}`;
+
+				await this.importArticle();
+			},
+			async importZeroWiki() {
+				if(!this.title) {
+					this.$zeroPage.error("Please fill title");
+					return;
+				}
+
+				this.source = `zerowiki://${toSlug(this.title)}`;
+
+				await this.importArticle();
 			}
 		}
 	};
