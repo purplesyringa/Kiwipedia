@@ -54,6 +54,21 @@ module.exports = {
 				exclude: /node_modules/
 			},
 			{
+				test: /\.js$/,
+				use: [
+					{
+						loader: "babel-loader",
+						options: {
+							presets: ["env", "flow"],
+							plugins: [
+								"transform-class-properties"
+							]
+						}
+					}
+				],
+				include: /node_modules.*katex/
+			},
+			{
 				test: /\.(gif|jpe?g|png)$/,
 				loader: "file-loader"
 			},

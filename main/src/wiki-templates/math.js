@@ -1,4 +1,4 @@
-import katex from "katex";
+import katex from "katex/katex.js";
 
 export default {
 	async render(params, renderer) {
