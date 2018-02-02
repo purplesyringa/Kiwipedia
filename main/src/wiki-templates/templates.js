@@ -8,6 +8,7 @@ import Ref from "./ref.js";
 import HashIf from "./#if.js";
 import If from "./if.js";
 import NumberOfArticles from "./numberofarticles.js";
+import Math_ from "./math.js";
 
 export default {
 	"cite web": CiteWeb,
@@ -19,5 +20,6 @@ export default {
 	"<ref>": Ref,
 	"#if": HashIf,
 	"if": If,
-	"nUMBEROFARTICLES": NumberOfArticles
+	"nUMBEROFARTICLES": NumberOfArticles,
+	"<math>": Math_
 };

@@ -16,6 +16,7 @@
 	import {getHubList} from "../../common/hub-manager.js";
 	import htmlparser from "htmlparser";
 	import stringReplaceAsync from "string-replace-async";
+	import KaTeX from "katex";
 
 	export default {
 		name: "markdown-article",
