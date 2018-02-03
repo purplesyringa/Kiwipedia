@@ -239,7 +239,7 @@
 
 			async renderTemplates(text, renderingTemplates, renderData) {
 				let rendered = this.renderCurlyTemplates(text, renderingTemplates, renderData);
-				rendered = await this.convertTagTemplates(rendered, renderData);
+				rendered = await this.convertTagTemplates(rendered, renderData, renderingTemplates);
 				return rendered;
 			},
 			renderCurlyTemplates(text, renderingTemplates, renderData) {
@@ -255,6 +255,7 @@
 						return `
 							<kiwipedia-template is="unexisting-template">
 								<kiwipedia-param name="name">${name}</kiwipedia-param>
+								<kiwipedia-original value="${util.base64encode(template)}">
 							</kiwipedia-template>
 						`;
 					}
@@ -270,8 +271,10 @@
 							Object.keys(params).map(paramName => {
 								let paramValue = params[paramName];
 								return `<kiwipedia-param name="${paramName}">${paramValue}</kiwipedia-param>`;
-							}).join("") +
-						`</kiwipedia-template>`
+							}).join("") + `
+
+							<kiwipedia-original value="${util.base64encode(template)}" />
+						</kiwipedia-template>`
 					);
 				});
 
@@ -380,10 +383,47 @@
 				return rendered;
 			},
 
-			async convertTagTemplates(html, renderData) {
+			expandOriginal(text, renderingTemplates) {
+				const templateRegexp = /MY_AWESOME_TEMPLATE_NUMBER_(.+?)_GOES_HERE_PLEASE_DONT_USE_THIS_CONSTANT_ANYWHERE_IN_ARTICLE/g;
+
+				return text.replace(templateRegexp, (all, id) => {
+					const template = renderingTemplates[id];
+					return `{{${this.expandOriginal(template, renderingTemplates)}}}`;
+				});
+			},
+
+			async convertTagTemplates(html, renderData, renderingTemplates) {
 				const handler = new htmlparser.DefaultHandler((error, dom) => {});
 				const parser = new htmlparser.Parser(handler);
 				parser.parseComplete(`<div>\n${html}\n</div>`);
+
+				const renderOriginal = (elem, skipThisOne) => {
+					if(elem.type == "text") {
+						return elem.data;
+					} else if(elem.type == "tag") {
+						if(Templates[`<${elem.name}>`]) {
+							const renderedInside = elem.children.map(child => renderOriginal(child)).join("");
+
+							if(skipThisOne) {
+								return renderedInside;
+							} else {
+								return `<${elem.data}>${renderedInside}</${elem.name}>`;
+							}
+						} else if(elem.name != "kiwipedia-template") {
+							return elem.children.map(child => renderOriginal(child)).join("");
+						}
+
+						let original = (elem.children || [])
+							.find(child => child.type == "tag" && child.name == "kiwipedia-original");
+						if(original) {
+							original = this.expandOriginal(util.base64decode(original.attribs.value), renderingTemplates);
+						} else {
+							original = "";
+						}
+
+						return `{{${original}}}`;
+					}
+				};
 
 				const renderTagTemplate = async elem => {
 					const template = elem.attribs.is;
@@ -392,12 +432,22 @@
 					const children = (elem.children || [])
 						.filter(child => child.type == "tag" && child.name == "kiwipedia-param");
 
+					let original = (elem.children || [])
+						.find(child => child.type == "tag" && child.name == "kiwipedia-original");
+					if(original) {
+						original = this.expandOriginal(util.base64decode(original.attribs.value), renderingTemplates);
+					} else {
+						original = "";
+					}
+
 					for(const child of children) {
 						const paramName = child.attribs.name;
 						const paramValue = (await Promise.all((child.children || []).map(convert))).join("");
 
 						params[paramName] = paramValue;
 					}
+
+					params.original = original;
 
 					return await this.renderTemplate(template, params, renderData);
 				};
@@ -416,6 +466,7 @@
 						if(Templates[template]) {
 							let params = {_: renderedInside};
 							Object.assign(params, elem.attribs || {});
+							params.original = renderOriginal(elem, true);
 							return await this.renderTemplate(template, params, renderData);
 						} else {
 							return `<${elem.data}>${renderedInside}</${elem.name}>`;
