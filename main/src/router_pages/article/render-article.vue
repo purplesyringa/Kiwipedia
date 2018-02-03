@@ -257,7 +257,7 @@
 								<kiwipedia-param name="name">${name}</kiwipedia-param>
 								<kiwipedia-original value="${util.base64encode(template)}">
 							</kiwipedia-template>
-						`;
+						`.replace(/[\t\n]/g, "");
 					}
 
 					for(let paramName of Object.keys(params)) {
@@ -271,10 +271,10 @@
 							Object.keys(params).map(paramName => {
 								let paramValue = params[paramName];
 								return `<kiwipedia-param name="${paramName}">${paramValue}</kiwipedia-param>`;
-							}).join("") + `
+							}).join("") +
 
-							<kiwipedia-original value="${util.base64encode(template)}" />
-						</kiwipedia-template>`
+							`<kiwipedia-original value="${util.base64encode(template)}" />` +
+						`</kiwipedia-template>`
 					);
 				});
 
