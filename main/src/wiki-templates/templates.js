@@ -13,6 +13,7 @@ import MathBrackets from "./math.js";
 import NoWrap from "./nowrap.js";
 import About from "./about.js";
 import HatNote from "./hatnote.js";
+import Main from "./main.js";
 
 export default {
 	"cite web": CiteWeb,
@@ -29,5 +30,6 @@ export default {
 	"math": MathBrackets,
 	"nowrap": NoWrap,
 	"about": About,
-	"hatnote": HatNote
+	"hatnote": HatNote,
+	"main": Main
 };
