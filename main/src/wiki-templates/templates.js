@@ -17,23 +17,29 @@ import Main from "./main.js";
 import MVar from "./mvar.js";
 import SeeAlso from "./see-also.js";
 
-export default {
-	"cite web": CiteWeb,
-	"reflist": RefList,
-	"ambox": AMBox,
-	"unexisting-template": UnexistingTemplate,
-	"invalid-template": InvalidTemplate,
-	"external media": ExternalMedia,
-	"<ref>": Ref,
-	"#if": HashIf,
-	"if": If,
-	"nUMBEROFARTICLES": NumberOfArticles,
-	"<math>": MathTag,
-	"math": MathBrackets,
-	"nowrap": NoWrap,
-	"about": About,
-	"hatnote": HatNote,
-	"main": Main,
-	"mvar": MVar,
-	"see also": SeeAlso
-};
+let Templates = {};
+
+for(let template of [
+	CiteWeb,
+	RefList,
+	AMBox,
+	UnexistingTemplate,
+	InvalidTemplate,
+	ExternalMedia,
+	Ref,
+	HashIf,
+	If,
+	NumberOfArticles,
+	MathTag,
+	MathBrackets,
+	NoWrap,
+	About,
+	HatNote,
+	Main,
+	MVar,
+	SeeAlso
+]) {
+	Templates[template.name] = template;
+}
+
+export default Templates;
