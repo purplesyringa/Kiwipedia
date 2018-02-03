@@ -15,6 +15,7 @@ import About from "./about.js";
 import HatNote from "./hatnote.js";
 import Main from "./main.js";
 import MVar from "./mvar.js";
+import SeeAlso from "./see-also.js";
 
 export default {
 	"cite web": CiteWeb,
@@ -33,5 +34,6 @@ export default {
 	"about": About,
 	"hatnote": HatNote,
 	"main": Main,
-	"mvar": MVar
+	"mvar": MVar,
+	"see also": SeeAlso
 };
