@@ -16,6 +16,7 @@
 	import {getHubList} from "../../common/hub-manager.js";
 	import htmlparser from "htmlparser";
 	import stringReplaceAsync from "string-replace-async";
+	import * as util from "../../common/util.js";
 
 	export default {
 		name: "markdown-article",
@@ -65,7 +66,7 @@
 					.forEach(tagName => {
 						const toRender = Array.from(rootNode.querySelectorAll(`rendered-${tagName}`));
 						toRender.forEach(async node => {
-							let params = {_: atob(node.innerHTML)};
+							let params = {_: util.base64decode(node.innerHTML)};
 
 							Array.from(node.attributes)
 								.forEach(attr => params[attr.name] = attr.value);
@@ -370,7 +371,7 @@
 					)
 
 					const tagName = template.match(/^<(.*)>$/)[1];
-					rendered = `<rendered-${tagName} ${attribs}>${btoa(rendered)}</rendered-${tagName}>`;
+					rendered = `<rendered-${tagName} ${attribs}>${util.base64encode(rendered)}</rendered-${tagName}>`;
 				}
 
 				return rendered;
