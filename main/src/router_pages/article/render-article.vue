@@ -105,7 +105,7 @@
 				const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData);
 
 				const html = await this.wikiTextToHTML(rendered);
-				return html;
+				return {html, renderData};
 			},
 
 			async wikiTextToHTML(wikitext) {
