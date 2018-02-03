@@ -356,6 +356,7 @@
 				};
 
 				let rendered = (await Templates[template].render.call(renderData, params, renderer, context))
+					.trim()
 					.replace(/\n/g, "");
 
 				if(/^<.*>$/.test(template) && Templates[template].afterRender) {
