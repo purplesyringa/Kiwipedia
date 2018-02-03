@@ -65,7 +65,7 @@
 					.forEach(tagName => {
 						const toRender = Array.from(rootNode.querySelectorAll(`rendered-${tagName}`));
 						toRender.forEach(async node => {
-							let params = {_: node.innerHTML};
+							let params = {_: atob(node.innerHTML)};
 
 							Array.from(node.attributes)
 								.forEach(attr => params[attr.name] = attr.value);
@@ -355,7 +355,7 @@
 
 				if(/^<.*>$/.test(template) && Templates[template].afterRender) {
 					const tagName = template.match(/^<(.*)>$/)[1];
-					rendered = `<rendered-${tagName}>${rendered}</rendered-${tagName}>`;
+					rendered = `<rendered-${tagName}>${btoa(rendered)}</rendered-${tagName}>`;
 				}
 
 				return rendered;
