@@ -269,8 +269,6 @@
 						`<kiwipedia-template is="${name}">` +
 							Object.keys(params).map(paramName => {
 								let paramValue = params[paramName];
-								paramValue = this.renderCurlyTemplates(paramValue, renderingTemplates, renderData);
-
 								return `<kiwipedia-param name="${paramName}">${paramValue}</kiwipedia-param>`;
 							}).join("") +
 						`</kiwipedia-template>`
