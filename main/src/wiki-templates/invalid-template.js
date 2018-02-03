@@ -1,4 +1,5 @@
 export default {
+	name: "invalid-template",
 	async render(params, renderer) {
 		return await renderer("ambox", {
 			type: "serious",

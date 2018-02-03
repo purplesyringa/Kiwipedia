@@ -1,4 +1,5 @@
 export default {
+	name: "cite web",
 	async render(params, renderer) {
 		const formatAuthor = () => {
 			let author = params.last ? `${params.first} ${params.last}` : params.author || "";

@@ -1,6 +1,7 @@
 import katex from "katex/katex.js";
 
 export default {
+	name: "<math>",
 	async render(params, renderer) {
 		return `${params._}`;
 	},

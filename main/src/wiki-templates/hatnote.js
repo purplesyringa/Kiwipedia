@@ -1,4 +1,5 @@
 export default {
+	name: "hatnote",
 	async render(params, renderer) {
 		const isTrue = val => ["yes", "y", "true", "1"].indexOf(val) > -1;
 

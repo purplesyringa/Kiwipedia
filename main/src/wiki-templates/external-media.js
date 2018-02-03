@@ -1,4 +1,5 @@
 export default {
+	name: "external media",
 	async render(params, renderer) {
 		let images = [params.image1, params.image2, params.image3];
 		images = images.filter(image => image);

@@ -1,4 +1,6 @@
 export default {
+	name: "see also",
+
 	async render(params, renderer, context) {
 		let articles = [];
 		for(let i = 1; params[i] !== undefined; i++) {

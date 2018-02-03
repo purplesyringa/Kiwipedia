@@ -1,4 +1,5 @@
 export default {
+	name: "about",
 	async render(params, renderer, context) {
 		const thisIsAbout = params[1];
 

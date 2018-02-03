@@ -1,4 +1,5 @@
 export default {
+	name: "if",
 	async render(params, renderer) {
 		if(params[1] == "") {
 			// Simple if

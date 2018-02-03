@@ -1,4 +1,6 @@
 export default {
+	name: "unexisting-template",
+
 	async render(params, renderer) {
 		return await renderer("ambox", {
 			type: "style",

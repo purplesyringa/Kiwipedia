@@ -1,4 +1,6 @@
 export default {
+	name: "<ref>",
+
 	init() {
 		this.refs = [];
 		this.refNames = [];

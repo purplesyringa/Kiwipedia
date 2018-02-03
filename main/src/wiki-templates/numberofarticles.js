@@ -1,6 +1,7 @@
 import Hub from "../common/hub.js";
 
 export default {
+	name: "nUMBEROFARTICLES",
 	async render(params, renderer, context) {
 		try {
 			const hub = new Hub(context.slug);

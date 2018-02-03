@@ -1,4 +1,6 @@
 export default {
+	name: "reflist",
+
 	init() {
 		this.refs = [];
 	},
