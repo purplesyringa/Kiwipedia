@@ -2,6 +2,9 @@ import katex from "katex/katex.js";
 
 export default {
 	async render(params, renderer) {
+		return `${params._}`;
+	},
+	async afterRender(params, renderer) {
 		try {
 			return `<span class="math">${katex.renderToString(params._)}</span>`;
 		} catch(e) {
