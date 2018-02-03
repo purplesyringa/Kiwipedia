@@ -43,6 +43,9 @@
 
 			this.$nextTick(() => {
 				const rootNode = document.getElementById(this.id);
+				if(!rootNode) {
+					return;
+				}
 
 				const secondaryRenderer = async (template, params) => {
 					if(Templates[template].afterRender) {
