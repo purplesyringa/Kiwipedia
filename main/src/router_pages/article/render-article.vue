@@ -105,6 +105,8 @@
 
 				const renderData = this.initTemplates();
 
+				text = this.prepareNowiki(text);
+
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
 				const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData);
 
@@ -402,12 +404,41 @@
 					return await this.renderTemplate(template, params, renderData);
 				};
 
+				const renderNowiki = async elem => {
+					const params = {};
+					const children = (elem.children || [])
+						.filter(child => child.type == "tag" && child.name == "kiwipedia-param");
+
+					for(const child of children) {
+						const paramName = child.attribs.name;
+						const paramValue = (await Promise.all((child.children || []).map(convert))).join("");
+
+						params[paramName] = paramValue;
+					}
+
+					let inside = (elem.children || [])
+						.find(child => child.type == "tag" && child.name == "kiwipedia-inside");
+					if(inside) {
+						inside = util.base64decode(inside.attribs.value);
+					} else {
+						inside = "";
+					}
+
+					params._ = inside;
+
+					const template = `<${elem.attribs.is}>`;
+
+					return await this.renderTemplate(template, params, renderData);
+				};
+
 				const convert = async elem => {
 					if(elem.type == "text") {
 						return elem.data;
 					} else if(elem.type == "tag") {
 						if(elem.name == "kiwipedia-template") {
 							return await renderTagTemplate(elem);
+						} else if(elem.name == "kiwipedia-nowiki") {
+							return await renderNowiki(elem);
 						}
 
 						let renderedInside = (await Promise.all((elem.children || []).map(convert))).join("");
@@ -423,6 +454,46 @@
 					}
 				};
 				return await convert(handler.dom[0]);
+			},
+
+			prepareNowiki(html) {
+				const handler = new htmlparser.DefaultHandler((error, dom) => {});
+				const parser = new htmlparser.Parser(handler);
+				parser.parseComplete(`<div>\n${html}\n</div>`);
+
+				const convertNowiki = elem => {
+					if(elem.type == "text") {
+						return elem.data;
+					} else if(elem.type == "tag") {
+						let renderedInside = (elem.children || []).map(convertNowiki).join("");
+
+						return `<${elem.data}>${renderedInside}</${elem.name}>`;
+					}
+				};
+
+				const convert = elem => {
+					if(elem.type == "text") {
+						return elem.data;
+					} else if(elem.type == "tag") {
+						if(Templates[`<${elem.name}>`] && Templates[`<${elem.name}>`].nowiki) {
+
+							const renderedInside = (elem.children || []).map(convertNowiki).join("");
+
+							return `<kiwipedia-nowiki is="${elem.name}">` +
+								Object.keys(elem.attribs || {}).map(key => {
+									const value = elem.attribs[key];
+									return `<kiwipedia-param name="${key}">${value}</kiwipedia-param>`;
+								}).join("") +
+								`<kiwipedia-inside value="${util.base64encode(renderedInside)}" />` +
+							`</kiwipedia-nowiki>`;
+						}
+
+						let renderedInside = (elem.children || []).map(convert).join("");
+
+						return `<${elem.data}>${renderedInside}</${elem.name}>`;
+					}
+				};
+				return convert(handler.dom[0]);
 			},
 
 			clicked(e) {
