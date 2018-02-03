@@ -8,8 +8,8 @@ import Ref from "./ref.js";
 import HashIf from "./#if.js";
 import If from "./if.js";
 import NumberOfArticles from "./numberofarticles.js";
-import Math_ from "./math.js";
-import MathBrackets from "./{{math}}.js";
+import MathTag from "./mathtag.js";
+import MathBrackets from "./math.js";
 
 export default {
 	"cite web": CiteWeb,
@@ -22,6 +22,6 @@ export default {
 	"#if": HashIf,
 	"if": If,
 	"nUMBEROFARTICLES": NumberOfArticles,
-	"<math>": Math_,
+	"<math>": MathTag,
 	"math": MathBrackets
 };
