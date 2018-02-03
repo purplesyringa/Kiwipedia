@@ -354,8 +354,22 @@
 					.replace(/\n/g, "");
 
 				if(/^<.*>$/.test(template) && Templates[template].afterRender) {
+					let attribs = (
+						Object.keys(params)
+							.map(name => {
+								return {
+									name: name,
+									value: params[name]
+										.replace(/&/g, "&amp;")
+										.replace(/"/g, "&quot;")
+								};
+							})
+							.map(({name, value}) => `${name}="${value}"`)
+							.join(" ")
+					)
+
 					const tagName = template.match(/^<(.*)>$/)[1];
-					rendered = `<rendered-${tagName}>${btoa(rendered)}</rendered-${tagName}>`;
+					rendered = `<rendered-${tagName} ${attribs}>${btoa(rendered)}</rendered-${tagName}>`;
 				}
 
 				return rendered;
