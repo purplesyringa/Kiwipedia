@@ -33,11 +33,3 @@ if [ -d data-temp ]; then
 	rm -rf $site_path/data
 	mv data-temp $site_path/data
 fi
-
-echo "Loading private key"
-privatekey=$(cat "$data_path/users.json" | python -c "import json, sys; p = json.load(sys.stdin); p = p[list(p.keys())[0]]; print(p['sites']['$site_address']['privatekey'])")
-
-echo "Signing"
-$zeronet_path sitePublish $site_address $privatekey
-
-popd >/dev/null 2>&1
