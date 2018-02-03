@@ -40,7 +40,13 @@
 
 				const {replaced, renderingTemplates} = this.replaceTemplates(text);
 				const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData);
-				let html = InstaView.convert(rendered);
+
+				const html = await this.wikiTextToHTML(rendered);
+				return html;
+			},
+
+			async wikiTextToHTML(wikitext) {
+				let html = InstaView.convert(wikitext);
 
 				html = await stringReplaceAsync(html, /ARTICLENAMEGOESHERE(.*?)(['"])/g, async (all, article, quote) => {
 					let wiki;
