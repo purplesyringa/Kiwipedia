@@ -9,12 +9,6 @@ export default {
 				"text-small": `
 					<div>
 						''Original string'': ${
-							params.original
-								.replace(/&/g, "&amp;")
-								.replace(/</g, "&lt;")
-								.replace(/>/g, "&gt;")
-						}<br>
-						''Rendered'': ${
 							params._
 								.replace(/&/g, "&amp;")
 								.replace(/</g, "&lt;")

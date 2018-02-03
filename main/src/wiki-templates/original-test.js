@@ -9,13 +9,13 @@ export default {
 				"text-small": `
 					<div>
 						''Original string'': ${
-							params.original
+							(params._ || "")
 								.replace(/&/g, "&amp;")
 								.replace(/</g, "&lt;")
 								.replace(/>/g, "&gt;")
 						}<br>
 						''Params'': ${
-							JSON.stringify(params)
+							JSON.stringify(params, (key, value) => key == "_" ? undefined : value)
 								.replace(/&/g, "&amp;")
 								.replace(/</g, "&lt;")
 								.replace(/>/g, "&gt;")
