@@ -33,7 +33,67 @@
 		},
 		async mounted() {
 			this.id = Math.random().toString(36).substr(2);
-			this.rendered = await this.render(this.text);
+
+			const res = await this.render(this.text);
+			this.rendered = res.html;
+
+			let renderData = res.renderData;
+			Object.freeze(renderData);
+
+			this.$nextTick(() => {
+				const rootNode = document.getElementById(this.id);
+
+				const secondaryRenderer = async (template, params) => {
+					if(Templates[template].afterRender) {
+						return await this.renderTemplate(
+							"ambox",
+							{
+								type: "serious",
+								text: "'''AfterRender error'''",
+								"text-small": "Template with afterRender cannot be invoked in afterRender handler"
+							}
+						);
+					}
+
+					return await this.renderTemplate(template, params, renderData);
+				};
+
+				Object.keys(Templates)
+					.filter(templateName => /^<.*>$/.test(templateName))
+					.map(templateName => templateName.match(/^<(.*)>$/)[1])
+					.filter(tagName => Templates[`<${tagName}>`].afterRender)
+					.forEach(tagName => {
+						const toRender = Array.from(rootNode.querySelectorAll(`rendered-${tagName}`));
+						toRender.forEach(async node => {
+							let params = {_: node.innerHTML};
+
+							Array.from(node.attributes)
+								.forEach(attr => params[attr.name] = attr.value);
+
+							const afterRender = await Templates[`<${tagName}>`].afterRender(params, secondaryRenderer);
+
+							const newNode = document.createElement("div");
+							newNode.innerHTML = afterRender;
+
+							if(newNode.children.length == 0) {
+								node.parentNode.removeChild(node);
+							} else if(newNode.children.length == 1) {
+								node.parentNode.replaceChild(newNode.children[0], node);
+							} else {
+								node.innerHTML = await this.wikiTextToHTML(
+									await this.renderTemplate(
+										"ambox",
+										{
+											type: "serious",
+											text: "'''AfterRender error'''",
+											"text-small": `AfterRender handler must return one node only, ${newNode.children.length} were returned.`
+										}
+									)
+								);
+							}
+						});
+					});
+			});
 		},
 		methods: {
 			async render(text) {
