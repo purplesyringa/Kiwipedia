@@ -356,6 +356,7 @@
 				if(/^<.*>$/.test(template) && Templates[template].afterRender) {
 					let attribs = (
 						Object.keys(params)
+							.filter(name => name != "_")
 							.map(name => {
 								return {
 									name: name,
