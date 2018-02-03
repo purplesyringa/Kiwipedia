@@ -290,8 +290,15 @@
 					imported: this.imported
 				};
 
-				return (await Templates[template].render.call(renderData, params, renderer, context))
+				let rendered = (await Templates[template].render.call(renderData, params, renderer, context))
 					.replace(/\n/g, "");
+
+				if(/^<.*>$/.test(template) && Templates[template].afterRender) {
+					const tagName = template.match(/^<(.*)>$/)[1];
+					rendered = `<rendered-${tagName}>${rendered}</rendered-${tagName}>`;
+				}
+
+				return rendered;
 			},
 
 			async convertTagTemplates(html, renderData) {
