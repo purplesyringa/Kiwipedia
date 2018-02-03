@@ -1,5 +1,5 @@
 <template>
-	<div v-if="rendered != ''" class="rendered" v-html="rendered" @click="clicked" />
+	<div v-if="rendered != ''" class="rendered" v-html="rendered" @click="clicked" :id="id" />
 	<loading v-else />
 </template>
 
@@ -26,10 +26,13 @@
 				slug: "",
 				article: "",
 				imported: "",
-				rendered: ""
+				rendered: "",
+
+				id: ""
 			};
 		},
 		async mounted() {
+			this.id = Math.random().toString(36).substr(2);
 			this.rendered = await this.render(this.text);
 		},
 		methods: {
