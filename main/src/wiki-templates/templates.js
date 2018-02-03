@@ -14,6 +14,7 @@ import NoWrap from "./nowrap.js";
 import About from "./about.js";
 import HatNote from "./hatnote.js";
 import Main from "./main.js";
+import MVar from "./mvar.js";
 
 export default {
 	"cite web": CiteWeb,
@@ -31,5 +32,6 @@ export default {
 	"nowrap": NoWrap,
 	"about": About,
 	"hatnote": HatNote,
-	"main": Main
+	"main": Main,
+	"mvar": MVar
 };
