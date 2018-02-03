@@ -1,15 +1,16 @@
 export default {
-	name: "original test",
+	nowiki: true,
+	name: "<original-test>",
 	async render(params, renderer) {
 		return await renderer(
 			"ambox",
 			{
 				type: "notice",
-				text: "'''{{original test}}'''",
+				text: "'''&lt;original-test&gt;'''",
 				"text-small": `
 					<div>
 						''Original string'': ${
-							(params._ || "")
+							params._
 								.replace(/&/g, "&amp;")
 								.replace(/</g, "&lt;")
 								.replace(/>/g, "&gt;")
