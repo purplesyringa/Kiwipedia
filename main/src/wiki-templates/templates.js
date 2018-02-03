@@ -11,6 +11,7 @@ import NumberOfArticles from "./numberofarticles.js";
 import MathTag from "./mathtag.js";
 import MathBrackets from "./math.js";
 import NoWrap from "./nowrap.js";
+import About from "./about.js";
 import HatNote from "./hatnote.js";
 
 export default {
@@ -27,5 +28,6 @@ export default {
 	"<math>": MathTag,
 	"math": MathBrackets,
 	"nowrap": NoWrap,
+	"about": About,
 	"hatnote": HatNote
 };
