@@ -10,6 +10,7 @@ import If from "./if.js";
 import NumberOfArticles from "./numberofarticles.js";
 import MathTag from "./mathtag.js";
 import MathBrackets from "./math.js";
+import NoWrap from "./nowrap.js";
 
 export default {
 	"cite web": CiteWeb,
@@ -23,5 +24,6 @@ export default {
 	"if": If,
 	"nUMBEROFARTICLES": NumberOfArticles,
 	"<math>": MathTag,
-	"math": MathBrackets
+	"math": MathBrackets,
+	"nowrap": NoWrap
 };
