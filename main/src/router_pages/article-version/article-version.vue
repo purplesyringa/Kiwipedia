@@ -31,7 +31,7 @@
 				For the latest version, <a :href="`?wiki/${slug}/${article}`" @click.prevent="$router.navigate(`wiki/${slug}/${article}`)">look here</a>.
 			</div>
 
-			<render-article :text="articleNode.text" :slug="slug" :article="article" :imported="articleNode.imported" />
+			<render-article :text="articleNode.text" :slug="slug" :article="article" :imported="articleNode.imported" :title="articleNode.title" />
 		</div>
 		<loading v-else />
 	</div>

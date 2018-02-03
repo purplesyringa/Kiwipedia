@@ -42,7 +42,7 @@
 				</span>.
 			</div>
 
-			<render-article :text="articleNode.text" :slug="slug" :article="article" imported="" />
+			<render-article :text="articleNode.text" :slug="slug" :article="article" imported="" :title="articleNode.title" />
 		</div>
 		<loading v-else />
 	</div>

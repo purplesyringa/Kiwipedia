@@ -20,7 +20,7 @@
 
 	export default {
 		name: "markdown-article",
-		props: ["text", "slug", "article", "imported"],
+		props: ["text", "slug", "article", "imported", "title"],
 		data() {
 			return {
 				text: "",
@@ -351,7 +351,8 @@
 				const context = {
 					slug: this.slug,
 					article: this.article,
-					imported: this.imported
+					imported: this.imported,
+					title: this.title
 				};
 
 				let rendered = (await Templates[template].render.call(renderData, params, renderer, context))
