@@ -1,7 +1,8 @@
 import {ElementType} from "./htmlparser.js";
 
 export default class Handler {
-	constructor() {
+	constructor(data) {
+		this.data = data;
 		this.reset();
 	}
 

@@ -100,6 +100,7 @@ function Parser (handler, options) {
 	//Resets the parser to a blank state, ready to parse a new HTML document
 	Parser.prototype.reset = function Parser$reset () {
 		this._buffer = "";
+		this._bufferOffset = 0;
 		this._done = false;
 		this._elements = [];
 		this._elementsCurrent = 0;
@@ -202,6 +203,8 @@ function Parser (handler, options) {
 				  raw: rawData
 				, data: (this._parseState == ElementType.Text) ? rawData : rawData.replace(Parser._reTrim, "")
 				, type: this._parseState
+				, from: this._current + this._bufferOffset
+				, to: this._next + this._bufferOffset
 			};
 	
 			var elementName = this.parseTagName(element.data);
@@ -356,6 +359,7 @@ function Parser (handler, options) {
 			this._location.charOffset = 0;
 		}
 		this._buffer = (this._current <= bufferEnd) ? this._buffer.substring(this._current) : "";
+		this._bufferOffset += this.current;
 		this._current = 0;
 	
 		this.writeHandler();
