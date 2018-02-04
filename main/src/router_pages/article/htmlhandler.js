@@ -29,6 +29,7 @@ export default class Handler {
 	// Resets the handler back to starting state
 	reset() {
 		this.dom = [];
+		this.tokens = [];
 		this._done = false;
 		this._tagStack = [];
 		this._tagStack.last = function() {
@@ -71,6 +72,8 @@ export default class Handler {
 		if(this._done) {
 			throw new Error("Writing to the handler after done() called is not allowed without a reset()");
 		}
+
+		this.tokens.push(element);
 
 		if(!this._tagStack.last()) {
 			// There are no parent elements
