@@ -9,10 +9,6 @@ export default class Handler {
 			// Keep whitespace-only text nodes
 			this._options.ignoreWhitespace = false;
 		}
-		if(this._options.verbose == undefined) {
-			// Keep data property for tags and raw property for all
-			this._options.verbose = true;
-		}
 		if(this._options.enforceEmptyTags == undefined) {
 			//Don't allow children for HTML tags defined as empty in spec
 			this._options.enforceEmptyTags = true;
@@ -113,13 +109,6 @@ export default class Handler {
 	handleElement(element) {
 		if(this._done) {
 			this.handleCallback(new Error("Writing to the handler after done() called is not allowed without a reset()"));
-		}
-
-		if(!this._options.verbose) {
-			delete element.raw;
-			if(element.type == "tag" || element.type == "script" || element.type == "style") {
-				delete element.data;
-			}
 		}
 
 		if(!this._tagStack.last()) {
