@@ -22,29 +22,6 @@ IN THE SOFTWARE.
 
 (function () {
 
-function runningInNode () {
-	return(
-		(typeof require) == "function"
-		&&
-		(typeof exports) == "object"
-		&&
-		(typeof module) == "object"
-		&&
-		(typeof __filename) == "string"
-		&&
-		(typeof __dirname) == "string"
-		);
-}
-
-if (!runningInNode()) {
-	if (!this.Tautologistics)
-		this.Tautologistics = {};
-	else if (this.Tautologistics.NodeHtmlParser)
-		return; //NodeHtmlParser already defined!
-	this.Tautologistics.NodeHtmlParser = {};
-	exports = this.Tautologistics.NodeHtmlParser;
-}
-
 //Types of elements found in the DOM
 var ElementType = {
 	  Text: "text" //Plain text
