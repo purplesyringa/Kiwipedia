@@ -472,13 +472,27 @@
 					}
 				};
 
+				const getInside = elem => {
+					let res = "";
+
+					const tokens = handler.tokens.slice(elem.openTokenId + 1, elem.closeTokenId); // Get everything inside
+					for(let token of tokens) {
+						if(token.type == "text") {
+							res += token.raw;
+						} else if(token.type == "tag") {
+							res += `<${token.raw}>`;
+						}
+					}
+
+					return res;
+				};
+
 				const convert = elem => {
 					if(elem.type == "text") {
 						return elem.raw;
 					} else if(elem.type == "tag") {
 						if(Templates[`<${elem.name}>`] && Templates[`<${elem.name}>`].nowiki) {
-
-							const renderedInside = (elem.children || []).map(convertNowiki).join("");
+							const renderedInside = getInside(elem);
 
 							return `<kiwipedia-nowiki is="${elem.name}">` +
 								Object.keys(elem.attribs || {}).map(key => {
