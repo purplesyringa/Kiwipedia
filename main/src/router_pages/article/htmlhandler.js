@@ -5,10 +5,6 @@ export default class Handler {
 		this.reset();
 		this._options = options ? options : {};
 
-		if(this._options.ignoreWhitespace == undefined) {
-			// Keep whitespace-only text nodes
-			this._options.ignoreWhitespace = false;
-		}
 		if(this._options.enforceEmptyTags == undefined) {
 			//Don't allow children for HTML tags defined as empty in spec
 			this._options.enforceEmptyTags = true;
@@ -58,11 +54,6 @@ export default class Handler {
 		this.handleElement(element);
 	} 
 	writeText(element) {
-		if(this._options.ignoreWhitespace) {
-			if(Handler.reWhitespace.test(element.data)) {
-				return;
-			}
-		}
 		this.handleElement(element);
 	}
 	writeComment(element) {
@@ -105,7 +96,7 @@ export default class Handler {
 		}
 		return this._options.enforceEmptyTags && !!Handler._emptyTags[name];
 	}
-	
+
 	handleElement(element) {
 		if(this._done) {
 			this.handleCallback(new Error("Writing to the handler after done() called is not allowed without a reset()"));
