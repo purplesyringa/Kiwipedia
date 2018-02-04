@@ -14,7 +14,7 @@
 	import Templates from "../../wiki-templates/templates.js";
 	import Hub, {toSlug} from "../../common/hub.js";
 	import {getHubList} from "../../common/hub-manager.js";
-	import htmlparser from "htmlparser";
+	import htmlparser from "./htmlparser.js";
 	import stringReplaceAsync from "string-replace-async";
 	import * as util from "../../common/util.js";
 

@@ -49,7 +49,6 @@
   },
   "dependencies": {
     "babel-plugin-transform-builtin-extend": "^1.1.2",
-    "htmlparser": "^1.7.7",
     "instaview": "git+https://github.com/imachug/instaview.git",
     "katex": "^0.9.0-beta1",
     "markdown-wiki": "0.0.1",
