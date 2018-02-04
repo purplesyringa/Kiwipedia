@@ -433,7 +433,7 @@
 
 				const convert = async elem => {
 					if(elem.type == "text") {
-						return elem.data;
+						return elem.raw;
 					} else if(elem.type == "tag") {
 						if(elem.name == "kiwipedia-template") {
 							return await renderTagTemplate(elem);
@@ -449,7 +449,7 @@
 							Object.assign(params, elem.attribs || {});
 							return await this.renderTemplate(template, params, renderData);
 						} else {
-							return `<${elem.data}>${renderedInside}</${elem.name}>`;
+							return `<${elem.raw}>${renderedInside}</${elem.name}>`;
 						}
 					}
 				};
@@ -463,17 +463,17 @@
 
 				const convertNowiki = elem => {
 					if(elem.type == "text") {
-						return elem.data;
+						return elem.raw;
 					} else if(elem.type == "tag") {
 						let renderedInside = (elem.children || []).map(convertNowiki).join("");
 
-						return `<${elem.data}>${renderedInside}</${elem.name}>`;
+						return `<${elem.raw}>${renderedInside}</${elem.name}>`;
 					}
 				};
 
 				const convert = elem => {
 					if(elem.type == "text") {
-						return elem.data;
+						return elem.raw;
 					} else if(elem.type == "tag") {
 						if(Templates[`<${elem.name}>`] && Templates[`<${elem.name}>`].nowiki) {
 
@@ -490,7 +490,7 @@
 
 						let renderedInside = (elem.children || []).map(convert).join("");
 
-						return `<${elem.data}>${renderedInside}</${elem.name}>`;
+						return `<${elem.raw}>${renderedInside}</${elem.name}>`;
 					}
 				};
 				return convert(handler.dom[0]);
