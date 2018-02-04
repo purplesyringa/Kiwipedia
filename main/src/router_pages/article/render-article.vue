@@ -15,6 +15,7 @@
 	import Hub, {toSlug} from "../../common/hub.js";
 	import {getHubList} from "../../common/hub-manager.js";
 	import htmlparser from "./htmlparser.js";
+	import HTMLHandler from "./htmlhandler.js";
 	import stringReplaceAsync from "string-replace-async";
 	import * as util from "../../common/util.js";
 
@@ -383,7 +384,7 @@
 			},
 
 			async convertTagTemplates(html, renderData) {
-				const handler = new htmlparser.DefaultHandler((error, dom) => {});
+				const handler = new HTMLHandler((error, dom) => {});
 				const parser = new htmlparser.Parser(handler);
 				parser.parseComplete(`<div>\n${html}\n</div>`);
 
@@ -457,7 +458,7 @@
 			},
 
 			prepareNowiki(html) {
-				const handler = new htmlparser.DefaultHandler((error, dom) => {});
+				const handler = new HTMLHandler((error, dom) => {});
 				const parser = new htmlparser.Parser(handler);
 				parser.parseComplete(`<div>\n${html}\n</div>`);
 
