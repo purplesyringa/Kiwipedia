@@ -384,7 +384,7 @@
 			},
 
 			async convertTagTemplates(html, renderData) {
-				const handler = new HTMLHandler();
+				const handler = new HTMLHandler(`<div>\n${html}\n</div>`);
 				const parser = new htmlparser.Parser(handler);
 				parser.parseComplete(`<div>\n${html}\n</div>`);
 
@@ -458,7 +458,7 @@
 			},
 
 			prepareNowiki(html) {
-				const handler = new HTMLHandler();
+				const handler = new HTMLHandler(`<div>\n${html}\n</div>`);
 				const parser = new htmlparser.Parser(handler);
 				parser.parseComplete(`<div>\n${html}\n</div>`);
 
@@ -473,18 +473,10 @@
 				};
 
 				const getInside = elem => {
-					let res = "";
+					const first = handler.tokens[elem.openTokenId];
+					const last = handler.tokens[elem.closeTokenId];
 
-					const tokens = handler.tokens.slice(elem.openTokenId + 1, elem.closeTokenId); // Get everything inside
-					for(let token of tokens) {
-						if(token.type == "text") {
-							res += token.raw;
-						} else if(token.type == "tag") {
-							res += `<${token.raw}>`;
-						}
-					}
-
-					return res;
+					return `<div>\n${html}\n</div>`.substring(first.to + 1, last.from - 1);
 				};
 
 				const convert = elem => {
