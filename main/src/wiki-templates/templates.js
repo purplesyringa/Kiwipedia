@@ -6,8 +6,16 @@ for(let file of context.keys()) {
 		continue;
 	}
 
-	let template = context(file).default;
-	Templates[template.name] = template;
+	const template = context(file).default;
+
+	let names = template.name;
+	if(typeof names == "string") {
+		names = [names];
+	}
+
+	for(let name of names) {
+		Templates[name] = template;
+	}
 }
 
 export default Templates;
