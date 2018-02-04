@@ -1,5 +1,5 @@
 export default {
-	name: "main",
+	name: ["main", "main article"],
 	async render(params, renderer, context) {
 		let articles = [];
 		for(let i = 1; params[i] !== undefined; i++) {
