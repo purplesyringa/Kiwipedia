@@ -3,12 +3,6 @@ import {ElementType} from "./htmlparser.js";
 export default class Handler {
 	constructor() {
 		this.reset();
-		this._options = {};
-
-		if(this._options.enforceEmptyTags == undefined) {
-			//Don't allow children for HTML tags defined as empty in spec
-			this._options.enforceEmptyTags = true;
-		}
 	}
 
 	// HTML Tags that shouldn't contain child nodes
@@ -59,9 +53,6 @@ export default class Handler {
 		this.handleElement(element);
 	}
 
-	// Handler options for how to behave
-	_options = null;
-
 	// Flag indicating whether handler has been notified of parsing completed
 	_done = false;
 
@@ -73,7 +64,7 @@ export default class Handler {
 		if(name.charAt(0) == '/') {
 			name = name.substring(1);
 		}
-		return this._options.enforceEmptyTags && !!Handler._emptyTags[name];
+		return !!Handler._emptyTags[name];
 	}
 
 	handleElement(element) {
