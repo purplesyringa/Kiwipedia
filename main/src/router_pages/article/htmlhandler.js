@@ -73,6 +73,7 @@ export default class Handler {
 			throw new Error("Writing to the handler after done() called is not allowed without a reset()");
 		}
 
+		let tokenId = this.tokens.length;
 		this.tokens.push(element);
 
 		if(!this._tagStack.last()) {
@@ -82,6 +83,7 @@ export default class Handler {
 			if(element.type != ElementType.Text && element.type != ElementType.Comment && element.type != ElementType.Directive) {
 				// Ignore closing tags that obviously don't have an opening tag
 				if(element.name[0] != "/") {
+					element.openTokenId = tokenId;
 					this.dom.push(element);
 					// Don't add tags to the tag stack that can't have children
 					if(!this.isEmptyTag(element)) {
@@ -107,24 +109,27 @@ export default class Handler {
 						while(pos > -1 && this._tagStack[pos--].name != baseName);
 						if(pos > -1 || this._tagStack[0].name == baseName) {
 							while(pos < this._tagStack.length - 1) {
+								this._tagStack.last().closeTokenId = tokenId;
 								this._tagStack.pop();
 							}
 						}
 					}
 				} else {
 					// This is not a closing tag
+					element.openTokenId = tokenId;
+
 					if(!this._tagStack.last().children) {
 						this._tagStack.last().children = [];
 					}
 					this._tagStack.last().children.push(element);
 
-					//Don't add tags to the tag stack that can't have children
+					// Don't add tags to the tag stack that can't have children
 					if(!this.isEmptyTag(element)) {
 						this._tagStack.push(element);
 					}
 				}
 			} else {
-				//This is not a container element
+				// This is not a container element
 				if(!this._tagStack.last().children) {
 					this._tagStack.last().children = [];
 				}
