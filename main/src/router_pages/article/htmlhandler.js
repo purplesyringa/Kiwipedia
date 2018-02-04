@@ -1,16 +1,13 @@
 import {ElementType} from "./htmlparser.js";
 
 export default class Handler {
-	constructor(callback, options) {
+	constructor() {
 		this.reset();
-		this._options = options ? options : {};
+		this._options = {};
 
 		if(this._options.enforceEmptyTags == undefined) {
 			//Don't allow children for HTML tags defined as empty in spec
 			this._options.enforceEmptyTags = true;
-		}
-		if((typeof callback) == "function") {
-			this._callback = callback;
 		}
 	}
 
@@ -48,7 +45,6 @@ export default class Handler {
 	// Signals the handler that parsing is done
 	done() {
 		this._done = true;
-		this.handleCallback(null);
 	}
 	writeTag(element) {
 		this.handleElement(element);
@@ -62,15 +58,9 @@ export default class Handler {
 	writeDirective(element) {
 		this.handleElement(element);
 	}
-	error(error) {
-		this.handleCallback(error);
-	}
 
 	// Handler options for how to behave
 	_options = null;
-
-	// Callback to respond to when parsing done
-	_callback = null;
 
 	// Flag indicating whether handler has been notified of parsing completed
 	_done = false;
@@ -78,17 +68,6 @@ export default class Handler {
 	// List of parents to the currently element being processed
 	_tagStack = null;
 
-	handleCallback(error) {
-		if(typeof this._callback != "function") {
-			if(error) {
-				throw error;
-			} else {
-				return;
-			}
-		}
-		this._callback(error, this.dom);
-	}
-	
 	isEmptyTag(element) {
 		let name = element.name.toLowerCase();
 		if(name.charAt(0) == '/') {
@@ -99,7 +78,7 @@ export default class Handler {
 
 	handleElement(element) {
 		if(this._done) {
-			this.handleCallback(new Error("Writing to the handler after done() called is not allowed without a reset()"));
+			throw new Error("Writing to the handler after done() called is not allowed without a reset()");
 		}
 
 		if(!this._tagStack.last()) {

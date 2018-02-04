@@ -384,7 +384,7 @@
 			},
 
 			async convertTagTemplates(html, renderData) {
-				const handler = new HTMLHandler((error, dom) => {});
+				const handler = new HTMLHandler();
 				const parser = new htmlparser.Parser(handler);
 				parser.parseComplete(`<div>\n${html}\n</div>`);
 
@@ -458,7 +458,7 @@
 			},
 
 			prepareNowiki(html) {
-				const handler = new HTMLHandler((error, dom) => {});
+				const handler = new HTMLHandler();
 				const parser = new htmlparser.Parser(handler);
 				parser.parseComplete(`<div>\n${html}\n</div>`);
 
