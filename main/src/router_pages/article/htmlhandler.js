@@ -61,7 +61,7 @@ export default class Handler {
 
 	isEmptyTag(element) {
 		let name = element.name.toLowerCase();
-		if(name.charAt(0) == '/') {
+		if(name[0] == "/") {
 			name = name.substring(1);
 		}
 		return !!Handler._emptyTags[name];
@@ -78,7 +78,7 @@ export default class Handler {
 			// If the element can be a container, add it to the tag stack and the top level list
 			if(element.type != ElementType.Text && element.type != ElementType.Comment && element.type != ElementType.Directive) {
 				// Ignore closing tags that obviously don't have an opening tag
-				if(element.name.charAt(0) != "/") {
+				if(element.name[0] != "/") {
 					this.dom.push(element);
 					// Don't add tags to the tag stack that can't have children
 					if(!this.isEmptyTag(element)) {
@@ -95,7 +95,7 @@ export default class Handler {
 			// If the element can be a container, add it as a child of the element
 			// on top of the tag stack and then add it to the tag stack
 			if(element.type != ElementType.Text && element.type != ElementType.Comment && element.type != ElementType.Directive) {
-				if(element.name.charAt(0) == "/") {
+				if(element.name[0] == "/") {
 					// This is a closing tag, scan the tagStack to find the matching opening tag
 					// and pop the stack up to the opening tag's parent
 					let baseName = element.name.substring(1);
