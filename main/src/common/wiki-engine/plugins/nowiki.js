@@ -23,19 +23,9 @@ export function prepareNowiki(html) {
 };
 
 export async function renderNowiki(elem, convert, renderTemplate, renderData) {
-	const params = {};
-	const children = (elem.children || [])
-		.filter(child => child.type == "tag" && child.name == "kiwipedia-param");
+	let params = await pluginUtil.getParams(convert);
 
-	for(const child of children) {
-		const paramName = child.attribs.name;
-		const paramValue = (await Promise.all((child.children || []).map(convert))).join("");
-
-		params[paramName] = paramValue;
-	}
-
-	let inside = (elem.children || [])
-		.find(child => child.type == "tag" && child.name == "kiwipedia-inside");
+	let inside = pluginUtil.find(elem, "kiwipedia-inside");
 	if(inside) {
 		inside = util.base64decode(inside.attribs.value);
 	} else {

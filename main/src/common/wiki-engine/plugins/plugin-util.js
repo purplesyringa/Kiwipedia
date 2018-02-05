@@ -29,3 +29,29 @@ export function walkHtml(html, condition, handler) {
 	};
 	return convert(htmlHandler.dom[0]);
 };
+
+export function find(elem, tagName) {
+	const child = (elem.children || [])
+		.find(child => child.type == "tag" && child.name == tagName);
+
+	return child || null;
+};
+export function findAll(elem, tagName) {
+	const children = (elem.children || [])
+		.filter(child => child.type == "tag" && child.name == tagName);
+
+	return children;
+};
+
+export async function getParams(elem, convert) {
+	let params = {};
+
+	for(const child of findAll(elem, "kiwipedia-param")) {
+		const paramName = child.attribs.name;
+		const paramValue = (await Promise.all((child.children || []).map(convert))).join("");
+
+		params[paramName] = paramValue;
+	}
+
+	return params;
+};
