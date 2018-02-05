@@ -1,4 +1,3 @@
-import InstaView from "instaview";
 import Templates from "../../wiki-templates/templates.js";
 import htmlparser from "./htmlparser.js";
 import HTMLHandler from "./htmlhandler.js";
