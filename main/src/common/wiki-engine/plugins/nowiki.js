@@ -1,7 +1,7 @@
-import Templates from "../../wiki-templates/templates.js";
-import htmlparser from "./htmlparser.js";
-import HTMLHandler from "./htmlhandler.js";
-import * as util from "../../common/util.js";
+import Templates from "../../../wiki-templates/templates.js";
+import htmlparser from "../htmlparser.js";
+import HTMLHandler from "../htmlhandler.js";
+import * as util from "../../../common/util.js";
 
 export function prepareNowiki(html) {
 	const handler = new HTMLHandler(`<div>\n${html}\n</div>`);

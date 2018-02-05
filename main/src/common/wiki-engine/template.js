@@ -2,7 +2,7 @@ import Templates from "../../wiki-templates/templates.js";
 import htmlparser from "./htmlparser.js";
 import HTMLHandler from "./htmlhandler.js";
 import {parseTemplate} from "./parser.js";
-import * as nowiki from "./nowiki.js";
+import * as nowiki from "./plugins/nowiki.js";
 
 export let settings = {renderTemplate: null};
 

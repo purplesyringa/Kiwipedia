@@ -3,7 +3,7 @@ import * as util from "../../common/util.js";
 import * as wikiText from "./wikitext.js";
 import {settings as templateSettings, replaceTemplates, renderCurlyTemplates, convertTagTemplates} from "./template.js";
 import renderTemplateInit from "./render-template.js";
-import * as nowiki from "./nowiki.js";
+import * as nowiki from "./plugins/nowiki.js";
 let renderTemplate;
 
 export default {
