@@ -2,7 +2,7 @@ import Templates from "../../wiki-templates/templates.js";
 import htmlparser from "./htmlparser.js";
 import HTMLHandler from "./htmlhandler.js";
 import {parseTemplate} from "./parser.js";
-import * as nowiki from "./plugins/nowiki.js";
+import * as plugins from "./plugins/plugins.js";
 
 export let settings = {renderTemplate: null};
 
@@ -108,8 +108,8 @@ export async function convertTagTemplates(html, renderData) {
 		} else if(elem.type == "tag") {
 			if(elem.name == "kiwipedia-template") {
 				return await renderTagTemplate(elem);
-			} else if(elem.name == "kiwipedia-nowiki") {
-				return await nowiki.render(elem, convert, settings.renderTemplate, renderData);
+			} else if(elem.name.startsWith("plugin-")) {
+				return await plugins.render(elem, convert, settings.renderTemplate, renderData);
 			}
 
 			let renderedInside = (await Promise.all((elem.children || []).map(convert))).join("");

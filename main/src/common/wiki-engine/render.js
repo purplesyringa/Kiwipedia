@@ -4,6 +4,7 @@ import * as wikiText from "./wikitext.js";
 import {settings as templateSettings, replaceTemplates, renderCurlyTemplates, convertTagTemplates} from "./template.js";
 import renderTemplateInit from "./render-template.js";
 import * as nowiki from "./plugins/nowiki.js";
+import * as plugins from "./plugins/plugins.js";
 let renderTemplate;
 
 export default {
@@ -101,7 +102,7 @@ export default {
 
 			const renderData = this.initTemplates();
 
-			text = nowiki.prepare(text);
+			text = plugins.prepare(text);
 
 			const {replaced, renderingTemplates} = replaceTemplates(text);
 			const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData);
