@@ -4,22 +4,16 @@ import HTMLHandler from "../htmlhandler.js";
 import * as util from "../../../common/util.js";
 import * as pluginUtil from "./plugin-util.js";
 
-export function prepare(html) {
-	return pluginUtil.walkHtml(
-		html,
-		elem => {
-			return Templates[`<${elem.name}>`] && Templates[`<${elem.name}>`].nowiki;
-		},
-		(elem, renderedInside) => {
-			return (
-				Object.keys(elem.attribs || {}).map(key => {
-					const value = elem.attribs[key];
-					return `<kiwipedia-param name="${key}">${value}</kiwipedia-param>`;
-				}).join("") +
-				`<kiwipedia-inside value="${util.base64encode(renderedInside)}" />`
-			);
-		},
-		"nowiki"
+export function condition(elem) {
+	return Templates[`<${elem.name}>`] && Templates[`<${elem.name}>`].nowiki;
+};
+export function handler(elem, renderedInside) {
+	return (
+		Object.keys(elem.attribs || {}).map(key => {
+			const value = elem.attribs[key];
+			return `<kiwipedia-param name="${key}">${value}</kiwipedia-param>`;
+		}).join("") +
+		`<kiwipedia-inside value="${util.base64encode(renderedInside)}" />`
 	);
 };
 
