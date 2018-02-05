@@ -11,14 +11,15 @@ export function prepare(html) {
 			return Templates[`<${elem.name}>`] && Templates[`<${elem.name}>`].nowiki;
 		},
 		(elem, renderedInside) => {
-			return `<plugin-nowiki is="${elem.name}">` +
+			return (
 				Object.keys(elem.attribs || {}).map(key => {
 					const value = elem.attribs[key];
 					return `<kiwipedia-param name="${key}">${value}</kiwipedia-param>`;
 				}).join("") +
-				`<kiwipedia-inside value="${util.base64encode(renderedInside)}" />` +
-			`</plugin-nowiki>`;
-		}
+				`<kiwipedia-inside value="${util.base64encode(renderedInside)}" />`
+			);
+		},
+		"nowiki"
 	);
 };
 

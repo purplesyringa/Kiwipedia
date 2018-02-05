@@ -1,7 +1,7 @@
 import htmlparser from "../htmlparser.js";
 import HTMLHandler from "../htmlhandler.js";
 
-export function walkHtml(html, condition, handler) {
+export function walkHtml(html, condition, handler, name) {
 	const htmlHandler = new HTMLHandler(`<div>\n${html}\n</div>`);
 	const parser = new htmlparser.Parser(htmlHandler);
 	parser.parseComplete(`<div>\n${html}\n</div>`);
@@ -19,7 +19,7 @@ export function walkHtml(html, condition, handler) {
 		} else if(elem.type == "tag") {
 			if(condition(elem)) {
 				const renderedInside = getInside(elem);
-				return handler(elem, renderedInside);
+				return `<plugin-${name} is="${elem.name}">${handler(elem, renderedInside)}</plugin-${name}>`;
 			}
 
 			let renderedInside = (elem.children || []).map(convert).join("");
