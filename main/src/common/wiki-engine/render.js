@@ -5,7 +5,7 @@ import htmlparser from "./htmlparser.js";
 import HTMLHandler from "./htmlhandler.js";
 import * as util from "../../common/util.js";
 import {wikiTextToHTML} from "./wikitext.js";
-import {parseTemplateParams} from "./parser.js";
+import {parseTemplate} from "./parser.js";
 
 export default {
 	name: "markdown-article",
@@ -200,7 +200,7 @@ export default {
 			const rendered = text.replace(templateRegexp, (all, id) => {
 				const template = renderingTemplates[id];
 
-				let {name, params} = this.parseTemplate(template);
+				let {name, params} = parseTemplate(template);
 
 				name = name[0].toLowerCase() + name.substr(1);
 				if(!Templates[name]) {
@@ -228,41 +228,6 @@ export default {
 			});
 
 			return rendered;
-		},
-
-		parseTemplate(template) {
-			if(template[0] == "#") {
-				let name = template.substr(0, template.indexOf(":"));
-				let params = template.substr(template.indexOf(":") + 1);
-
-				return {
-					name: name.trimLeft(),
-					params: parseTemplateParams(params, false)
-				};
-			}
-
-			let match = template.match(/^([^#<>\[\]\|\{\}]+?)\|([\s\S]*)$/);
-			if(match) {
-				return {
-					name: match[1].trim(),
-					params: parseTemplateParams(match[2])
-				};
-			}
-
-			match = template.match(/^([^#<>\[\]\|\{\}]+?)$/);
-			if(match) {
-				return {
-					name: match[1].trim(),
-					params: {}
-				};
-			}
-
-			return {
-				name: "invalid-template",
-				params: {
-					code: template
-				}
-			};
 		},
 
 		async renderTemplate(template, params, renderData) {
