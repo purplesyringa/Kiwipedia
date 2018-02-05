@@ -4,8 +4,7 @@ import htmlparser from "./htmlparser.js";
 import HTMLHandler from "./htmlhandler.js";
 import * as util from "../../common/util.js";
 import * as wikiText from "./wikitext.js";
-import {parseTemplate} from "./parser.js";
-import {replaceTemplates} from "./template.js";
+import {replaceTemplates, renderCurlyTemplates} from "./template.js";
 
 export default {
 	name: "markdown-article",
@@ -115,43 +114,8 @@ export default {
 		},
 
 		async renderTemplates(text, renderingTemplates, renderData) {
-			let rendered = this.renderCurlyTemplates(text, renderingTemplates, renderData);
+			let rendered = renderCurlyTemplates(text, renderingTemplates, renderData);
 			rendered = await this.convertTagTemplates(rendered, renderData);
-			return rendered;
-		},
-		renderCurlyTemplates(text, renderingTemplates, renderData) {
-			const templateRegexp = /MY_AWESOME_TEMPLATE_NUMBER_(.+?)_GOES_HERE_PLEASE_DONT_USE_THIS_CONSTANT_ANYWHERE_IN_ARTICLE/g;
-
-			const rendered = text.replace(templateRegexp, (all, id) => {
-				const template = renderingTemplates[id];
-
-				let {name, params} = parseTemplate(template);
-
-				name = name[0].toLowerCase() + name.substr(1);
-				if(!Templates[name]) {
-					return `
-						<kiwipedia-template is="unexisting-template">
-							<kiwipedia-param name="name">${name}</kiwipedia-param>
-						</kiwipedia-template>
-					`.replace(/[\t\n]/g, "");
-				}
-
-				for(let paramName of Object.keys(params)) {
-					let paramValue = params[paramName];
-					paramValue = this.renderCurlyTemplates(paramValue, renderingTemplates, renderData);
-					params[paramName] = paramValue;
-				}
-
-				return (
-					`<kiwipedia-template is="${name}">` +
-						Object.keys(params).map(paramName => {
-							let paramValue = params[paramName];
-							return `<kiwipedia-param name="${paramName}">${paramValue}</kiwipedia-param>`;
-						}).join("") +
-					`</kiwipedia-template>`
-				);
-			});
-
 			return rendered;
 		},
 
