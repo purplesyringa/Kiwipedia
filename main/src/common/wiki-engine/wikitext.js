@@ -1,6 +1,27 @@
+import {getHubList} from "../../common/hub-manager.js";
 import Hub, {toSlug} from "../../common/hub.js";
 import InstaView from "instaview";
 import stringReplaceAsync from "string-replace-async";
+
+export async function init() {
+	let hubs = await getHubList();
+	hubs = hubs.map(hub => hub.slug);
+	hubs = hubs.join("|");
+
+	InstaView.conf.wiki = {
+		lang: "language",
+		interwiki: hubs,
+		default_thumb_width: 180
+	};
+	InstaView.conf.paths = {
+		base_href: "./",
+		articles: `ARTICLENAMEGOESHERE`,
+		math: "/math/", // TODO
+		images: "",
+		images_fallback: "", // TODO
+		magnify_icon: "" // TODO
+	};
+};
 
 export async function wikiTextToHTML(wikitext, slug) {
 	let html = InstaView.convert(wikitext);

@@ -1,10 +1,9 @@
 import InstaView from "instaview";
 import Templates from "../../wiki-templates/templates.js";
-import {getHubList} from "../../common/hub-manager.js";
 import htmlparser from "./htmlparser.js";
 import HTMLHandler from "./htmlhandler.js";
 import * as util from "../../common/util.js";
-import {wikiTextToHTML} from "./wikitext.js";
+import * as wikiText from "./wikitext.js";
 import {parseTemplate} from "./parser.js";
 
 export default {
@@ -73,7 +72,7 @@ export default {
 						} else if(newNode.children.length == 1) {
 							node.parentNode.replaceChild(newNode.children[0], node);
 						} else {
-							node.innerHTML = await wikiTextToHTML(
+							node.innerHTML = await wikiText.wikiTextToHTML(
 								await this.renderTemplate(
 									"ambox",
 									{
@@ -91,7 +90,7 @@ export default {
 	},
 	methods: {
 		async render(text) {
-			await this.init();
+			await wikiText.init();
 
 			const renderData = this.initTemplates();
 
@@ -100,28 +99,8 @@ export default {
 			const {replaced, renderingTemplates} = this.replaceTemplates(text);
 			const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData);
 
-			const html = await wikiTextToHTML(rendered, this.slug);
+			const html = await wikiText.wikiTextToHTML(rendered, this.slug);
 			return {html, renderData};
-		},
-
-		async init() {
-			let hubs = await getHubList();
-			hubs = hubs.map(hub => hub.slug);
-			hubs = hubs.join("|");
-
-			InstaView.conf.wiki = {
-				lang: "language",
-				interwiki: hubs,
-				default_thumb_width: 180
-			};
-			InstaView.conf.paths = {
-				base_href: "./",
-				articles: `ARTICLENAMEGOESHERE`,
-				math: "/math/", // TODO
-				images: "",
-				images_fallback: "", // TODO
-				magnify_icon: "" // TODO
-			};
 		},
 
 		initTemplates() {
