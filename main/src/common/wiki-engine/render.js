@@ -149,33 +149,6 @@ export default {
 				return await renderTemplate(template, params, renderData);
 			};
 
-			const renderNowiki = async elem => {
-				const params = {};
-				const children = (elem.children || [])
-					.filter(child => child.type == "tag" && child.name == "kiwipedia-param");
-
-				for(const child of children) {
-					const paramName = child.attribs.name;
-					const paramValue = (await Promise.all((child.children || []).map(convert))).join("");
-
-					params[paramName] = paramValue;
-				}
-
-				let inside = (elem.children || [])
-					.find(child => child.type == "tag" && child.name == "kiwipedia-inside");
-				if(inside) {
-					inside = util.base64decode(inside.attribs.value);
-				} else {
-					inside = "";
-				}
-
-				params._ = inside;
-
-				const template = `<${elem.attribs.is}>`;
-
-				return await renderTemplate(template, params, renderData);
-			};
-
 			const convert = async elem => {
 				if(elem.type == "text") {
 					return elem.raw;
@@ -183,7 +156,7 @@ export default {
 					if(elem.name == "kiwipedia-template") {
 						return await renderTagTemplate(elem);
 					} else if(elem.name == "kiwipedia-nowiki") {
-						return await renderNowiki(elem);
+						return await nowiki.renderNowiki(elem);
 					}
 
 					let renderedInside = (await Promise.all((elem.children || []).map(convert))).join("");
