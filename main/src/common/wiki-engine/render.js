@@ -5,6 +5,7 @@ import htmlparser from "./htmlparser.js";
 import HTMLHandler from "./htmlhandler.js";
 import * as util from "../../common/util.js";
 import {wikiTextToHTML} from "./wikitext.js";
+import {parseTemplateParams} from "./parser.js";
 
 export default {
 	name: "markdown-article",
@@ -236,7 +237,7 @@ export default {
 
 				return {
 					name: name.trimLeft(),
-					params: this.parseTemplateParams(params, false)
+					params: parseTemplateParams(params, false)
 				};
 			}
 
@@ -244,7 +245,7 @@ export default {
 			if(match) {
 				return {
 					name: match[1].trim(),
-					params: this.parseTemplateParams(match[2])
+					params: parseTemplateParams(match[2])
 				};
 			}
 
@@ -262,27 +263,6 @@ export default {
 					code: template
 				}
 			};
-		},
-
-		parseTemplateParams(params, trim=true) {
-			let index = 1;
-			let res = {};
-
-			params.split("|").forEach(param => {
-				if(trim) {
-					if(param.indexOf("=") == -1) {
-						res[index++] = param;
-					} else {
-						let name = param.substr(0, param.indexOf("=")).trim();
-						let value = param.substr(param.indexOf("=") + 1).trim();
-						res[name] = value;
-					}
-				} else {
-					res[index++] = param.trim();
-				}
-			});
-
-			return res;
 		},
 
 		async renderTemplate(template, params, renderData) {
