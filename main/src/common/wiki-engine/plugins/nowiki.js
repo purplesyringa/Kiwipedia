@@ -4,7 +4,7 @@ import HTMLHandler from "../htmlhandler.js";
 import * as util from "../../../common/util.js";
 import * as pluginUtil from "./plugin-util.js";
 
-export function prepareNowiki(html) {
+export function prepare(html) {
 	return pluginUtil.walkHtml(
 		html,
 		elem => {
@@ -22,7 +22,7 @@ export function prepareNowiki(html) {
 	);
 };
 
-export async function renderNowiki(elem, convert, renderTemplate, renderData) {
+export async function render(elem, convert, renderTemplate, renderData) {
 	let params = await pluginUtil.getParams(convert);
 
 	let inside = pluginUtil.find(elem, "kiwipedia-inside");

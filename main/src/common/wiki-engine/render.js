@@ -101,7 +101,7 @@ export default {
 
 			const renderData = this.initTemplates();
 
-			text = nowiki.prepareNowiki(text);
+			text = nowiki.prepare(text);
 
 			const {replaced, renderingTemplates} = replaceTemplates(text);
 			const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData);

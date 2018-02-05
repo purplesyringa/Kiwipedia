@@ -109,7 +109,7 @@ export async function convertTagTemplates(html, renderData) {
 			if(elem.name == "kiwipedia-template") {
 				return await renderTagTemplate(elem);
 			} else if(elem.name == "kiwipedia-nowiki") {
-				return await nowiki.renderNowiki(elem, convert, settings.renderTemplate, renderData);
+				return await nowiki.render(elem, convert, settings.renderTemplate, renderData);
 			}
 
 			let renderedInside = (await Promise.all((elem.children || []).map(convert))).join("");
