@@ -72,7 +72,7 @@
 
 <script type="text/javascript">
 	import Hub, {toSlug, NotEnoughError, TooMuchError} from "../../common/hub.js";
-	import RenderArticle from "../article/render-article.vue";
+	import RenderArticle from "../../common/wiki-engine/render.vue";
 	import importer from "../../common/importer.js";
 
 	export default {
