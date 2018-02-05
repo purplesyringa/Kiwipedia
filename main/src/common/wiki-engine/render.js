@@ -137,35 +137,14 @@ export default {
 			return {renderingTemplates, replaced};
 		},
 		replace(text, callback) {
-			// First tokenize
-			let tokens = [];
-			let state = "";
-			text.split("").forEach(char => {
-				if(char == "{" && state == "{") {
-					state = "";
-					tokens.pop();
-					tokens.push("\x00");
-				} else if(char == "{" && state != "{") {
-					state = "{";
-					tokens.push(state);
-				} else if(char == "}" && state == "}") {
-					state = "";
-					tokens.pop();
-					tokens.push("\x01");
-				} else if(char == "}" && state != "}") {
-					state = "}";
-					tokens.push(state);
-				} else {
-					state = "";
-					tokens.push(char);
-				}
-			});
-
-			tokens = tokens.join("");
-
-			return tokens.replace(/\x00([^\x00\x01]*?)\x01/g, (all, template) => {
-				return callback(template);
-			}).replace(/\x00/g, "{{").replace(/\x01/g, "}}");
+			return text
+				.replace(/{{/g, "\x00")
+				.replace(/}}/g, "\x01")
+				.replace(/\x00([^\x00\x01]*?)\x01/g, (all, template) => {
+					return callback(template);
+				})
+				.replace(/\x00/g, "{{")
+				.replace(/\x01/g, "}}");
 		},
 
 		async renderTemplates(text, renderingTemplates, renderData) {
