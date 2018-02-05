@@ -4,6 +4,8 @@ import HTMLHandler from "../htmlhandler.js";
 import * as util from "../../../common/util.js";
 import * as pluginUtil from "./plugin-util.js";
 
+export const name = "nowiki";
+
 export function condition(elem) {
 	return Templates[`<${elem.name}>`] && Templates[`<${elem.name}>`].nowiki;
 };
