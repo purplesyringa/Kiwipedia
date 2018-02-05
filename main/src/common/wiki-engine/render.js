@@ -5,6 +5,7 @@ import HTMLHandler from "./htmlhandler.js";
 import * as util from "../../common/util.js";
 import * as wikiText from "./wikitext.js";
 import {parseTemplate} from "./parser.js";
+import {replaceTemplates} from "./template.js";
 
 export default {
 	name: "markdown-article",
@@ -96,7 +97,7 @@ export default {
 
 			text = this.prepareNowiki(text);
 
-			const {replaced, renderingTemplates} = this.replaceTemplates(text);
+			const {replaced, renderingTemplates} = replaceTemplates(text);
 			const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData);
 
 			const html = await wikiText.wikiTextToHTML(rendered, this.slug);
@@ -111,40 +112,6 @@ export default {
 				}
 			}
 			return renderData;
-		},
-
-		replaceTemplates(text) {
-			let lastTemplateId = 0;
-
-			const templateConstant = `MY_AWESOME_TEMPLATE_NUMBER_{{id}}_GOES_HERE_PLEASE_DONT_USE_THIS_CONSTANT_ANYWHERE_IN_ARTICLE`;
-
-			const renderingTemplates = {};
-
-			// Remove <!-- --> comments
-			text = text.replace(/<!--[\s\S]*?-->/g, "");
-
-			// First, replace {{templates}} with constants
-			let replaced = text, oldReplaced;
-			do {
-				oldReplaced = replaced;
-				replaced = this.replace(replaced, template => {
-					const id = lastTemplateId++;
-					renderingTemplates[id] = template;
-					return templateConstant.replace("{{id}}", id);
-				});
-			} while(oldReplaced != replaced);
-
-			return {renderingTemplates, replaced};
-		},
-		replace(text, callback) {
-			return text
-				.replace(/{{/g, "\x00")
-				.replace(/}}/g, "\x01")
-				.replace(/\x00([^\x00\x01]*?)\x01/g, (all, template) => {
-					return callback(template);
-				})
-				.replace(/\x00/g, "{{")
-				.replace(/\x01/g, "}}");
 		},
 
 		async renderTemplates(text, renderingTemplates, renderData) {
