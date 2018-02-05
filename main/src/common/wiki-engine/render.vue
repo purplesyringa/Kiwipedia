@@ -10,5 +10,6 @@
 </style>
 
 <script type="text/javascript">
-	export * from "./render.js";
+	import Render from "./render.js";
+	export default Render;
 </script>

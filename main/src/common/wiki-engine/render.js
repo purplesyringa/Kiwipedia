@@ -1,11 +1,10 @@
 import InstaView from "instaview";
 import Templates from "../../wiki-templates/templates.js";
-import Hub, {toSlug} from "../../common/hub.js";
 import {getHubList} from "../../common/hub-manager.js";
 import htmlparser from "./htmlparser.js";
 import HTMLHandler from "./htmlhandler.js";
-import stringReplaceAsync from "string-replace-async";
 import * as util from "../../common/util.js";
+import {wikiTextToHTML} from "./wikitext.js";
 
 export default {
 	name: "markdown-article",
@@ -73,7 +72,7 @@ export default {
 						} else if(newNode.children.length == 1) {
 							node.parentNode.replaceChild(newNode.children[0], node);
 						} else {
-							node.innerHTML = await this.wikiTextToHTML(
+							node.innerHTML = await wikiTextToHTML(
 								await this.renderTemplate(
 									"ambox",
 									{
@@ -81,7 +80,8 @@ export default {
 										text: "'''AfterRender error'''",
 										"text-small": `AfterRender handler must return one node only, ${newNode.children.length} were returned.`
 									}
-								)
+								),
+								this.slug
 							);
 						}
 					});
@@ -99,48 +99,8 @@ export default {
 			const {replaced, renderingTemplates} = this.replaceTemplates(text);
 			const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData);
 
-			const html = await this.wikiTextToHTML(rendered);
+			const html = await wikiTextToHTML(rendered, this.slug);
 			return {html, renderData};
-		},
-
-		async wikiTextToHTML(wikitext) {
-			let html = InstaView.convert(wikitext);
-
-			html = await stringReplaceAsync(html, /ARTICLENAMEGOESHERE(.*?)(['"])/g, async (all, article, quote) => {
-				let wiki;
-
-				if(article.indexOf(":") == -1) {
-					// Local link
-					wiki = this.slug;
-				} else {
-					// Interwiki
-					article = article.replace(/^:/, "");
-
-					wiki = article.substr(0, article.indexOf(":"));
-					article = article.substr(article.indexOf(":") + 1);
-
-					wiki = toSlug(wiki.replace("/", "MYAWESOMECONSTANT")).replace(toSlug("MYAWESOMECONSTANT"), "/");
-				}
-
-				article = toSlug(article);
-
-				const hub = new Hub(wiki);
-				try {
-					await hub.init();
-				} catch(e) {
-					return `?/wiki/${wiki}/${article}${quote} class='interwiki-invalid'`;
-				}
-
-				try {
-					await hub.getArticleOrigins(article);
-				} catch(e) {
-					return `?/wiki/${wiki}/${article}${quote} class='interwiki-error'`;
-				}
-
-				return `?/wiki/${wiki}/${article}${quote} class='interwiki-exists'`;
-			});
-
-			return html;
 		},
 
 		async init() {
