@@ -1,9 +1,7 @@
 import Templates from "../../wiki-templates/templates.js";
-import htmlparser from "./htmlparser.js";
-import HTMLHandler from "./htmlhandler.js";
 import * as util from "../../common/util.js";
 import * as wikiText from "./wikitext.js";
-import {replaceTemplates, renderCurlyTemplates} from "./template.js";
+import {settings as templateSettings, replaceTemplates, renderCurlyTemplates, convertTagTemplates} from "./template.js";
 import renderTemplateInit from "./render-template.js";
 import * as nowiki from "./nowiki.js";
 let renderTemplate;
@@ -99,6 +97,7 @@ export default {
 				imported: this.imported,
 				title: this.title
 			});
+			templateSettings.renderTemplate = renderTemplate;
 
 			const renderData = this.initTemplates();
 
@@ -123,55 +122,8 @@ export default {
 
 		async renderTemplates(text, renderingTemplates, renderData) {
 			let rendered = renderCurlyTemplates(text, renderingTemplates, renderData);
-			rendered = await this.convertTagTemplates(rendered, renderData);
+			rendered = await convertTagTemplates(rendered, renderData);
 			return rendered;
-		},
-
-		async convertTagTemplates(html, renderData) {
-			const handler = new HTMLHandler(`<div>\n${html}\n</div>`);
-			const parser = new htmlparser.Parser(handler);
-			parser.parseComplete(`<div>\n${html}\n</div>`);
-
-			const renderTagTemplate = async elem => {
-				const template = elem.attribs.is;
-
-				const params = {};
-				const children = (elem.children || [])
-					.filter(child => child.type == "tag" && child.name == "kiwipedia-param");
-
-				for(const child of children) {
-					const paramName = child.attribs.name;
-					const paramValue = (await Promise.all((child.children || []).map(convert))).join("");
-
-					params[paramName] = paramValue;
-				}
-
-				return await renderTemplate(template, params, renderData);
-			};
-
-			const convert = async elem => {
-				if(elem.type == "text") {
-					return elem.raw;
-				} else if(elem.type == "tag") {
-					if(elem.name == "kiwipedia-template") {
-						return await renderTagTemplate(elem);
-					} else if(elem.name == "kiwipedia-nowiki") {
-						return await nowiki.renderNowiki(elem);
-					}
-
-					let renderedInside = (await Promise.all((elem.children || []).map(convert))).join("");
-
-					let template = `<${elem.name}>`;
-					if(Templates[template]) {
-						let params = {_: renderedInside};
-						Object.assign(params, elem.attribs || {});
-						return await renderTemplate(template, params, renderData);
-					} else {
-						return `<${elem.raw}>${renderedInside}</${elem.name}>`;
-					}
-				}
-			};
-			return await convert(handler.dom[0]);
 		},
 
 		clicked(e) {

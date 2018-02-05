@@ -49,7 +49,7 @@ export function prepareNowiki(html) {
 	return convert(handler.dom[0]);
 };
 
-export async function renderNowiki(elem) {
+export async function renderNowiki(elem, convert, renderTemplate, renderData) {
 	const params = {};
 	const children = (elem.children || [])
 		.filter(child => child.type == "tag" && child.name == "kiwipedia-param");
