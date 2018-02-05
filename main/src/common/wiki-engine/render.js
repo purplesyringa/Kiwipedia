@@ -5,6 +5,8 @@ import HTMLHandler from "./htmlhandler.js";
 import * as util from "../../common/util.js";
 import * as wikiText from "./wikitext.js";
 import {replaceTemplates, renderCurlyTemplates} from "./template.js";
+import renderTemplateInit from "./render-template.js";
+let renderTemplate;
 
 export default {
 	name: "markdown-article",
@@ -37,7 +39,7 @@ export default {
 
 			const secondaryRenderer = async (template, params) => {
 				if(Templates[template].afterRender) {
-					return await this.renderTemplate(
+					return await renderTemplate(
 						"ambox",
 						{
 							type: "serious",
@@ -47,7 +49,7 @@ export default {
 					);
 				}
 
-				return await this.renderTemplate(template, params, renderData);
+				return await renderTemplate(template, params, renderData);
 			};
 
 			Object.keys(Templates)
@@ -73,7 +75,7 @@ export default {
 							node.parentNode.replaceChild(newNode.children[0], node);
 						} else {
 							node.innerHTML = await wikiText.wikiTextToHTML(
-								await this.renderTemplate(
+								await renderTemplate(
 									"ambox",
 									{
 										type: "serious",
@@ -91,6 +93,12 @@ export default {
 	methods: {
 		async render(text) {
 			await wikiText.init();
+			renderTemplate = renderTemplateInit({
+				slug: this.slug,
+				article: this.article,
+				imported: this.imported,
+				title: this.title
+			});
 
 			const renderData = this.initTemplates();
 
@@ -119,52 +127,6 @@ export default {
 			return rendered;
 		},
 
-		async renderTemplate(template, params, renderData) {
-			const renderer = async (template, params) => {
-				return await this.renderTemplate(template, params, renderData);
-			};
-
-			template = template[0].toLowerCase() + template.substr(1);
-			if(!Templates[template]) {
-				return await this.renderTemplate("unexisting-template", {
-					name: template
-				}, renderData);
-			}
-
-			const context = {
-				slug: this.slug,
-				article: this.article,
-				imported: this.imported,
-				title: this.title
-			};
-
-			let rendered = (await Templates[template].render.call(renderData, params, renderer, context))
-				.trim()
-				.replace(/\n/g, "");
-
-			if(/^<.*>$/.test(template) && Templates[template].afterRender) {
-				let attribs = (
-					Object.keys(params)
-						.filter(name => name != "_")
-						.map(name => {
-							return {
-								name: name,
-								value: params[name]
-									.replace(/&/g, "&amp;")
-									.replace(/"/g, "&quot;")
-							};
-						})
-						.map(({name, value}) => `${name}="${value}"`)
-						.join(" ")
-				)
-
-				const tagName = template.match(/^<(.*)>$/)[1];
-				rendered = `<rendered-${tagName} ${attribs}>${util.base64encode(rendered)}</rendered-${tagName}>`;
-			}
-
-			return rendered;
-		},
-
 		async convertTagTemplates(html, renderData) {
 			const handler = new HTMLHandler(`<div>\n${html}\n</div>`);
 			const parser = new htmlparser.Parser(handler);
@@ -184,7 +146,7 @@ export default {
 					params[paramName] = paramValue;
 				}
 
-				return await this.renderTemplate(template, params, renderData);
+				return await renderTemplate(template, params, renderData);
 			};
 
 			const renderNowiki = async elem => {
@@ -211,7 +173,7 @@ export default {
 
 				const template = `<${elem.attribs.is}>`;
 
-				return await this.renderTemplate(template, params, renderData);
+				return await renderTemplate(template, params, renderData);
 			};
 
 			const convert = async elem => {
@@ -230,7 +192,7 @@ export default {
 					if(Templates[template]) {
 						let params = {_: renderedInside};
 						Object.assign(params, elem.attribs || {});
-						return await this.renderTemplate(template, params, renderData);
+						return await renderTemplate(template, params, renderData);
 					} else {
 						return `<${elem.raw}>${renderedInside}</${elem.name}>`;
 					}
