@@ -6,6 +6,7 @@ import * as util from "../../common/util.js";
 import * as wikiText from "./wikitext.js";
 import {replaceTemplates, renderCurlyTemplates} from "./template.js";
 import renderTemplateInit from "./render-template.js";
+import * as nowiki from "./nowiki.js";
 let renderTemplate;
 
 export default {
@@ -102,7 +103,7 @@ export default {
 
 			const renderData = this.initTemplates();
 
-			text = this.prepareNowiki(text);
+			text = nowiki.prepareNowiki(text);
 
 			const {replaced, renderingTemplates} = replaceTemplates(text);
 			const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData);
@@ -199,52 +200,6 @@ export default {
 				}
 			};
 			return await convert(handler.dom[0]);
-		},
-
-		prepareNowiki(html) {
-			const handler = new HTMLHandler(`<div>\n${html}\n</div>`);
-			const parser = new htmlparser.Parser(handler);
-			parser.parseComplete(`<div>\n${html}\n</div>`);
-
-			const convertNowiki = elem => {
-				if(elem.type == "text") {
-					return elem.raw;
-				} else if(elem.type == "tag") {
-					let renderedInside = (elem.children || []).map(convertNowiki).join("");
-
-					return `<${elem.raw}>${renderedInside}</${elem.name}>`;
-				}
-			};
-
-			const getInside = elem => {
-				const first = handler.tokens[elem.openTokenId];
-				const last = handler.tokens[elem.closeTokenId];
-
-				return `<div>\n${html}\n</div>`.substring(first.to + 1, last.from - 1);
-			};
-
-			const convert = elem => {
-				if(elem.type == "text") {
-					return elem.raw;
-				} else if(elem.type == "tag") {
-					if(Templates[`<${elem.name}>`] && Templates[`<${elem.name}>`].nowiki) {
-						const renderedInside = getInside(elem);
-
-						return `<kiwipedia-nowiki is="${elem.name}">` +
-							Object.keys(elem.attribs || {}).map(key => {
-								const value = elem.attribs[key];
-								return `<kiwipedia-param name="${key}">${value}</kiwipedia-param>`;
-							}).join("") +
-							`<kiwipedia-inside value="${util.base64encode(renderedInside)}" />` +
-						`</kiwipedia-nowiki>`;
-					}
-
-					let renderedInside = (elem.children || []).map(convert).join("");
-
-					return `<${elem.raw}>${renderedInside}</${elem.name}>`;
-				}
-			};
-			return convert(handler.dom[0]);
 		},
 
 		clicked(e) {
