@@ -9,6 +9,7 @@ export let settings = {renderTemplate: null};
 
 
 const templateConstant = `MY_AWESOME_TEMPLATE_NUMBER_{{id}}_GOES_HERE_PLEASE_DONT_USE_THIS_CONSTANT_ANYWHERE_IN_ARTICLE`;
+const templateRegexp = /MY_AWESOME_TEMPLATE_NUMBER_(.+?)_GOES_HERE_PLEASE_DONT_USE_THIS_CONSTANT_ANYWHERE_IN_ARTICLE/g;
 
 export function replaceTemplates(text) {
 	let lastTemplateId = 0;
@@ -45,8 +46,6 @@ function replace(text, callback) {
 
 
 export function renderCurlyTemplates(text, renderingTemplates, renderData) {
-	const templateRegexp = /MY_AWESOME_TEMPLATE_NUMBER_(.+?)_GOES_HERE_PLEASE_DONT_USE_THIS_CONSTANT_ANYWHERE_IN_ARTICLE/g;
-
 	const rendered = text.replace(templateRegexp, (all, id) => {
 		const template = renderingTemplates[id];
 
