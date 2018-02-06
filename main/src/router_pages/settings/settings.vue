@@ -28,7 +28,9 @@
 			const settings = await Settings.load();
 			this.hideUnknownTemplate = settings.hideUnknownTemplate;
 
-			this.ready = true;
+			this.$nextTick(() => {
+				this.ready = true;
+			});
 		},
 		watch: {
 			hideUnknownTemplate() {
@@ -37,6 +39,10 @@
 		},
 		methods: {
 			save() {
+				if(!this.ready) {
+					return;
+				}
+
 				try {
 					Settings.save({
 						hideUnknownTemplate: this.hideUnknownTemplate
