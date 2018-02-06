@@ -13,23 +13,25 @@ for(let file of context.keys()) {
 	Plugins[plugin.name] = plugin;
 }
 
-export function prepare(html) {
+export function prepare(html, context) {
 	html = Object.keys(Plugins).reduce((html, name) => {
 		const plugin = Plugins[name];
 		if(plugin.prepare) {
-			return plugin.prepare(html);
+			return plugin.prepare.call(context, html);
 		} else {
 			return html;
 		}
 	}, html);
 
-	return Object.keys(Plugins).reduce((html, name) => {
+	html = Object.keys(Plugins).reduce((html, name) => {
 		const plugin = Plugins[name];
-		return pluginUtil.walkHtml(html, plugin.condition, plugin.handler, name);
+		return pluginUtil.walkHtml(html, plugin.condition.bind(context), plugin.handler.bind(context), name);
 	}, html);
+
+	return html;
 };
 
-export async function render(elem, convert, renderTemplate, renderData) {
+export async function render(elem, convert, renderTemplate, renderData, context) {
 	const name = elem.name.replace(/^plugin-/, "");
 	if(!Plugins[name]) {
 		return "";
@@ -41,5 +43,5 @@ export async function render(elem, convert, renderTemplate, renderData) {
 		return await renderTemplate(template, params, renderData);
 	};
 
-	return await Plugins[name].render(pluginUtil.getData(elem), params, renderer);
+	return await Plugins[name].render.call(context, pluginUtil.getData(elem), params, renderer);
 };

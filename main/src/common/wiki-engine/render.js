@@ -106,10 +106,11 @@ export default {
 
 			const renderData = this.initTemplates();
 
-			text = plugins.prepare(text);
+			let context = {};
+			text = plugins.prepare(text, context);
 
 			const {replaced, renderingTemplates} = replaceTemplates(text);
-			const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData);
+			const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData, context);
 
 			const html = await wikiText.wikiTextToHTML(rendered, this.slug);
 			return {html, renderData};
@@ -125,8 +126,8 @@ export default {
 			return renderData;
 		},
 
-		async renderTemplates(text, renderingTemplates, renderData) {
-			let rendered = renderCurlyTemplates(text, renderingTemplates, renderData);
+		async renderTemplates(text, renderingTemplates, renderData, context) {
+			let rendered = renderCurlyTemplates(text, renderingTemplates, renderData, context);
 			rendered = await convertTagTemplates(rendered, renderData);
 			return rendered;
 		},

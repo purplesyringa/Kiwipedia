@@ -82,7 +82,7 @@ export function renderCurlyTemplates(text, renderingTemplates, renderData) {
 };
 
 
-export async function convertTagTemplates(html, renderData) {
+export async function convertTagTemplates(html, renderData, context) {
 	const handler = new HTMLHandler(`<div>\n${html}\n</div>`);
 	const parser = new htmlparser.Parser(handler);
 	parser.parseComplete(`<div>\n${html}\n</div>`);
@@ -92,7 +92,7 @@ export async function convertTagTemplates(html, renderData) {
 			return elem.raw;
 		} else if(elem.type == "tag") {
 			if(elem.name.startsWith("plugin-")) {
-				return await plugins.render(elem, convert, settings.renderTemplate, renderData);
+				return await plugins.render(elem, convert, settings.renderTemplate, renderData, context);
 			}
 
 			let renderedInside = (await Promise.all((elem.children || []).map(convert))).join("");
