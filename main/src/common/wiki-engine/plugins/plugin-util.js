@@ -7,6 +7,10 @@ export function walkHtml(html, condition, handler, name) {
 	parser.parseComplete(`<div>\n${html}\n</div>`);
 
 	const getInside = elem => {
+		if(elem.forceVoid) {
+			return "";
+		}
+
 		const first = htmlHandler.tokens[elem.openTokenId];
 		const last = htmlHandler.tokens[elem.closeTokenId];
 

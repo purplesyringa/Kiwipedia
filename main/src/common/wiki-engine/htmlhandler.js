@@ -77,6 +77,11 @@ export default class Handler {
 		let tokenId = this.tokens.length;
 		this.tokens.push(element);
 
+		if(element.type == "tag" && /\/\s*$/.test(element.raw)) {
+			element.name = element.name.replace(/\s*\/\s*$/, "");
+			element.forceVoid = true;
+		}
+
 		if(!this._tagStack.last()) {
 			// There are no parent elements
 
