@@ -10,6 +10,7 @@ import EditArticle from "./edit-article/edit-article.vue";
 import ArticleHistory from "./article-history/article-history.vue";
 import ArticleVersion from "./article-version/article-version.vue";
 import ArticleIndex from "./article-index/article-index.vue";
+import Settings from "./settings/settings.vue";
 
 export default (vue, zeroPage) => [
 	{
@@ -138,6 +139,13 @@ export default (vue, zeroPage) => [
 		path: "article-index/:language",
 		controller: () => {
 			vue.currentView = ArticleIndex;
+		}
+	},
+
+	{
+		path: "settings",
+		controller: () => {
+			vue.currentView = Settings;
 		}
 	}
 ];
