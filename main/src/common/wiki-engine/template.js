@@ -3,6 +3,7 @@ import htmlparser from "./htmlparser.js";
 import HTMLHandler from "./htmlhandler.js";
 import {parseTemplate} from "./parser.js";
 import * as plugins from "./plugins/plugins.js";
+import * as util from "../util.js";
 
 export let settings = {renderTemplate: null};
 
@@ -54,9 +55,10 @@ export function renderCurlyTemplates(text, renderingTemplates, renderData) {
 		name = name[0].toLowerCase() + name.substr(1);
 		if(!Templates[name]) {
 			return `
-				<kiwipedia-template is="unexisting-template">
+				<plugin-template>
+					<kiwipedia-data key="${util.base64encode("is")}" value="${util.base64encode("unknown-template")}" />
 					<kiwipedia-param name="name">${name}</kiwipedia-param>
-				</kiwipedia-template>
+				</plugin-template>
 			`.replace(/[\t\n]/g, "");
 		}
 
@@ -67,12 +69,13 @@ export function renderCurlyTemplates(text, renderingTemplates, renderData) {
 		}
 
 		return (
-			`<kiwipedia-template is="${name}">` +
+			`<plugin-template>
+				<kiwipedia-data key="${util.base64encode("is")}" value="${util.base64encode(name)}" />` +
 				Object.keys(params).map(paramName => {
 					let paramValue = params[paramName];
 					return `<kiwipedia-param name="${paramName}">${paramValue}</kiwipedia-param>`;
 				}).join("") +
-			`</kiwipedia-template>`
+			`</plugin-template>`
 		);
 	});
 
@@ -85,30 +88,11 @@ export async function convertTagTemplates(html, renderData) {
 	const parser = new htmlparser.Parser(handler);
 	parser.parseComplete(`<div>\n${html}\n</div>`);
 
-	const renderTagTemplate = async elem => {
-		const template = elem.attribs.is;
-
-		const params = {};
-		const children = (elem.children || [])
-			.filter(child => child.type == "tag" && child.name == "kiwipedia-param");
-
-		for(const child of children) {
-			const paramName = child.attribs.name;
-			const paramValue = (await Promise.all((child.children || []).map(convert))).join("");
-
-			params[paramName] = paramValue;
-		}
-
-		return await settings.renderTemplate(template, params, renderData);
-	};
-
 	const convert = async elem => {
 		if(elem.type == "text") {
 			return elem.raw;
 		} else if(elem.type == "tag") {
-			if(elem.name == "kiwipedia-template") {
-				return await renderTagTemplate(elem);
-			} else if(elem.name.startsWith("plugin-")) {
+			if(elem.name.startsWith("plugin-")) {
 				return await plugins.render(elem, convert, settings.renderTemplate, renderData);
 			}
 
