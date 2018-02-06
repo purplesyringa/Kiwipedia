@@ -29,7 +29,7 @@ export function walkHtml(html, condition, handler, name) {
 
 				const renderedInside = getInside(elem);
 				return `
-					<plugin-${name} is="${elem.name}">
+					<plugin-${name}>
 						${params}
 						${handler(elem, renderedInside)}
 					</plugin-${name}>

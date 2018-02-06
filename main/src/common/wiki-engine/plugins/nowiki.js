@@ -11,7 +11,10 @@ export default {
 		return Templates[`<${elem.name}>`] && Templates[`<${elem.name}>`].nowiki;
 	},
 	handler(elem, renderedInside) {
-		return `<kiwipedia-inside value="${util.base64encode(renderedInside)}" />`;
+		return `
+			<kiwipedia-template value="${util.base64encode(elem.name)}" />
+			<kiwipedia-inside value="${util.base64encode(renderedInside)}" />
+		`;
 	},
 
 	async render(elem, params, renderer) {
@@ -24,7 +27,8 @@ export default {
 
 		params._ = inside;
 
-		const template = `<${elem.attribs.is}>`;
+		let template = util.base64decode(pluginUtil.find(elem, "kiwipedia-template").attribs.value);
+		template = `<${template}>`;
 
 		return await renderer(template, params);
 	}
