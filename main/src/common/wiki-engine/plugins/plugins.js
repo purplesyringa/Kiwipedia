@@ -9,7 +9,7 @@ for(let file of context.keys()) {
 		continue;
 	}
 
-	const plugin = context(file);
+	const plugin = context(file).default;
 	Plugins[plugin.name] = plugin;
 }
 
