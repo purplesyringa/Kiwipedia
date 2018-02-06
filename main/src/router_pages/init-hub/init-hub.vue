@@ -6,11 +6,13 @@
 		</p>
 
 		<setting
+			type="text"
 			name="Language"
 			description="en/pl/etc."
 			v-model="language"
 		/>
 		<setting
+			type="text"
 			name="Subgroup (optional)"
 			description="ZeroNet development/America/etc."
 			v-model="subgroup"

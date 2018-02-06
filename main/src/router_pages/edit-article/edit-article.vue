@@ -13,10 +13,10 @@
 			</h1>
 
 			<setting
+				type="multiline"
 				name="Content"
 				description="Wikitext supported"
 				ref="content"
-				:multiline="true"
 				v-model="content"
 			/>
 

@@ -18,6 +18,7 @@
 			</p>
 
 			<setting
+				type="text"
 				name="Title"
 				description="Leave it empty to use title from article source"
 				ref="title"
@@ -30,6 +31,7 @@
 			<p>Or</p>
 
 			<setting
+				type="text"
 				name="Source"
 				description="Use http[s]://{language}.wikipedia.org/wiki/{article} for Wikipedia.org, zerowiki://{article} for original ZeroWiki and zerowiki://{address}/{article} for ZeroWiki clones"
 				ref="source"

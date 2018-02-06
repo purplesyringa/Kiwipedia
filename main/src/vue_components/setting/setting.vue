@@ -4,7 +4,7 @@
 		<div class="description">{{description}}</div>
 
 		<textarea
-			v-if="multiline"
+			v-if="type == 'multiline'"
 
 			ref="input"
 			:disabled="disabled"
@@ -28,7 +28,7 @@
 <script type="text/javascript">
 	export default {
 		name: "init-hub",
-		props: ["name", "description", "multiline", "value"],
+		props: ["name", "description", "type", "value"],
 		data() {
 			return {
 				value: "",

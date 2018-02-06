@@ -18,6 +18,7 @@
 			</p>
 
 			<setting
+				type="text"
 				name="Title"
 				description=""
 				ref="title"
@@ -25,10 +26,10 @@
 			/>
 
 			<setting
+				type="multiline"
 				name="Content"
 				description="Wikitext supported"
 				ref="content"
-				:multiline="true"
 				v-model="content"
 			/>
 
