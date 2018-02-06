@@ -1,7 +1,11 @@
 export default {
 	name: "unexisting-template",
 
-	async render(params, renderer) {
+	async render(params, renderer, context) {
+		if(context.settings.hideUnknownTemplate) {
+			return "";
+		}
+
 		return await renderer("ambox", {
 			type: "style",
 			text: "'''Unknown template'''",
