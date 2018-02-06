@@ -22,8 +22,18 @@ export function walkHtml(html, condition, handler, name) {
 			return elem.raw;
 		} else if(elem.type == "tag") {
 			if(condition(elem)) {
+				const params = Object.keys(elem.attribs || {}).map(key => {
+					const value = elem.attribs[key];
+					return `<kiwipedia-param name="${key}">${value}</kiwipedia-param>`;
+				}).join("");
+
 				const renderedInside = getInside(elem);
-				return `<plugin-${name} is="${elem.name}">${handler(elem, renderedInside)}</plugin-${name}>`;
+				return `
+					<plugin-${name} is="${elem.name}">
+						${params}
+						${handler(elem, renderedInside)}
+					</plugin-${name}>
+				`;
 			}
 
 			let renderedInside = (elem.children || []).map(convert).join("");

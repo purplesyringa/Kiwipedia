@@ -11,17 +11,11 @@ export default {
 		return Templates[`<${elem.name}>`] && Templates[`<${elem.name}>`].nowiki;
 	},
 	handler(elem, renderedInside) {
-		return (
-			Object.keys(elem.attribs || {}).map(key => {
-				const value = elem.attribs[key];
-				return `<kiwipedia-param name="${key}">${value}</kiwipedia-param>`;
-			}).join("") +
-			`<kiwipedia-inside value="${util.base64encode(renderedInside)}" />`
-		);
+		return `<kiwipedia-inside value="${util.base64encode(renderedInside)}" />`;
 	},
 
 	async render(elem, convert, renderTemplate, renderData) {
-		let params = await pluginUtil.getParams(convert);
+		let params = await pluginUtil.getParams(elem, convert);
 
 		let inside = pluginUtil.find(elem, "kiwipedia-inside");
 		if(inside) {
