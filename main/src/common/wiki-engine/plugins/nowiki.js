@@ -1,8 +1,5 @@
 import Templates from "../../../wiki-templates/templates.js";
-import htmlparser from "../htmlparser.js";
-import HTMLHandler from "../htmlhandler.js";
 import * as util from "../../../common/util.js";
-import * as pluginUtil from "./plugin-util.js";
 
 export default {
 	name: "nowiki",
