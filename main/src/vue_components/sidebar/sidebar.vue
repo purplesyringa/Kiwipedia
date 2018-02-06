@@ -32,12 +32,28 @@
 				Want to request a feature or report a bug?
 			</a>
 		</p>
+
+		<p>
+			<a v-if="siteInfo.auth_address" href="?/settings" @click.prevent="$router.navigate('settings')">
+				My settings
+			</a>
+		</p>
 	</aside>
 </template>
 
 <script language="text/javascript">
 	export default {
 		props: [],
-		name: "sidebar"
+		name: "sidebar",
+		data() {
+			return {
+				siteInfo: {}
+			};
+		},
+		mounted() {
+			this.$eventBus.$on("setSiteInfo", siteInfo => {
+				this.siteInfo = siteInfo;
+			});
+		}
 	};
 </script>
