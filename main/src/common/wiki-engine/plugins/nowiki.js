@@ -14,9 +14,7 @@ export default {
 		return `<kiwipedia-inside value="${util.base64encode(renderedInside)}" />`;
 	},
 
-	async render(elem, convert, renderTemplate, renderData) {
-		let params = await pluginUtil.getParams(elem, convert);
-
+	async render(elem, params, renderTemplate, renderData) {
 		let inside = pluginUtil.find(elem, "kiwipedia-inside");
 		if(inside) {
 			inside = util.base64decode(inside.attribs.value);
