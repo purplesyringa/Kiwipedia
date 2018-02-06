@@ -5,6 +5,7 @@ import {settings as templateSettings, replaceTemplates, renderCurlyTemplates, co
 import renderTemplateInit from "./render-template.js";
 import * as nowiki from "./plugins/nowiki.js";
 import * as plugins from "./plugins/plugins.js";
+import * as Settings from "../settings.js";
 let renderTemplate;
 
 export default {
@@ -91,12 +92,15 @@ export default {
 	},
 	methods: {
 		async render(text) {
+			const settings = await Settings.load();
+
 			await wikiText.init();
 			renderTemplate = renderTemplateInit({
 				slug: this.slug,
 				article: this.article,
 				imported: this.imported,
-				title: this.title
+				title: this.title,
+				settings: settings
 			});
 			templateSettings.renderTemplate = renderTemplate;
 
