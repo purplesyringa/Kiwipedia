@@ -11,10 +11,10 @@ export default {
 		return Templates[`<${elem.name}>`] && Templates[`<${elem.name}>`].nowiki;
 	},
 	handler(elem, renderedInside) {
-		return `
-			<kiwipedia-template value="${util.base64encode(elem.name)}" />
-			<kiwipedia-inside value="${util.base64encode(renderedInside)}" />
-		`;
+		return {
+			template: elem.name,
+			inside: renderedInside
+		};
 	},
 
 	async render(elem, params, renderer) {

@@ -1,3 +1,4 @@
+import * as util from "../../../common/util.js";
 import htmlparser from "../htmlparser.js";
 import HTMLHandler from "../htmlhandler.js";
 
@@ -22,16 +23,25 @@ export function walkHtml(html, condition, handler, name) {
 			return elem.raw;
 		} else if(elem.type == "tag") {
 			if(condition(elem)) {
+				const renderedInside = getInside(elem);
+
 				const params = Object.keys(elem.attribs || {}).map(key => {
 					const value = elem.attribs[key];
 					return `<kiwipedia-param name="${key}">${value}</kiwipedia-param>`;
 				}).join("");
 
-				const renderedInside = getInside(elem);
+				let data = [];
+				const obj = handler(elem, renderedInside);
+				Object.keys(obj).forEach(key => {
+					const value = obj[key];
+					data.push(`<kiwipedia-${key} value="${util.base64encode(value)}" />`);
+				});
+				data = data.join("");
+
 				return `
 					<plugin-${name}>
 						${params}
-						${handler(elem, renderedInside)}
+						${data}
 					</plugin-${name}>
 				`;
 			}
