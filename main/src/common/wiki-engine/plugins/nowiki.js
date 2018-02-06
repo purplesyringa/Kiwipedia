@@ -14,7 +14,7 @@ export default {
 		return `<kiwipedia-inside value="${util.base64encode(renderedInside)}" />`;
 	},
 
-	async render(elem, params, renderTemplate, renderData) {
+	async render(elem, params, renderer) {
 		let inside = pluginUtil.find(elem, "kiwipedia-inside");
 		if(inside) {
 			inside = util.base64decode(inside.attribs.value);
@@ -26,6 +26,6 @@ export default {
 
 		const template = `<${elem.attribs.is}>`;
 
-		return await renderTemplate(template, params, renderData);
+		return await renderer(template, params);
 	}
 };

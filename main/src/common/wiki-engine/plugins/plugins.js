@@ -28,5 +28,9 @@ export async function render(elem, convert, renderTemplate, renderData) {
 
 	let params = await pluginUtil.getParams(elem, convert);
 
-	return await Plugins[name].render(elem, params, renderTemplate, renderData);
+	async function renderer(template, params) {
+		return await renderTemplate(template, params, renderData);
+	};
+
+	return await Plugins[name].render(elem, params, renderer);
 };
