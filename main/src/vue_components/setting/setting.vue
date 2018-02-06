@@ -1,5 +1,16 @@
 <template>
 	<div>
+		<checkbox
+			v-if="type == 'checkbox'"
+
+			class="checkbox"
+			ref="input"
+			type="checkbox"
+			:disabled="disabled"
+			:value="value"
+			@input="update"
+		/>
+
 		<div class="name">{{name}}</div>
 		<div class="description">{{description}}</div>
 
@@ -11,6 +22,7 @@
 			:value="value"
 			@input="update"
 		/>
+		<div v-else-if="type == 'checkbox'" />
 		<input
 			v-else
 
@@ -26,9 +38,11 @@
 <style lang="sass" src="./setting.sass" scoped></style>
 
 <script type="text/javascript">
+	import Checkbox from "./checkbox.vue";
+
 	export default {
 		name: "init-hub",
-		props: ["name", "description", "type", "value"],
+		props: ["name", "description", "type", "value", "disabled"],
 		data() {
 			return {
 				value: "",
@@ -40,6 +54,10 @@
 			update() {
 				this.$emit("input", this.$refs.input.value);
 			}
+		},
+
+		components: {
+			checkbox: Checkbox
 		}
 	};
 </script>

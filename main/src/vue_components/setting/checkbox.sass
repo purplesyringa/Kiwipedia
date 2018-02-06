@@ -1,0 +1,28 @@
+.checkbox
+	position: relative
+
+	display: inline-block
+	width: 16px
+	height: 16px
+
+	border: 1px solid #DDD
+
+	font-family: "Verdana", "Arial", sans-serif
+	font-size: 16px
+
+.checkbox:not(.disabled):hover
+	background-color: #EEE
+.checkbox:not(.disabled):active
+	background-color: #CCC
+
+.disabled
+	background-color: #888
+	border-color: #888
+
+.checkbox span
+	position: absolute
+	top: -4px
+	left: 2px
+
+	display: inline-block
+	user-select: none
