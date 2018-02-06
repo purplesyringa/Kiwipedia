@@ -109,7 +109,6 @@ export default {
 			let context = {};
 			text = plugins.prepare(text, context);
 
-			const renderingTemplates = context.renderingTemplates;
 			const rendered = await convertTagTemplates(text, renderData);
 
 			const html = await wikiText.wikiTextToHTML(rendered, this.slug);

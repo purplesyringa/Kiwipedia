@@ -88,12 +88,13 @@ function replaceTemplates(text) {
 			return templateConstant.replace("{{id}}", id);
 		});
 	} while(oldReplaced != replaced);
+	text = replaced;
 
-	return {renderingTemplates, replaced};
+	return {renderingTemplates, text};
 };
 
 
-function renderCurlyTemplates(text, renderingTemplates) {
+function renderCurlyTemplates({text, renderingTemplates}) {
 	const rendered = text.replace(templateRegexp, (all, id) => {
 		const template = renderingTemplates[id];
 
@@ -111,7 +112,7 @@ function renderCurlyTemplates(text, renderingTemplates) {
 
 		for(let paramName of Object.keys(params)) {
 			let paramValue = params[paramName];
-			paramValue = renderCurlyTemplates(paramValue, renderingTemplates);
+			paramValue = renderCurlyTemplates({text: paramValue, renderingTemplates});
 			params[paramName] = paramValue;
 		}
 
@@ -133,9 +134,7 @@ export default {
 	name: "template",
 
 	afterHandle(html) {
-		const replaced = replaceTemplates(html);
-		this.renderingTemplates = replaced.renderingTemplates;
-		return renderCurlyTemplates(replaced.replaced, replaced.renderingTemplates);
+		return renderCurlyTemplates(replaceTemplates(html));
 	},
 
 	condition(elem) {
