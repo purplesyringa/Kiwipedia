@@ -1,7 +1,7 @@
 import Templates from "../../wiki-templates/templates.js";
 import * as util from "../../common/util.js";
 import * as wikiText from "./wikitext.js";
-import {settings as templateSettings, replaceTemplates, renderCurlyTemplates, convertTagTemplates} from "./template.js";
+import {settings as templateSettings, renderCurlyTemplates, convertTagTemplates} from "./template.js";
 import renderTemplateInit from "./render-template.js";
 import * as nowiki from "./plugins/nowiki.js";
 import * as plugins from "./plugins/plugins.js";
@@ -109,8 +109,8 @@ export default {
 			let context = {};
 			text = plugins.prepare(text, context);
 
-			const {replaced, renderingTemplates} = replaceTemplates(text);
-			const rendered = await this.renderTemplates(replaced, renderingTemplates, renderData, context);
+			const renderingTemplates = context.renderingTemplates;
+			const rendered = await this.renderTemplates(text, renderingTemplates, renderData, context);
 
 			const html = await wikiText.wikiTextToHTML(rendered, this.slug);
 			return {html, renderData};
@@ -127,8 +127,7 @@ export default {
 		},
 
 		async renderTemplates(text, renderingTemplates, renderData, context) {
-			let rendered = renderCurlyTemplates(text, renderingTemplates, renderData, context);
-			rendered = await convertTagTemplates(rendered, renderData);
+			let rendered = await convertTagTemplates(text, renderData);
 			return rendered;
 		},
 
