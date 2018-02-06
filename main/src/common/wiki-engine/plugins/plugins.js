@@ -14,6 +14,15 @@ for(let file of context.keys()) {
 }
 
 export function prepare(html) {
+	html = Object.keys(Plugins).reduce((html, name) => {
+		const plugin = Plugins[name];
+		if(plugin.prepare) {
+			return plugin.prepare(html);
+		} else {
+			return html;
+		}
+	}, html);
+
 	return Object.keys(Plugins).reduce((html, name) => {
 		const plugin = Plugins[name];
 		return pluginUtil.walkHtml(html, plugin.condition, plugin.handler, name);
