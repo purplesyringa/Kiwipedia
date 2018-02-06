@@ -37,9 +37,13 @@
 		},
 		methods: {
 			save() {
-				Settings.save({
-					hideUnknownTemplate: this.hideUnknownTemplate
-				});
+				try {
+					Settings.save({
+						hideUnknownTemplate: this.hideUnknownTemplate
+					});
+				} catch(e) {
+					this.$zeroPage.error(e.message);
+				}
 			}
 		}
 	};
