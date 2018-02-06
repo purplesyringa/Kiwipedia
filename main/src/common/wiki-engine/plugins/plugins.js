@@ -32,5 +32,5 @@ export async function render(elem, convert, renderTemplate, renderData) {
 		return await renderTemplate(template, params, renderData);
 	};
 
-	return await Plugins[name].render(elem, params, renderer);
+	return await Plugins[name].render(pluginUtil.getData(elem), params, renderer);
 };

@@ -34,7 +34,7 @@ export function walkHtml(html, condition, handler, name) {
 				const obj = handler(elem, renderedInside);
 				Object.keys(obj).forEach(key => {
 					const value = obj[key];
-					data.push(`<kiwipedia-${key} value="${util.base64encode(value)}" />`);
+					data.push(`<kiwipedia-data key="${util.base64encode(key)}" value="${util.base64encode(value)}" />`);
 				});
 				data = data.join("");
 
@@ -78,4 +78,14 @@ export async function getParams(elem, convert) {
 	}
 
 	return params;
+};
+
+export function getData(elem) {
+	let data = {};
+	for(let child of findAll(elem, "kiwipedia-data")) {
+		const key = util.base64decode(child.attribs.key);
+		const value = util.base64decode(child.attribs.value);
+		data[key] = value;
+	}
+	return data;
 };
