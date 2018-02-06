@@ -16,8 +16,8 @@ for(let file of context.keys()) {
 export function prepare(html, context) {
 	html = Object.keys(Plugins).reduce((html, name) => {
 		const plugin = Plugins[name];
-		if(plugin.prepare) {
-			return plugin.prepare.call(context, html);
+		if(plugin.beforeHandle) {
+			return plugin.beforeHandle.call(context, html);
 		} else {
 			return html;
 		}
@@ -26,6 +26,15 @@ export function prepare(html, context) {
 	html = Object.keys(Plugins).reduce((html, name) => {
 		const plugin = Plugins[name];
 		return pluginUtil.walkHtml(html, plugin.condition.bind(context), plugin.handler.bind(context), name);
+	}, html);
+
+	html = Object.keys(Plugins).reduce((html, name) => {
+		const plugin = Plugins[name];
+		if(plugin.afterHandle) {
+			return plugin.afterHandle.call(context, html);
+		} else {
+			return html;
+		}
 	}, html);
 
 	return html;
