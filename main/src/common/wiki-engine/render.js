@@ -110,7 +110,7 @@ export default {
 			text = plugins.prepare(text, context);
 
 			const renderingTemplates = context.renderingTemplates;
-			const rendered = await this.renderTemplates(text, renderingTemplates, renderData, context);
+			const rendered = await convertTagTemplates(text, renderData);
 
 			const html = await wikiText.wikiTextToHTML(rendered, this.slug);
 			return {html, renderData};
@@ -124,11 +124,6 @@ export default {
 				}
 			}
 			return renderData;
-		},
-
-		async renderTemplates(text, renderingTemplates, renderData, context) {
-			let rendered = await convertTagTemplates(text, renderData);
-			return rendered;
 		},
 
 		clicked(e) {
