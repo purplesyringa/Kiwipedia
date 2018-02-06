@@ -97,15 +97,7 @@ export async function convertTagTemplates(html, renderData) {
 			}
 
 			let renderedInside = (await Promise.all((elem.children || []).map(convert))).join("");
-
-			let template = `<${elem.name}>`;
-			if(Templates[template]) {
-				let params = {_: renderedInside};
-				Object.assign(params, elem.attribs || {});
-				return await settings.renderTemplate(template, params, renderData);
-			} else {
-				return `<${elem.raw}>${renderedInside}</${elem.name}>`;
-			}
+			return `<${elem.raw}>${renderedInside}</${elem.name}>`;
 		}
 	};
 	return await convert(handler.dom[0]);

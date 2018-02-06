@@ -4,13 +4,17 @@ export default {
 	name: "template",
 
 	condition(elem) {
-		return false;
+		return Templates[`<${elem.name}>`];
 	},
 	handler(elem, renderedInside) {
-		return {};
+		return {
+			is: `<${elem.name}>`,
+			_: renderedInside
+		};
 	},
 
 	async render(data, params, renderer) {
+		params._ = data._;
 		return await renderer(data.is, params);
 	}
 };
