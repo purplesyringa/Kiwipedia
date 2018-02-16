@@ -5,7 +5,7 @@ export default {
 			// Simple if
 
 			let settings = (params[5] || "").split(",");
-			if(params[2].indexOf("was referenced, though is doesn't exist") > -1 && settings.indexOf("-unknown") == -1) {
+			if(params[2].indexOf("was referenced, though it doesn't exist") > -1 && settings.indexOf("-unknown") == -1) {
 				return await renderer(
 					"ambox",
 					{
