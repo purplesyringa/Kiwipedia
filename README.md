@@ -4,7 +4,7 @@ _Free/libre and Open Source Decentralized Wiki with Wikipedia Import_
 
 Kiwipedia is still in beta. If you have the time feel free to work on any open issues.
 
-You can submit your suggestions here on GitHub (Issues) and also in our Gitcenter Repository. 
+You can submit your suggestions here on GitHub ([Issues](https://github.com/imachug/Kiwipedia/issues)) and also in our [Gitcenter Repository](http://127.0.0.1:43110/13c2MpR9ztCzVm7r8cTfV9h9FFEEiQ6AKD). 
 
 # Support Kiwipedia
 
