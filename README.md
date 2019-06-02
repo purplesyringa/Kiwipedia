@@ -1,4 +1,4 @@
-_Decentralized Wiki with Wikipedia Import_
+_Free/libre and Open Source Decentralized Wiki with Wikipedia Import_
 
 # Contributing
 
