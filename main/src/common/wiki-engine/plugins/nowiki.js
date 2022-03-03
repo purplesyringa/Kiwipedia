@@ -9,13 +9,12 @@ export default {
 	},
 	handler(elem, renderedInside) {
 		return {
-			template: elem.name,
 			inside: renderedInside
 		};
 	},
 
 	async render(data, params, renderer) {
 		params._ = data.inside;
-		return await renderer(`<${data.template}>`, params);
+		return await renderer(`<${params._name}>`, params);
 	}
 };

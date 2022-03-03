@@ -47,6 +47,7 @@ export async function render(elem, convert, renderTemplate, renderData, context)
 	}
 
 	let params = await pluginUtil.getParams(elem, convert);
+	params._name = elem.name;
 
 	async function renderer(template, params) {
 		return await renderTemplate(template, params, renderData);
